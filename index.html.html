@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مولّد التقارير التعليمية</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ui:#1f4e79;--ui-soft:#eaf1f8;--line:#d5dce6;--txt:#1b2430;--mut:#667085;--gold:#f5b301}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{font-family:'Tajawal',sans-serif;background:#eef1f5;color:var(--txt);font-size:15px}
+button,input,select,textarea{font-family:inherit;font-size:inherit}
+a{color:inherit}
+
+/* ===== شريط علوي ===== */
+.topbar{position:sticky;top:0;z-index:20;background:var(--ui);color:#fff;display:flex;align-items:center;gap:10px;padding:10px 18px;flex-wrap:wrap}
+.brand{font-size:1.1rem;font-weight:800;text-decoration:none;color:#fff}
+.grow{flex:1}
+.btn{border:0;border-radius:8px;padding:8px 16px;cursor:pointer;font-weight:700;background:#fff;color:var(--ui);text-decoration:none;display:inline-block}
+.btn:hover{filter:brightness(.95)}
+.btn.pri{background:var(--gold);color:#1b2430}
+.btn.sec{background:var(--ui-soft);color:var(--ui)}
+.btn.dng{background:#fde8e8;color:#b42318}
+.btn.sm{padding:5px 11px;font-size:.88rem}
+.gen-only{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ===== الصفحة الرئيسية (قائمة القوالب) ===== */
+.wrap{max-width:1040px;margin:0 auto;padding:22px 16px 50px}
+.crumbs{color:var(--mut);font-size:.88rem;margin-bottom:14px}
+.crumbs span{margin:0 6px}
+.hero{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:20px;border-right:6px solid var(--ui)}
+.hero h1{margin:0 0 6px;font-size:1.7rem;color:var(--ui)}
+.hero p{margin:0;color:var(--mut);line-height:1.8}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:.15s;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:var(--acc,var(--ui))}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 26px #1f4e7922}
+.card .ic{width:46px;height:46px;border-radius:12px;background:var(--ui-soft);display:grid;place-items:center;font-size:1.5rem}
+.card h3{margin:0;font-size:1.08rem}
+.card p{margin:0;color:var(--mut);font-size:.9rem;line-height:1.7;flex:1}
+.card .btn{text-align:center;background:var(--ui);color:#fff}
+.tip{margin-top:22px;background:#fffbe8;border:1px solid #f1e2a0;border-radius:10px;padding:12px 16px;font-size:.9rem;line-height:1.8}
+
+/* ===== المولّد ===== */
+.app{display:grid;grid-template-columns:minmax(340px,440px) 1fr;gap:16px;padding:16px;align-items:start}
+.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;max-height:calc(100vh - 90px);overflow:auto}
+.panel h2{font-size:1rem;margin:18px 0 8px;color:var(--ui);border-bottom:2px solid var(--ui-soft);padding-bottom:5px}
+.panel h2:first-child{margin-top:0}
+label{display:block;font-weight:700;margin:10px 0 4px;font-size:.92rem}
+input[type=text],input[type=date],select,textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#fff;color:var(--txt)}
+textarea{min-height:84px;resize:vertical;line-height:1.7}
+input:focus,select:focus,textarea:focus{outline:2px solid #9bbbe0;border-color:#9bbbe0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hint{color:var(--mut);font-size:.8rem;margin-top:3px}
+.chk{display:flex;align-items:center;gap:8px;font-weight:500;margin:8px 0}
+.chk input{width:auto}
+.saved{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.saved select{flex:1;min-width:140px}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px;margin-top:8px}
+.thumb{position:relative;border:1px solid var(--line);border-radius:8px;overflow:hidden;aspect-ratio:1}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb button{position:absolute;top:3px;left:3px;border:0;background:#b42318;color:#fff;border-radius:50%;width:22px;height:22px;cursor:pointer;line-height:1}
+.logo-prev{height:46px;margin-top:6px;display:block}
+dialog{border:0;border-radius:12px;padding:20px;min-width:300px;max-width:560px;width:92vw;max-height:90vh;box-shadow:0 10px 40px #0004}
+dialog::backdrop{background:#0006}
+dialog h3{margin-top:0;color:var(--ui)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1b2430;color:#fff;padding:9px 18px;border-radius:8px;opacity:0;pointer-events:none;transition:.3s;z-index:50}
+.toast.on{opacity:1}
+
+/* ===== المعاينة ===== */
+.stage{overflow:auto;padding-bottom:30px}
+.sheet{width:210mm;min-height:297mm;margin:0 auto;background:#fff;color:#111;padding:12mm 14mm;box-shadow:0 4px 24px #0002;direction:rtl;font-size:calc(16px * var(--fs,1));line-height:1.65}
+.sheet{--c1:#1f4e79;--bg:#1f4e79;--fg:#fff;--soft:#f6f9fc}
+.sheet.sc-grad{--c1:#0f766e;--bg:linear-gradient(90deg,#0f766e,#1d4ed8);--soft:#f3faf9}
+.sheet.sc-lav{--c1:#6d4aa8;--bg:#6d4aa8;--soft:#f8f5fc}
+.sheet.ink{--bg:#fff;--fg:#000;--soft:#fff;--c1:#000}
+.sheet.ink .title{border:1.5px solid #000}
+.sheet .hdr{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;border-bottom:2px solid var(--c1);padding-bottom:8px}
+.sheet .hdr .r{text-align:right;font-weight:700}
+.sheet .hdr .l{text-align:left;font-weight:700}
+.sheet .hdr .c{display:flex;gap:8px;align-items:center;justify-content:center}
+.sheet .hdr img{max-height:22mm;max-width:34mm;object-fit:contain}
+.sheet .title{margin:12px 0 10px;text-align:center;background:var(--bg);color:var(--fg);border-radius:8px;padding:9px 12px;font-size:1.45em;font-weight:800}
+.sheet .info{display:grid;grid-template-columns:1fr 1fr;border:1px solid #cfd6df;border-radius:6px;overflow:hidden}
+.sheet .info div{padding:5px 10px;border-bottom:1px solid #e3e8ef}
+.sheet .info div:nth-child(odd){border-left:1px solid #e3e8ef}
+.sheet .info b{color:var(--c1)}
+.sheet .sec{margin:9px 0;break-inside:avoid}
+.sheet .sec h3{margin:0 0 4px;font-size:1.02em;color:var(--c1);border-right:4px solid var(--c1);padding-right:8px}
+.sheet .sec .body{border:1px solid #cfd6df;border-radius:6px;padding:6px 11px;background:var(--soft)}
+.sheet .li{display:flex;gap:6px}
+.sheet .li b{color:var(--c1);min-width:1.4em}
+.sheet .sigs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px;text-align:center;break-inside:avoid}
+.sheet .sigs b{display:block}
+.sheet .sigs .ln{margin-top:22px;border-top:1px dotted #555;padding-top:2px;font-size:.85em;color:#555}
+.sheet .ev{display:grid;gap:8px;margin-top:6px}
+.sheet .ev figure{margin:0;break-inside:avoid;text-align:center}
+.sheet .ev img{width:100%;height:62mm;object-fit:cover;border:1px solid #cfd6df;border-radius:6px;display:block}
+.sheet .ev.cp img{height:40mm}
+.sheet .ev figcaption{font-size:.8em;color:#555}
+
+@media(max-width:980px){.app{grid-template-columns:1fr}.panel{max-height:none}}
+@media print{
+  @page{size:A4;margin:12mm 0}
+  html,body{background:#fff}
+  .topbar,.panel,.toast,#home{display:none!important}
+  .app{display:block;padding:0}
+  .stage{overflow:visible;padding:0}
+  .sheet{zoom:1!important;box-shadow:none;margin:0;padding:0 14mm;min-height:0;width:210mm}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= الشريط العلوي ================= -->
+<div class="topbar">
+  <a class="brand" href="#/" id="brandLink">مولّد التقارير التعليمية</a>
+  <span class="grow"></span>
+  <span class="gen-only" id="genBtns" hidden>
+    <button type="button" class="btn sec" id="btnBack">‹ القوالب</button>
+    <button class="btn sec" id="btnSample">تعبئة مثال</button>
+    <button class="btn sec" id="btnClear">تقرير جديد</button>
+    <button class="btn pri" id="btnPrint">طباعة / حفظ PDF</button>
+  </span>
+  <button class="btn" id="btnSettings">الإعدادات العامة</button>
+</div>
+
+<!-- ================= الصفحة الرئيسية: قائمة القوالب ================= -->
+<section id="home">
+  <div class="wrap">
+    <div class="hero">
+      <h1>أداء الواجبات الوظيفية</h1>
+      <p>اختر القالب المناسب لتوثيق شاهدك، ثم أدخل بياناتك وأرفق صور الشواهد واطبع التقرير أو احفظه PDF.</p>
+    </div>
+    <div class="cards" id="cards"></div>
+    <div class="tip">قبل البدء: اضغط «الإعدادات العامة» لتكتب بيانات الترويسة والتوقيعات وترفع الشعار مرة واحدة، فتظهر في كل التقارير تلقائياً.</div>
+  </div>
+</section>
+
+<!-- ================= المولّد ================= -->
+<div class="app" id="gen" hidden>
+  <aside class="panel">
+    <h2>التقارير المحفوظة</h2>
+    <div class="saved">
+      <select id="savedSel"></select>
+      <button class="btn sec sm" id="btnSave">حفظ</button>
+      <button class="btn dng sm" id="btnDel">حذف</button>
+    </div>
+    <div class="hint" id="savedCount"></div>
+
+    <h2>بيانات التقرير</h2>
+    <div id="formArea"></div>
+
+    <h2>شواهد (صور)</h2>
+    <input type="file" id="imgInput" accept="image/*" multiple>
+    <div class="hint">حتى 10 شواهد. تُصغَّر الصور تلقائياً قبل الحفظ.</div>
+    <label class="chk"><input type="checkbox" data-set="compress"> ضغط الشواهد (أصغر ارتفاعاً لتناسب صفحة واحدة)</label>
+    <div class="thumbs" id="thumbs"></div>
+  </aside>
+
+  <main class="stage" id="stage">
+    <div class="sheet" id="sheet"></div>
+  </main>
+</div>
+
+<!-- ================= نافذة الإعدادات العامة ================= -->
+<dialog id="setDlg">
+  <h3>الإعدادات العامة</h3>
+  <div class="hint">تُحفظ مرة واحدة وتُطبَّق على كل التقارير.</div>
+
+  <label>صيغة التقرير</label>
+  <select data-set="gender">
+    <option value="m">طلاب / معلمين</option>
+    <option value="f">طالبات / معلمات</option>
+  </select>
+
+  <label>الترويسة — الجهة اليمنى</label>
+  <textarea data-set="header" rows="4"></textarea>
+  <label>الترويسة — الجهة اليسرى</label>
+  <textarea data-set="extra" rows="3"></textarea>
+
+  <div class="row2">
+    <div>
+      <label>الشعار الرئيسي</label>
+      <input type="file" id="logo1" accept="image/*">
+      <img id="logo1Prev" class="logo-prev" alt="" hidden>
+      <button class="btn dng sm" id="logo1Del" hidden>إزالة</button>
+    </div>
+    <div>
+      <label>شعار فرعي</label>
+      <input type="file" id="logo2" accept="image/*">
+      <img id="logo2Prev" class="logo-prev" alt="" hidden>
+      <button class="btn dng sm" id="logo2Del" hidden>إزالة</button>
+    </div>
+  </div>
+
+  <label>التوقيعات</label>
+  <div class="row2"><input type="text" data-sig="0.role" placeholder="الصفة (يمين)"><input type="text" data-sig="0.name" placeholder="الاسم"></div>
+  <div class="row2" style="margin-top:6px"><input type="text" data-sig="1.role" placeholder="الصفة (وسط)"><input type="text" data-sig="1.name" placeholder="الاسم"></div>
+  <div class="row2" style="margin-top:6px"><input type="text" data-sig="2.role" placeholder="الصفة (يسار)"><input type="text" data-sig="2.name" placeholder="الاسم"></div>
+  <div class="hint">اترك الصفة والاسم فارغين لإخفاء التوقيع.</div>
+
+  <div class="row2">
+    <div>
+      <label>ألوان التقرير</label>
+      <select data-set="scheme">
+        <option value="base">أساسي</option>
+        <option value="grad">تدرّج</option>
+        <option value="lav">لافندر</option>
+      </select>
+    </div>
+    <div>
+      <label>نوع الخط</label>
+      <select data-set="font">
+        <option>Tajawal</option><option>Cairo</option><option>Noto Naskh Arabic</option><option>Amiri</option>
+      </select>
+    </div>
+  </div>
+  <label>حجم النص</label>
+  <select data-set="size">
+    <option value="1.2">أكبر 120%</option>
+    <option value="1.1">كبير 110%</option>
+    <option value="1">عادي 100%</option>
+    <option value="0.95">وسط 95%</option>
+    <option value="0.9">صغير 90%</option>
+    <option value="0.85">أصغر 85%</option>
+  </select>
+  <label class="chk"><input type="checkbox" data-set="ink"> موفّر الحبر (بلا خلفيات ملوّنة)</label>
+  <label class="chk"><input type="checkbox" data-set="digits"> استخدام الأرقام العربية (١٢٣)</label>
+
+  <div style="display:flex;gap:8px;margin-top:14px;justify-content:space-between">
+    <button class="btn dng sm" id="btnReset">استعادة القيم الافتراضية</button>
+    <button class="btn pri sm" id="setClose">حفظ وإغلاق</button>
+  </div>
+</dialog>
+
+<!-- ================= نافذة حفظ التقرير ================= -->
+<dialog id="dlg">
+  <h3>حفظ التقرير</h3>
+  <label>اسم التقرير</label>
+  <input type="text" id="dlgName">
+  <label class="chk" id="dlgUpdRow" hidden><input type="checkbox" id="dlgUpd" checked> تحديث التقرير المحدد بدل إنشاء جديد</label>
+  <div style="display:flex;gap:8px;margin-top:14px;justify-content:flex-end">
+    <button class="btn sec sm" id="dlgCancel">إلغاء</button>
+    <button class="btn pri sm" id="dlgOk">حفظ</button>
+  </div>
+</dialog>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =====================================================================
+   تعريفات التقارير — لإضافة قالب جديد أضف كائناً هنا وأضف مفتاحه إلى ORDER
+   type: text = نص حر | list = قائمة مرقّمة (سطر لكل بند)
+   ===================================================================== */
+const REPORTS = {
+  program: {
+    name: 'تقرير توثيق تنفيذ برنامج', icon: '📘', acc: '#1f4e79',
+    desc: 'توثيق برنامج أو مبادرة نُفّذت، بأهدافه وإجراءاته ونتائجه وشواهده.',
+    info: [
+      { id: 'place', label: 'مكان التنفيذ' }, { id: 'date', label: 'تاريخ التنفيذ', type: 'date' },
+      { id: 'audience', label: 'الفئة المستفيدة' }, { id: 'count', label: 'عدد المستفيدين' }
+    ],
+    sections: [
+      { id: 'summary', label: 'وصف مختصر للبرنامج', type: 'text', ph: 'اكتب وصفاً موجزاً ودقيقاً' },
+      { id: 'goals',   label: 'أهداف البرنامج',     type: 'list', ph: 'هدف في كل سطر' },
+      { id: 'steps',   label: 'إجراءات التنفيذ',    type: 'list', ph: 'خطوة في كل سطر بالتسلسل' },
+      { id: 'results', label: 'النتائج',            type: 'list', ph: 'نتيجة في كل سطر' },
+      { id: 'recs',    label: 'التوصيات',           type: 'text', ph: 'توصيات للتطوير والتحسين' },
+      { id: 'notes',   label: 'الملاحظات',          type: 'text', ph: 'أي معلومات إضافية' }
+    ],
+    sample: {
+      title: 'تقرير توثيق تنفيذ برنامج', place: 'قاعة الأنشطة', date: '', audience: 'طلاب الصف الخامس', count: '40',
+      summary: 'نُفّذ برنامج تعزيز القراءة بهدف رفع دافعية الطلاب نحو القراءة الحرة.',
+      goals: 'ترسيخ عادة القراءة اليومية\nتنمية الثروة اللغوية\nتشجيع الطلاب على تبادل الكتب',
+      steps: 'الإعلان عن البرنامج وتسجيل المشاركين\nتخصيص وقت يومي للقراءة\nمناقشة ما تم قراءته أسبوعياً\nتكريم المتميزين',
+      results: 'ارتفاع نسبة المشاركة في القراءة\nتحسّن مستوى الطلاب في التعبير',
+      recs: 'تعميم البرنامج على بقية الصفوف.', notes: ''
+    }
+  },
+  classAct: {
+    name: 'تقرير تنفيذ نشاط صفي', icon: '📖', acc: '#0f766e',
+    desc: 'توثيق نشاط نُفّذ داخل الحصة الدراسية مع الاستراتيجية والوسائل والنتائج.',
+    info: [
+      { id: 'subject', label: 'المادة' }, { id: 'grade', label: 'الصف' },
+      { id: 'lesson', label: 'الدرس' }, { id: 'date', label: 'تاريخ التنفيذ', type: 'date' }
+    ],
+    sections: [
+      { id: 'summary',  label: 'وصف النشاط',                 type: 'text', ph: 'اكتب وصفاً موجزاً للنشاط' },
+      { id: 'goals',    label: 'أهداف النشاط',               type: 'list', ph: 'هدف في كل سطر' },
+      { id: 'tools',    label: 'الاستراتيجية والوسائل المستخدمة', type: 'list', ph: 'عنصر في كل سطر' },
+      { id: 'steps',    label: 'إجراءات التنفيذ',            type: 'list', ph: 'خطوة في كل سطر بالتسلسل' },
+      { id: 'results',  label: 'النتائج',                    type: 'list', ph: 'نتيجة في كل سطر' },
+      { id: 'recs',     label: 'التوصيات',                   type: 'text', ph: 'توصيات للتطوير والتحسين' },
+      { id: 'notes',    label: 'الملاحظات',                  type: 'text', ph: 'أي معلومات إضافية' }
+    ],
+    sample: {
+      title: 'تقرير تنفيذ نشاط صفي', subject: 'العلوم', grade: 'الصف الرابع', lesson: 'دورة الماء', date: '',
+      summary: 'نُفّذ نشاط تعليمي جماعي لمحاكاة دورة الماء في الطبيعة.',
+      goals: 'أن يصف الطالب مراحل دورة الماء\nأن يعمل الطالب ضمن فريق',
+      tools: 'التعلم التعاوني\nنموذج مجسّم لدورة الماء\nبطاقات مصوّرة',
+      steps: 'تقسيم الطلاب إلى مجموعات\nتوزيع الأدوات والبطاقات\nتنفيذ المحاكاة ومناقشتها\nتقويم ختامي قصير',
+      results: 'تفاعل جميع المجموعات\nتحقق أهداف الدرس لدى غالبية الطلاب',
+      recs: 'تكرار النشاط بأدوات أخرى في دروس مشابهة.', notes: ''
+    }
+  },
+  assembly: {
+    name: 'تقرير تنفيذ إذاعة مدرسية', icon: '🎙️', acc: '#6d4aa8',
+    desc: 'توثيق إذاعة الطابور الصباحي، بفقراتها وأهدافها ونتائجها.',
+    info: [
+      { id: 'place', label: 'مكان التنفيذ' }, { id: 'time', label: 'وقت التنفيذ' },
+      { id: 'audience', label: 'المستهدفون' }, { id: 'date', label: 'تاريخ التنفيذ', type: 'date' }
+    ],
+    sections: [
+      { id: 'summary',  label: 'وصف مختصر لما تم تنفيذه', type: 'text', ph: 'اكتب وصفاً موجزاً ودقيقاً' },
+      { id: 'goals',    label: 'أهداف الإذاعة المدرسية',   type: 'list', ph: 'هدف في كل سطر' },
+      { id: 'steps',    label: 'إجراءات التنفيذ',          type: 'list', ph: 'خطوة في كل سطر بالتسلسل' },
+      { id: 'segments', label: 'فقرات الإذاعة',            type: 'list', ph: 'فقرة في كل سطر' },
+      { id: 'results',  label: 'النتائج',                  type: 'list', ph: 'نتيجة في كل سطر' },
+      { id: 'recs',     label: 'التوصيات',                 type: 'text', ph: 'توصيات للتطوير والتحسين' },
+      { id: 'notes',    label: 'الملاحظات',                type: 'text', ph: 'أي معلومات إضافية' }
+    ],
+    sample: {
+      title: 'تقرير تنفيذ إذاعة مدرسية', place: 'ساحة المدرسة', time: 'الطابور الصباحي', audience: 'جميع الطلاب', date: '',
+      summary: 'نُفّذت إذاعة صباحية تناولت قيمة التعاون، بمشاركة مجموعة من الطلاب في تقديم الفقرات.',
+      goals: 'تعزيز القيم السلوكية الإيجابية\nتنمية مهارات الإلقاء والثقة بالنفس\nتشجيع المشاركة في الأنشطة المدرسية',
+      steps: 'توزيع الأدوار على الطلاب المشاركين\nالتدريب على الإلقاء\nتنفيذ الإذاعة أمام مجتمع المدرسة\nتوثيق التنفيذ بالصور',
+      segments: 'القرآن الكريم\nالحديث الشريف\nكلمة الصباح\nالحكمة\nهل تعلم',
+      results: 'مشاركة فعّالة من الطلاب\nتحسّن مهارات الإلقاء\nتعزيز روح العمل الجماعي',
+      recs: 'الاستمرار في تقديم الإذاعة بانتظام وإتاحة الفرصة لأكبر عدد من الطلاب.', notes: ''
+    }
+  },
+  extra: {
+    name: 'تقرير تنفيذ نشاط لا صفي', icon: '🎯', acc: '#c2410c',
+    desc: 'توثيق نشاط خارج الحصة الدراسية: رحلة، مسابقة، فعالية، نادٍ طلابي.',
+    info: [
+      { id: 'place', label: 'مكان التنفيذ' }, { id: 'date', label: 'تاريخ التنفيذ', type: 'date' },
+      { id: 'audience', label: 'الفئة المستهدفة' }, { id: 'count', label: 'عدد المشاركين' }
+    ],
+    sections: [
+      { id: 'summary', label: 'وصف النشاط',      type: 'text', ph: 'اكتب وصفاً موجزاً للنشاط' },
+      { id: 'goals',   label: 'أهداف النشاط',    type: 'list', ph: 'هدف في كل سطر' },
+      { id: 'steps',   label: 'إجراءات التنفيذ', type: 'list', ph: 'خطوة في كل سطر بالتسلسل' },
+      { id: 'results', label: 'النتائج',         type: 'list', ph: 'نتيجة في كل سطر' },
+      { id: 'recs',    label: 'التوصيات',        type: 'text', ph: 'توصيات للتطوير والتحسين' },
+      { id: 'notes',   label: 'الملاحظات',       type: 'text', ph: 'أي معلومات إضافية' }
+    ],
+    sample: {
+      title: 'تقرير تنفيذ نشاط لا صفي', place: 'ملعب المدرسة', date: '', audience: 'طلاب المرحلة المتوسطة', count: '60',
+      summary: 'نُفّذ يوم رياضي تضمّن مسابقات جماعية وفردية بروح تنافسية.',
+      goals: 'تنمية اللياقة البدنية\nتعزيز روح الفريق\nاكتشاف المواهب الرياضية',
+      steps: 'تشكيل الفرق وتحديد المسابقات\nتجهيز الملعب والأدوات\nتنفيذ المسابقات\nتكريم الفرق الفائزة',
+      results: 'مشاركة واسعة من الطلاب\nاكتشاف عدد من المواهب الرياضية',
+      recs: 'تنظيم اليوم الرياضي بشكل فصلي.', notes: ''
+    }
+  },
+  waiting: {
+    name: 'تقرير تنفيذ حصة انتظار', icon: '⏳', acc: '#0369a1',
+    desc: 'توثيق حصة انتظار نُفّذت بدلاً من معلم غائب، بما قُدّم فيها من محتوى.',
+    info: [
+      { id: 'grade', label: 'الصف والشعبة' }, { id: 'period', label: 'الحصة' },
+      { id: 'absent', label: 'المعلم الغائب' }, { id: 'date', label: 'تاريخ التنفيذ', type: 'date' }
+    ],
+    sections: [
+      { id: 'summary', label: 'وصف ما تم تنفيذه',   type: 'text', ph: 'اكتب وصفاً موجزاً لما جرى في الحصة' },
+      { id: 'goals',   label: 'أهداف الحصة',        type: 'list', ph: 'هدف في كل سطر' },
+      { id: 'steps',   label: 'الأنشطة والإجراءات', type: 'list', ph: 'نشاط في كل سطر بالتسلسل' },
+      { id: 'results', label: 'النتائج',            type: 'list', ph: 'نتيجة في كل سطر' },
+      { id: 'recs',    label: 'التوصيات',           type: 'text', ph: 'توصيات للتطوير والتحسين' },
+      { id: 'notes',   label: 'الملاحظات',          type: 'text', ph: 'أي معلومات إضافية' }
+    ],
+    sample: {
+      title: 'تقرير تنفيذ حصة انتظار', grade: 'الصف السادس / ب', period: 'الحصة الثالثة', absent: '', date: '',
+      summary: 'استثمرت الحصة في نشاط قرائي وحوار هادف بدلاً من ضياع الوقت.',
+      goals: 'استثمار وقت الحصة فيما يفيد\nتنمية مهارات التواصل',
+      steps: 'تهيئة الطلاب وتوزيع نصوص قصيرة\nقراءة جماعية ثم مناقشة\nنشاط ختامي: كتابة فكرة رئيسية',
+      results: 'انضباط الطلاب وتفاعلهم\nإنجاز النشاط في زمن الحصة',
+      recs: 'إعداد حقيبة أنشطة جاهزة لحصص الانتظار.', notes: ''
+    }
+  }
+};
+const ORDER = ['program', 'classAct', 'assembly', 'extra', 'waiting'];
+
+/* ===================== الحالة ===================== */
+const LS_SET = 'rg_settings_v2';
+const MAX_IMG = 10, MAX_SAVED = 10;
+
+const defaultSigs = g => g === 'f'
+  ? [{role:'المعلمة',name:''},{role:'',name:''},{role:'مديرة المدرسة',name:''}]
+  : [{role:'المعلم',name:''},{role:'',name:''},{role:'مدير المدرسة',name:''}];
+
+const DEF_SETTINGS = () => ({
+  gender: 'm',
+  header: 'اسم الدولة\nاسم الجهة التعليمية\nاسم المدرسة',
+  extra: 'العام الدراسي 2026 / 2027\nالفصل الدراسي الأول',
+  logo: '', logo2: '',
+  sigs: defaultSigs('m'),
+  scheme: 'base', font: 'Tajawal', size: '1',
+  ink: false, digits: false, compress: false
+});
+
+let R = null;                 // التقرير الحالي
+let settings = loadSettings();
+let data = {};
+let images = [];
+let savedIdx = -1;
+
+function loadSettings(){
+  try { return Object.assign(DEF_SETTINGS(), JSON.parse(localStorage.getItem(LS_SET) || '{}')); }
+  catch(e){ return DEF_SETTINGS(); }
+}
+function persistSettings(){
+  try { localStorage.setItem(LS_SET, JSON.stringify(settings)); }
+  catch(e){ toast('تعذّر حفظ الإعدادات (مساحة التخزين ممتلئة)'); }
+}
+
+/* ===================== أدوات ===================== */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const lines = s => String(s || '').split('\n').map(l => l.trim()).filter(Boolean);
+const stripNum = l => l.replace(/^\s*[0-9٠-٩]+\s*[.\-)،:]\s*/, '');
+let tmr;
+function toast(msg){ const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(tmr); tmr = setTimeout(() => t.classList.remove('on'), 2600); }
+const freshData = () => ({ title: R.name });
+
+/* ===================== التوجيه بين الصفحات ===================== */
+function route(){
+  const m = /^#\/report\/([\w-]+)/.exec(location.hash || '');
+  const want = (m && REPORTS[m[1]]) ? m[1] : null;
+  if (want){ if (!R || R.key !== want) openReport(want); }
+  else if (R || $('#home').hidden) showHome();
+}
+/* التنقل المباشر بالنقر (لا يعتمد على روابط # فتعمل في أي بيئة) */
+function go(key){
+  if (key) openReport(key); else showHome();
+  try { history.pushState(null, '', key ? '#/report/' + key : '#/'); } catch(e){ /* بيئات معزولة */ }
+}
+function showHome(){
+  R = null;
+  $('#home').hidden = false; $('#gen').hidden = true; $('#genBtns').hidden = true;
+  document.title = 'مولّد التقارير التعليمية';
+  window.scrollTo(0, 0);
+}
+function openReport(key){
+  R = REPORTS[key]; R.key = key;
+  data = freshData(); images = []; savedIdx = -1;
+  $('#home').hidden = true; $('#gen').hidden = false; $('#genBtns').hidden = false;
+  document.title = R.name + ' | مولّد التقارير';
+  buildForm(); syncForm(); refreshSaved(); render();
+  window.scrollTo(0, 0);
+}
+function buildCards(){
+  $('#cards').innerHTML = ORDER.map(k => {
+    const r = REPORTS[k];
+    return `<div class="card" style="--acc:${r.acc}">
+      <div class="ic">${r.icon}</div>
+      <h3>${esc(r.name)}</h3>
+      <p>${esc(r.desc)}</p>
+      <button type="button" class="btn" data-open="${k}">ابدأ التصميم</button>
+    </div>`;
+  }).join('');
+  $$('[data-open]').forEach(b => b.addEventListener('click', () => go(b.dataset.open)));
+}
+addEventListener('hashchange', route);
+addEventListener('popstate', route);
+
+/* ===================== بناء النموذج ===================== */
+function buildForm(){
+  let h = `<label>عنوان التقرير *</label><input type="text" data-f="title">`;
+  h += `<div class="row2">` + R.info.map(f =>
+    `<div><label>${esc(f.label)}</label><input type="${f.type === 'date' ? 'date' : 'text'}" data-f="${f.id}"></div>`).join('') + `</div>`;
+  R.sections.forEach(s => {
+    h += `<label>${esc(s.label)}</label><textarea data-f="${s.id}" placeholder="${esc(s.ph || '')}"></textarea>`;
+    if (s.type === 'list') h += `<div class="hint">سطر واحد لكل بند — يُرقَّم تلقائياً</div>`;
+  });
+  $('#formArea').innerHTML = h;
+  $$('[data-f]').forEach(el => el.addEventListener('input', () => { data[el.dataset.f] = el.value; render(); }));
+}
+function syncForm(){
+  $$('[data-f]').forEach(el => el.value = data[el.dataset.f] || '');
+  renderThumbs();
+}
+
+/* ===================== المعاينة ===================== */
+function render(){
+  if (!R) return;
+  const S = settings;
+  const t = x => S.digits ? String(x).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]) : String(x);
+  const fmtDate = v => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || ''); return m ? `${m[3]}/${m[2]}/${m[1]}` : (v || ''); };
+  const br = x => esc(x).replace(/\n/g, '<br>');
+
+  const logos = [S.logo, S.logo2].filter(Boolean).map(src => `<img src="${src}" alt="">`).join('');
+  let h = `<div class="hdr">
+      <div class="r">${lines(S.header).map(l => `<div>${esc(t(l))}</div>`).join('')}</div>
+      <div class="c">${logos}</div>
+      <div class="l">${lines(S.extra).map(l => `<div>${esc(t(l))}</div>`).join('')}</div>
+    </div>`;
+
+  h += `<div class="title">${esc(t(data.title || R.name))}</div>`;
+
+  const cells = R.info.filter(f => data[f.id]).map(f =>
+    `<div><b>${esc(f.label)}:</b> ${esc(t(f.type === 'date' ? fmtDate(data[f.id]) : data[f.id]))}</div>`);
+  if (cells.length){
+    if (cells.length % 2) cells.push('<div></div>');
+    h += `<div class="info">${cells.join('')}</div>`;
+  }
+
+  R.sections.forEach(s => {
+    const v = data[s.id];
+    if (!v || !v.trim()) return;
+    const body = s.type === 'list'
+      ? lines(v).map((l, i) => `<div class="li"><b>${t(i + 1)}.</b><span>${esc(t(stripNum(l)))}</span></div>`).join('')
+      : br(t(v));
+    h += `<div class="sec"><h3>${esc(s.label)}</h3><div class="body">${body}</div></div>`;
+  });
+
+  if (images.length){
+    const cols = images.length === 1 ? 1 : images.length > 6 ? 3 : 2;
+    h += `<div class="sec" style="margin-top:14px"><h3>الشواهد</h3>
+      <div class="ev ${S.compress ? 'cp' : ''}" style="grid-template-columns:repeat(${cols},1fr)">
+      ${images.map((src, i) => `<figure><img src="${src}" alt=""><figcaption>شاهد ${t(i + 1)}</figcaption></figure>`).join('')}
+      </div></div>`;
+  }
+
+  /* التوقيعات تأتي دائماً بعد الشواهد */
+  if (S.sigs.some(g => g.role || g.name)){
+    h += `<div class="sigs">` + S.sigs.map(g => (g.role || g.name)
+      ? `<div><b>${esc(g.role)}</b><div>${esc(g.name)}</div><div class="ln">التوقيع</div></div>` : '<div></div>').join('') + `</div>`;
+  }
+
+  const sh = $('#sheet');
+  sh.className = `sheet sc-${S.scheme}` + (S.ink ? ' ink' : '');
+  sh.style.fontFamily = `'${S.font}', 'Tajawal', sans-serif`;
+  sh.style.setProperty('--fs', S.size);
+  sh.innerHTML = h;
+  fit();
+}
+function fit(){
+  const w = $('#stage').clientWidth - 4;
+  if (w > 0) $('#sheet').style.zoom = Math.min(1, w / 794);
+}
+addEventListener('resize', fit);
+
+/* ===================== الإعدادات العامة ===================== */
+function syncSettings(){
+  $$('[data-set]').forEach(el => {
+    const k = el.dataset.set;
+    if (el.type === 'checkbox') el.checked = !!settings[k]; else el.value = settings[k];
+  });
+  $$('[data-sig]').forEach(el => {
+    const [i, p] = el.dataset.sig.split('.');
+    el.value = settings.sigs[i][p] || '';
+  });
+  [['logo', '#logo1Prev', '#logo1Del'], ['logo2', '#logo2Prev', '#logo2Del']].forEach(([k, p, d]) => {
+    const has = !!settings[k];
+    $(p).hidden = !has; $(d).hidden = !has;
+    if (has) $(p).src = settings[k];
+  });
+}
+$$('[data-set]').forEach(el => el.addEventListener('input', () => {
+  const k = el.dataset.set;
+  if (k === 'gender'){
+    const old = defaultSigs(settings.gender), nw = defaultSigs(el.value);
+    settings.sigs.forEach((g, i) => { if (g.role === old[i].role) g.role = nw[i].role; });
+    settings.gender = el.value;
+    syncSettings();
+  } else settings[k] = el.type === 'checkbox' ? el.checked : el.value;
+  persistSettings(); render();
+}));
+$$('[data-sig]').forEach(el => el.addEventListener('input', () => {
+  const [i, p] = el.dataset.sig.split('.');
+  settings.sigs[i][p] = el.value;
+  persistSettings(); render();
+}));
+$('#btnSettings').onclick = () => { syncSettings(); $('#setDlg').showModal(); };
+$('#setClose').onclick = () => $('#setDlg').close();
+$('#btnReset').onclick = () => {
+  if (!confirm('استعادة كل الإعدادات الافتراضية؟')) return;
+  settings = DEF_SETTINGS(); persistSettings(); syncSettings(); render();
+};
+
+/* ===================== الصور ===================== */
+function readImg(file, max, type){
+  return new Promise(res => {
+    const r = new FileReader();
+    r.onerror = () => res(null);
+    r.onload = () => {
+      const im = new Image();
+      im.onerror = () => res(null);
+      im.onload = () => {
+        const k = Math.min(1, max / Math.max(im.width, im.height));
+        const c = document.createElement('canvas');
+        c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+        const x = c.getContext('2d');
+        if (type === 'jpeg'){ x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); }
+        x.drawImage(im, 0, 0, c.width, c.height);
+        res(c.toDataURL('image/' + type, 0.82));
+      };
+      im.src = r.result;
+    };
+    r.readAsDataURL(file);
+  });
+}
+$('#imgInput').addEventListener('change', async e => {
+  for (const f of [...e.target.files]){
+    if (images.length >= MAX_IMG){ toast('الحد الأقصى 10 شواهد'); break; }
+    const d = await readImg(f, 1200, 'jpeg');
+    if (d) images.push(d);
+  }
+  e.target.value = '';
+  renderThumbs(); render();
+});
+function renderThumbs(){
+  $('#thumbs').innerHTML = images.map((s, i) =>
+    `<div class="thumb"><img src="${s}" alt=""><button data-rm="${i}" title="حذف">×</button></div>`).join('');
+  $$('[data-rm]').forEach(b => b.onclick = () => { images.splice(+b.dataset.rm, 1); renderThumbs(); render(); });
+}
+[['#logo1', 'logo'], ['#logo2', 'logo2']].forEach(([sel, key]) => {
+  $(sel).addEventListener('change', async e => {
+    const f = e.target.files[0]; if (!f) return;
+    const d = await readImg(f, 400, 'png');
+    if (d){ settings[key] = d; persistSettings(); syncSettings(); render(); }
+    e.target.value = '';
+  });
+});
+$('#logo1Del').onclick = () => { settings.logo = ''; persistSettings(); syncSettings(); render(); };
+$('#logo2Del').onclick = () => { settings.logo2 = ''; persistSettings(); syncSettings(); render(); };
+
+/* ===================== حفظ التقارير (لكل نوع قائمته) ===================== */
+const repKey = () => 'rg_reports_' + R.key;
+const getSaved = () => { try { return JSON.parse(localStorage.getItem(repKey()) || '[]'); } catch(e){ return []; } };
+function setSaved(list){
+  try { localStorage.setItem(repKey(), JSON.stringify(list)); return true; }
+  catch(e){ toast('مساحة التخزين ممتلئة — قلّل عدد الشواهد أو احذف تقارير قديمة'); return false; }
+}
+function refreshSaved(){
+  const list = getSaved();
+  $('#savedSel').innerHTML = `<option value="-1">— تقرير جديد —</option>` +
+    list.map((r, i) => `<option value="${i}">${esc(r.name)}</option>`).join('');
+  $('#savedSel').value = String(savedIdx);
+  $('#savedCount').textContent = `${list.length}/${MAX_SAVED} تقارير محفوظة من هذا النوع (داخل هذا المتصفح فقط)`;
+}
+$('#savedSel').onchange = e => {
+  savedIdx = +e.target.value;
+  if (savedIdx >= 0){
+    const r = getSaved()[savedIdx];
+    data = Object.assign(freshData(), r.data); images = r.images || [];
+  } else { data = freshData(); images = []; }
+  syncForm(); render();
+};
+$('#btnSave').onclick = () => {
+  const list = getSaved();
+  $('#dlgName').value = savedIdx >= 0 ? list[savedIdx].name : (data.title || R.name);
+  $('#dlgUpdRow').hidden = savedIdx < 0;
+  $('#dlgUpd').checked = true;
+  $('#dlg').showModal();
+};
+$('#dlgCancel').onclick = () => $('#dlg').close();
+$('#dlgOk').onclick = () => {
+  const name = $('#dlgName').value.trim() || R.name;
+  const list = getSaved();
+  const rec = { name, data: { ...data }, images: [...images] };
+  if (savedIdx >= 0 && $('#dlgUpd').checked) list[savedIdx] = rec;
+  else {
+    if (list.length >= MAX_SAVED){ toast('وصلت للحد الأقصى (10) — احذف تقريراً أولاً'); return; }
+    list.push(rec); savedIdx = list.length - 1;
+  }
+  if (setSaved(list)){ $('#dlg').close(); refreshSaved(); toast('تم الحفظ'); }
+};
+$('#btnDel').onclick = () => {
+  if (savedIdx < 0) return toast('اختر تقريراً محفوظاً أولاً');
+  if (!confirm('حذف التقرير المحفوظ المحدد؟')) return;
+  const list = getSaved(); list.splice(savedIdx, 1);
+  if (setSaved(list)){ savedIdx = -1; data = freshData(); images = []; refreshSaved(); syncForm(); render(); }
+};
+
+/* ===================== أزرار عامة ===================== */
+$('#btnSample').onclick = () => { data = { ...R.sample }; syncForm(); render(); };
+$('#btnClear').onclick = () => {
+  if (!confirm('بدء تقرير جديد؟ ستُفرَّغ الحقول الحالية.')) return;
+  savedIdx = -1; data = freshData(); images = [];
+  refreshSaved(); syncForm(); render();
+};
+$('#btnPrint').onclick = () => {
+  const old = document.title;
+  document.title = data.title || R.name;   // يصبح اسم ملف PDF
+  window.print();
+  setTimeout(() => document.title = old, 500);
+};
+
+/* ===================== تشغيل ===================== */
+$('#brandLink').addEventListener('click', e => { e.preventDefault(); go(null); });
+$('#btnBack').addEventListener('click', () => go(null));
+buildCards(); syncSettings(); route();
+</script>
+</body>
+</html>

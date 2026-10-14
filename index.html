@@ -1,10 +1,11 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>مولّد التقارير التعليمية</title>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;700&family=Tajawal:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--ui:#1f4e79;--ui-soft:#eaf1f8;--line:#d5dce6;--txt:#1b2430;--mut:#667085;--gold:#f5b301}
 *{box-sizing:border-box}
@@ -30,7 +31,7 @@ a{color:inherit}
 .wrap{max-width:1040px;margin:0 auto;padding:22px 16px 50px}
 .crumbs{color:var(--mut);font-size:.88rem;margin-bottom:14px}
 .crumbs span{margin:0 6px}
-.hero{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:20px;border-right:6px solid var(--ui)}
+.hero{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:20px;border-inline-start:6px solid var(--ui)}
 .hero h1{margin:0 0 6px;font-size:1.7rem;color:var(--ui)}
 .hero p{margin:0;color:var(--mut);line-height:1.8}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
@@ -71,7 +72,7 @@ dialog h3{margin-top:0;color:var(--ui)}
 
 /* ===== المعاينة ===== */
 .stage{overflow:auto;padding-bottom:30px}
-.sheet{width:210mm;min-height:297mm;margin:0 auto;background:#fff;color:#111;padding:0;box-shadow:0 4px 24px #0002;direction:rtl;font-size:calc(16px * var(--fs,1));line-height:1.6;display:flex;flex-direction:column;overflow:hidden}
+.sheet{width:210mm;min-height:297mm;margin:0 auto;background:#fff;color:#111;padding:0;box-shadow:0 4px 24px #0002;font-size:calc(16px * var(--fs,1));line-height:1.6;display:flex;flex-direction:column;overflow:hidden}
 .sheet{--hd:#0f4c5c;--hf:#fff;--ac:#2a9d78;--lb:#0f4c5c;--stripe:linear-gradient(90deg,#2a9d78,#1d8fbf,#2a9d78)}
 .sheet.sc-grad{--hd:linear-gradient(90deg,#0f766e,#1d4ed8);--ac:#0f9d8f;--lb:#0f5f8a;--stripe:linear-gradient(90deg,#14b8a6,#3b82f6,#14b8a6)}
 .sheet.sc-lav{--hd:#5b3f93;--ac:#8b6cc7;--lb:#5b3f93;--stripe:linear-gradient(90deg,#8b6cc7,#c084fc,#8b6cc7)}
@@ -82,8 +83,8 @@ dialog h3{margin-top:0;color:var(--ui)}
 .sheet .hdr{position:relative;background:var(--hd);color:var(--hf);display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:center;padding:7mm 12mm 11mm;border-radius:0 0 22px 22px}
 .sheet .hdr::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--stripe)}
 .sheet .hdr .r,.sheet .hdr .l{font-size:.82em;line-height:1.55;font-weight:700;overflow-wrap:anywhere}
-.sheet .hdr .r{text-align:right}
-.sheet .hdr .l{text-align:left}
+.sheet .hdr .r{text-align:start}
+.sheet .hdr .l{text-align:end}
 .sheet .hdr .r div:nth-child(n+2){font-size:.92em;font-weight:600}
 .sheet .hdr .c{display:flex;gap:8px;align-items:center;justify-content:center}
 .sheet .hdr img{max-height:26mm;max-width:38mm;object-fit:contain}
@@ -96,7 +97,7 @@ dialog h3{margin-top:0;color:var(--ui)}
 .sheet .main{flex:1;display:flex;flex-direction:column;padding:0 12mm 5mm}
 /* خانات بعنوان يطفو على الإطار */
 .sheet .box{position:relative;border:1.5px solid var(--ac);border-radius:12px;padding:12px 13px 7px;background:#fff;break-inside:avoid}
-.sheet .box>.lb{position:absolute;top:-.8em;right:14px;background:#fff;padding:0 8px;font-size:.88em;font-weight:800;color:var(--lb);line-height:1.4;white-space:nowrap}
+.sheet .box>.lb{position:absolute;top:-.8em;inset-inline-start:14px;background:#fff;padding:0 8px;font-size:.88em;font-weight:800;color:var(--lb);line-height:1.4;white-space:nowrap}
 .sheet .info{display:grid;gap:10px;margin-top:14px}
 .sheet .info .box{text-align:center;padding:10px 8px 5px}
 .sheet .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px 12px;margin-top:20px;margin-bottom:12px}
@@ -111,9 +112,9 @@ dialog h3{margin-top:0;color:var(--ui)}
 .sheet .ev.cp img{height:30mm}
 /* التوقيعات */
 .sheet .sigs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:auto;padding-top:7mm;border-top:1px solid #d3d9e0;break-inside:avoid;font-size:.95em}
-.sheet .sigs>div:nth-child(1){text-align:right}
+.sheet .sigs>div:nth-child(1){text-align:start}
 .sheet .sigs>div:nth-child(2){text-align:center}
-.sheet .sigs>div:nth-child(3){text-align:left}
+.sheet .sigs>div:nth-child(3){text-align:end}
 .sheet .sigs b{font-weight:800}
 /* الشريط السفلي */
 .sheet .ftr{background:var(--hd);color:var(--hf);text-align:center;font-size:.7em;padding:5px 12mm}
@@ -135,47 +136,48 @@ dialog h3{margin-top:0;color:var(--ui)}
 
 <!-- ================= الشريط العلوي ================= -->
 <div class="topbar">
-  <a class="brand" href="#/" id="brandLink">مولّد التقارير التعليمية</a>
+  <a class="brand" href="#/" id="brandLink" data-i18n="brand">مولّد التقارير التعليمية</a>
   <span class="grow"></span>
   <span class="gen-only" id="genBtns" hidden>
-    <button type="button" class="btn sec" id="btnBack">‹ القوالب</button>
-    <button class="btn sec" id="btnSample">تعبئة مثال</button>
-    <button class="btn sec" id="btnClear">تقرير جديد</button>
-    <button class="btn pri" id="btnPrint">طباعة / حفظ PDF</button>
+    <button type="button" class="btn sec" id="btnBack" data-i18n="back">‹ القوالب</button>
+    <button class="btn sec" id="btnSample" data-i18n="sample">تعبئة مثال</button>
+    <button class="btn sec" id="btnClear" data-i18n="newReport">تقرير جديد</button>
+    <button class="btn pri" id="btnPrint" data-i18n="print">طباعة / حفظ PDF</button>
   </span>
-  <button class="btn" id="btnSettings">الإعدادات العامة</button>
+  <button class="btn" id="btnLang" type="button">English</button>
+  <button class="btn" id="btnSettings" data-i18n="settings">الإعدادات العامة</button>
 </div>
 
 <!-- ================= الصفحة الرئيسية: قائمة القوالب ================= -->
 <section id="home">
   <div class="wrap">
     <div class="hero">
-      <h1>أداء الواجبات الوظيفية</h1>
-      <p>اختر القالب المناسب لتوثيق شاهدك، ثم أدخل بياناتك وأرفق صور الشواهد واطبع التقرير أو احفظه PDF.</p>
+      <h1 data-i18n="homeTitle">أداء الواجبات الوظيفية</h1>
+      <p data-i18n="homeSub">اختر القالب المناسب لتوثيق شاهدك، ثم أدخل بياناتك وأرفق صور الشواهد واطبع التقرير أو احفظه PDF.</p>
     </div>
     <div class="cards" id="cards"></div>
-    <div class="tip">قبل البدء: اضغط «الإعدادات العامة» لتكتب بيانات الترويسة والتوقيعات وترفع الشعار مرة واحدة، فتظهر في كل التقارير تلقائياً.</div>
+    <div class="tip" data-i18n="homeTip">قبل البدء: اضغط «الإعدادات العامة» لتكتب بيانات الترويسة والتوقيعات وترفع الشعار مرة واحدة، فتظهر في كل التقارير تلقائياً.</div>
   </div>
 </section>
 
 <!-- ================= المولّد ================= -->
 <div class="app" id="gen" hidden>
   <aside class="panel">
-    <h2>التقارير المحفوظة</h2>
+    <h2 data-i18n="savedH">التقارير المحفوظة</h2>
     <div class="saved">
       <select id="savedSel"></select>
-      <button class="btn sec sm" id="btnSave">حفظ</button>
-      <button class="btn dng sm" id="btnDel">حذف</button>
+      <button class="btn sec sm" id="btnSave" data-i18n="save">حفظ</button>
+      <button class="btn dng sm" id="btnDel" data-i18n="del">حذف</button>
     </div>
     <div class="hint" id="savedCount"></div>
 
-    <h2>بيانات التقرير</h2>
+    <h2 data-i18n="dataH">بيانات التقرير</h2>
     <div id="formArea"></div>
 
-    <h2>شواهد (صور)</h2>
+    <h2 data-i18n="evH">شواهد (صور)</h2>
     <input type="file" id="imgInput" accept="image/*" multiple>
-    <div class="hint">حتى 10 شواهد. تُصغَّر الصور تلقائياً قبل الحفظ.</div>
-    <label class="chk"><input type="checkbox" data-set="compress"> ضغط الشواهد (أصغر ارتفاعاً لتناسب صفحة واحدة)</label>
+    <div class="hint" data-i18n="imgHint">حتى 10 شواهد. تُصغَّر الصور تلقائياً قبل الحفظ.</div>
+    <label class="chk"><input type="checkbox" data-set="compress"> <span data-i18n="compress">ضغط الشواهد (أصغر ارتفاعاً لتناسب صفحة واحدة)</span></label>
     <div class="thumbs" id="thumbs"></div>
   </aside>
 
@@ -186,88 +188,88 @@ dialog h3{margin-top:0;color:var(--ui)}
 
 <!-- ================= نافذة الإعدادات العامة ================= -->
 <dialog id="setDlg">
-  <h3>الإعدادات العامة</h3>
-  <div class="hint">تُحفظ مرة واحدة وتُطبَّق على كل التقارير.</div>
+  <h3 data-i18n="settings">الإعدادات العامة</h3>
+  <div class="hint" data-i18n="settingsHint">تُحفظ مرة واحدة وتُطبَّق على كل التقارير.</div>
 
-  <label>صيغة التقرير</label>
+  <label data-i18n="gender">صيغة التقرير</label>
   <select data-set="gender">
-    <option value="m">طلاب / معلمين</option>
-    <option value="f">طالبات / معلمات</option>
-    <option value="sm">طلاب / طالبات</option>
-    <option value="tm">معلمين / معلمات</option>
+    <option value="m" data-i18n="gM">طلاب / معلمين</option>
+    <option value="f" data-i18n="gF">طالبات / معلمات</option>
+    <option value="sm" data-i18n="gSM">طلاب / طالبات</option>
+    <option value="tm" data-i18n="gTM">معلمين / معلمات</option>
   </select>
 
-  <label>الترويسة — الجهة اليمنى</label>
-  <textarea data-set="header" rows="4"></textarea>
-  <label>الترويسة — الجهة اليسرى</label>
-  <textarea data-set="extra" rows="3"></textarea>
+  <label data-i18n="hdrR">الترويسة — الجهة اليمنى</label>
+  <textarea data-setl="header" rows="4"></textarea>
+  <label data-i18n="hdrL">الترويسة — الجهة اليسرى</label>
+  <textarea data-setl="extra" rows="3"></textarea>
 
   <div class="row2">
     <div>
-      <label>الشعار الرئيسي</label>
+      <label data-i18n="logoMain">الشعار الرئيسي</label>
       <input type="file" id="logo1" accept="image/*">
       <img id="logo1Prev" class="logo-prev" alt="" hidden>
-      <button class="btn dng sm" id="logo1Del" hidden>إزالة</button>
-      <button class="btn sec sm" id="logo1Restore" hidden>استعادة شعار المدرسة</button>
+      <button class="btn dng sm" id="logo1Del" data-i18n="remove" hidden>إزالة</button>
+      <button class="btn sec sm" id="logo1Restore" data-i18n="restoreLogo" hidden>استعادة شعار المدرسة</button>
     </div>
     <div>
-      <label>شعار فرعي</label>
+      <label data-i18n="logoSub">شعار فرعي</label>
       <input type="file" id="logo2" accept="image/*">
       <img id="logo2Prev" class="logo-prev" alt="" hidden>
-      <button class="btn dng sm" id="logo2Del" hidden>إزالة</button>
+      <button class="btn dng sm" id="logo2Del" data-i18n="remove" hidden>إزالة</button>
     </div>
   </div>
 
-  <label>التوقيعات</label>
-  <div class="row2"><input type="text" data-sig="0.role" placeholder="الصفة (يمين)"><input type="text" data-sig="0.name" placeholder="الاسم"></div>
-  <div class="row2" style="margin-top:6px"><input type="text" data-sig="1.role" placeholder="الصفة (وسط)"><input type="text" data-sig="1.name" placeholder="الاسم"></div>
-  <div class="row2" style="margin-top:6px"><input type="text" data-sig="2.role" placeholder="الصفة (يسار)"><input type="text" data-sig="2.name" placeholder="الاسم"></div>
-  <div class="hint">اترك الصفة والاسم فارغين لإخفاء التوقيع.</div>
+  <label data-i18n="sigs">التوقيعات</label>
+  <div class="row2"><input type="text" data-sig="0.role" placeholder="الصفة (يمين)" data-i18n-ph="phTitle0"><input type="text" data-sig="0.name" placeholder="الاسم" data-i18n-ph="phName"></div>
+  <div class="row2" style="margin-top:6px"><input type="text" data-sig="1.role" placeholder="الصفة (وسط)" data-i18n-ph="phTitle1"><input type="text" data-sig="1.name" placeholder="الاسم" data-i18n-ph="phName"></div>
+  <div class="row2" style="margin-top:6px"><input type="text" data-sig="2.role" placeholder="الصفة (يسار)" data-i18n-ph="phTitle2"><input type="text" data-sig="2.name" placeholder="الاسم" data-i18n-ph="phName"></div>
+  <div class="hint" data-i18n="sigHint">اترك الصفة والاسم فارغين لإخفاء التوقيع.</div>
 
   <div class="row2">
     <div>
-      <label>ألوان التقرير</label>
+      <label data-i18n="scheme">ألوان التقرير</label>
       <select data-set="scheme">
-        <option value="base">أساسي</option>
-        <option value="grad">تدرّج</option>
-        <option value="lav">لافندر</option>
-        <option value="blue">أزرق</option>
+        <option value="base" data-i18n="sc0">أساسي</option>
+        <option value="grad" data-i18n="sc1">تدرّج</option>
+        <option value="lav" data-i18n="sc2">لافندر</option>
+        <option value="blue" data-i18n="sc3">أزرق</option>
       </select>
     </div>
     <div>
-      <label>نوع الخط</label>
+      <label data-i18n="font">نوع الخط</label>
       <select data-set="font">
-        <option>Tajawal</option><option>Cairo</option><option>Noto Naskh Arabic</option><option>Amiri</option>
+        <option>Tajawal</option><option>Cairo</option><option>Noto Naskh Arabic</option><option>Amiri</option><option>Inter</option>
       </select>
     </div>
   </div>
-  <label>حجم النص</label>
+  <label data-i18n="size">حجم النص</label>
   <select data-set="size">
-    <option value="1.2">أكبر 120%</option>
-    <option value="1.1">كبير 110%</option>
-    <option value="1">عادي 100%</option>
-    <option value="0.95">وسط 95%</option>
-    <option value="0.9">صغير 90%</option>
-    <option value="0.85">أصغر 85%</option>
+    <option value="1.2" data-i18n="sz120">أكبر 120%</option>
+    <option value="1.1" data-i18n="sz110">كبير 110%</option>
+    <option value="1" data-i18n="sz100">عادي 100%</option>
+    <option value="0.95" data-i18n="sz95">وسط 95%</option>
+    <option value="0.9" data-i18n="sz90">صغير 90%</option>
+    <option value="0.85" data-i18n="sz85">أصغر 85%</option>
   </select>
-  <label class="chk"><input type="checkbox" data-set="ink"> موفّر الحبر (بلا خلفيات ملوّنة)</label>
-  <label class="chk"><input type="checkbox" data-set="digits"> استخدام الأرقام العربية (١٢٣)</label>
+  <label class="chk"><input type="checkbox" data-set="ink"> <span data-i18n="ink">موفّر الحبر (بلا خلفيات ملوّنة)</span></label>
+  <label class="chk" id="digitsRow"><input type="checkbox" data-set="digits"> <span data-i18n="digits">استخدام الأرقام العربية (١٢٣)</span></label>
 
   <div style="display:flex;gap:8px;margin-top:14px;justify-content:space-between">
-    <button class="btn dng sm" id="btnReset">استعادة القيم الافتراضية</button>
-    <button class="btn pri sm" id="setClose">حفظ وإغلاق</button>
+    <button class="btn dng sm" id="btnReset" data-i18n="resetDef">استعادة القيم الافتراضية</button>
+    <button class="btn pri sm" id="setClose" data-i18n="saveClose">حفظ وإغلاق</button>
   </div>
 </dialog>
 
 <!-- ================= نافذة حفظ التقرير ================= -->
 <dialog id="dlg">
-  <h3>حفظ التقرير</h3>
-  <label>اسم التقرير</label>
+  <h3 data-i18n="saveH">حفظ التقرير</h3>
+  <label data-i18n="repName">اسم التقرير</label>
   <input type="text" id="dlgName">
-  <label class="chk" id="dlgUpdRow" hidden><input type="checkbox" id="dlgUpd" checked> تحديث التقرير المحدد بدل إنشاء جديد</label>
+  <label class="chk" id="dlgUpdRow" hidden><input type="checkbox" id="dlgUpd" checked> <span data-i18n="updSel">تحديث التقرير المحدد بدل إنشاء جديد</span></label>
   <div style="display:flex;gap:8px;margin-top:14px;justify-content:flex-end">
-    <button class="btn sec sm" id="dlgCancel">إلغاء</button>
-    <button class="btn pri sm" id="dlgOk">حفظ</button>
+    <button class="btn sec sm" id="dlgCancel" data-i18n="cancel">إلغاء</button>
+    <button class="btn pri sm" id="dlgOk" data-i18n="save">حفظ</button>
   </div>
 </dialog>
 <div class="toast" id="toast"></div>
@@ -441,6 +443,218 @@ const REPORTS = {
   }
 };
 const ORDER = ['program', 'classAct', 'assembly', 'extra', 'waiting', 'observation'];
+Object.keys(REPORTS).forEach(k => REPORTS[k].key = k);
+
+/* =====================================================================
+   اللغة: ar / en — الزر في الشريط العلوي يبدّل الواجهة والتقارير والاتجاه معاً
+   ===================================================================== */
+const LS_LANG = 'rg_lang';
+let LANG = 'ar';
+try { if (localStorage.getItem(LS_LANG) === 'en') LANG = 'en'; } catch(e){}
+
+const I18N = {
+  ar: {
+    brand:'مولّد التقارير التعليمية', back:'‹ القوالب', sample:'تعبئة مثال', newReport:'تقرير جديد', print:'طباعة / حفظ PDF', settings:'الإعدادات العامة',
+    homeTitle:'أداء الواجبات الوظيفية',
+    homeSub:'اختر القالب المناسب لتوثيق شاهدك، ثم أدخل بياناتك وأرفق صور الشواهد واطبع التقرير أو احفظه PDF.',
+    homeTip:'قبل البدء: اضغط «الإعدادات العامة» لتكتب بيانات الترويسة والتوقيعات وترفع الشعار مرة واحدة، فتظهر في كل التقارير تلقائياً.',
+    start:'ابدأ التصميم', savedH:'التقارير المحفوظة', save:'حفظ', del:'حذف', newOpt:'— تقرير جديد —',
+    savedCount:'{n}/{max} تقارير محفوظة من هذا النوع (داخل هذا المتصفح فقط)',
+    dataH:'بيانات التقرير', repTitle:'عنوان التقرير *', hintList:'سطر واحد لكل بند — يُرقَّم تلقائياً',
+    evH:'شواهد (صور)', imgHint:'حتى 10 شواهد. تُصغَّر الصور تلقائياً قبل الحفظ.', compress:'ضغط الشواهد (أصغر ارتفاعاً لتناسب صفحة واحدة)',
+    settingsHint:'تُحفظ مرة واحدة وتُطبَّق على كل التقارير.', gender:'صيغة التقرير',
+    gM:'طلاب / معلمين', gF:'طالبات / معلمات', gSM:'طلاب / طالبات', gTM:'معلمين / معلمات',
+    hdrR:'الترويسة — الجهة اليمنى', hdrL:'الترويسة — الجهة اليسرى',
+    logoMain:'الشعار الرئيسي', logoSub:'شعار فرعي', remove:'إزالة', restoreLogo:'استعادة شعار المدرسة',
+    sigs:'التوقيعات', phTitle0:'الصفة (يمين)', phTitle1:'الصفة (وسط)', phTitle2:'الصفة (يسار)', phName:'الاسم',
+    sigHint:'اترك الصفة والاسم فارغين لإخفاء التوقيع.',
+    scheme:'ألوان التقرير', sc0:'أساسي', sc1:'تدرّج', sc2:'لافندر', sc3:'أزرق', font:'نوع الخط', size:'حجم النص',
+    sz120:'أكبر 120%', sz110:'كبير 110%', sz100:'عادي 100%', sz95:'وسط 95%', sz90:'صغير 90%', sz85:'أصغر 85%',
+    ink:'موفّر الحبر (بلا خلفيات ملوّنة)', digits:'استخدام الأرقام العربية (١٢٣)', resetDef:'استعادة القيم الافتراضية', saveClose:'حفظ وإغلاق',
+    saveH:'حفظ التقرير', repName:'اسم التقرير', updSel:'تحديث التقرير المحدد بدل إنشاء جديد', cancel:'إلغاء',
+    evidence:'الشواهد', thumbDel:'حذف',
+    errSettings:'تعذّر حفظ الإعدادات (مساحة التخزين ممتلئة)', maxImg:'الحد الأقصى 10 شواهد',
+    errStorage:'مساحة التخزين ممتلئة — قلّل عدد الشواهد أو احذف تقارير قديمة', maxSaved:'وصلت للحد الأقصى (10) — احذف تقريراً أولاً',
+    saved:'تم الحفظ', pickSaved:'اختر تقريراً محفوظاً أولاً', cResetAll:'استعادة كل الإعدادات الافتراضية؟',
+    cDel:'حذف التقرير المحفوظ المحدد؟', cNew:'بدء تقرير جديد؟ ستُفرَّغ الحقول الحالية.'
+  },
+  en: {
+    brand:'Educational Report Generator', back:'‹ Templates', sample:'Fill sample', newReport:'New report', print:'Print / Save PDF', settings:'General settings',
+    homeTitle:'Job Duties Performance',
+    homeSub:'Choose the template that fits your evidence, enter your details, attach evidence photos, then print the report or save it as a PDF.',
+    homeTip:'Before you start: open “General settings” to enter the header details and signatures and upload the logo once — they will then appear on every report automatically.',
+    start:'Start designing', savedH:'Saved reports', save:'Save', del:'Delete', newOpt:'— New report —',
+    savedCount:'{n}/{max} saved reports of this type (stored in this browser only)',
+    dataH:'Report details', repTitle:'Report title *', hintList:'One item per line — numbered automatically',
+    evH:'Evidence (photos)', imgHint:'Up to 10 photos. Images are resized automatically before saving.', compress:'Compress evidence (shorter images to fit one page)',
+    settingsHint:'Saved once and applied to all reports.', gender:'Report format',
+    gM:'Male students / male teachers', gF:'Female students / female teachers', gSM:'Male / female students', gTM:'Male / female teachers',
+    hdrR:'Header — left side', hdrL:'Header — right side',
+    logoMain:'Main logo', logoSub:'Secondary logo', remove:'Remove', restoreLogo:'Restore school logo',
+    sigs:'Signatures', phTitle0:'Title (left)', phTitle1:'Title (center)', phTitle2:'Title (right)', phName:'Name',
+    sigHint:'Leave the title and name empty to hide a signature.',
+    scheme:'Report colors', sc0:'Default', sc1:'Gradient', sc2:'Lavender', sc3:'Blue', font:'Font', size:'Text size',
+    sz120:'Largest 120%', sz110:'Large 110%', sz100:'Normal 100%', sz95:'Medium 95%', sz90:'Small 90%', sz85:'Smallest 85%',
+    ink:'Ink saver (no colored backgrounds)', digits:'Use Arabic-Indic digits (١٢٣)', resetDef:'Restore defaults', saveClose:'Save & close',
+    saveH:'Save report', repName:'Report name', updSel:'Update the selected report instead of creating a new one', cancel:'Cancel',
+    evidence:'Evidence', thumbDel:'Delete',
+    errSettings:'Could not save settings (storage is full)', maxImg:'Maximum 10 photos',
+    errStorage:'Storage is full — reduce the number of photos or delete old reports', maxSaved:'Limit reached (10) — delete a report first',
+    saved:'Saved', pickSaved:'Select a saved report first', cResetAll:'Restore all default settings?',
+    cDel:'Delete the selected saved report?', cNew:'Start a new report? The current fields will be cleared.'
+  }
+};
+const T = (k, v) => {
+  let t = (I18N[LANG] && I18N[LANG][k]) ?? I18N.ar[k] ?? k;
+  if (v) for (const x in v) t = t.replace('{' + x + '}', v[x]);
+  return t;
+};
+
+/* النسخة الإنجليزية من التقارير: العناوين فقط (نفس الهيكل) + مثال جاهز */
+const EN = {
+  program: {
+    name: 'Program Implementation Report',
+    desc: 'Document a program or initiative you carried out — its goals, procedures, results and evidence.',
+    info: { place: 'Venue', date: 'Date', audience: 'Target group', count: 'Number of beneficiaries' },
+    sections: {
+      summary: ['Brief description of the program', 'Write a short, accurate description'],
+      goals: ['Program goals', 'One goal per line'],
+      steps: ['Implementation procedures', 'One step per line, in order'],
+      results: ['Results', 'One result per line'],
+      recs: ['Recommendations', 'Recommendations for development and improvement'],
+      notes: ['Notes', 'Any additional information']
+    },
+    sample: {
+      title: 'Program Implementation Report', place: 'Activity hall', date: '', audience: 'Grade 5 students', count: '40',
+      summary: 'A reading program was implemented to raise students’ motivation for independent reading.',
+      goals: 'Build a daily reading habit\nEnrich students’ vocabulary\nEncourage students to exchange books',
+      steps: 'Announce the program and register participants\nSet aside a daily reading time\nDiscuss what was read every week\nHonor outstanding readers',
+      results: 'Higher participation in reading\nImproved students’ written expression',
+      recs: 'Extend the program to the remaining grades.', notes: ''
+    }
+  },
+  classAct: {
+    name: 'Classroom Activity Report',
+    desc: 'Document an activity carried out during the lesson, with its strategy, resources and results.',
+    info: { subject: 'Subject', grade: 'Grade', lesson: 'Lesson', date: 'Date' },
+    sections: {
+      summary: ['Activity description', 'Write a short description of the activity'],
+      goals: ['Activity goals', 'One goal per line'],
+      tools: ['Strategy and resources used', 'One item per line'],
+      steps: ['Implementation procedures', 'One step per line, in order'],
+      results: ['Results', 'One result per line'],
+      recs: ['Recommendations', 'Recommendations for development and improvement'],
+      notes: ['Notes', 'Any additional information']
+    },
+    sample: {
+      title: 'Classroom Activity Report', subject: 'Science', grade: 'Grade 4', lesson: 'The Water Cycle', date: '',
+      summary: 'A group learning activity was held to simulate the water cycle in nature.',
+      goals: 'Students describe the stages of the water cycle\nStudents work as part of a team',
+      tools: 'Cooperative learning\nA 3D model of the water cycle\nIllustrated cards',
+      steps: 'Divide students into groups\nDistribute the materials and cards\nRun the simulation and discuss it\nShort closing assessment',
+      results: 'All groups took part actively\nMost students achieved the lesson goals',
+      recs: 'Repeat the activity with other materials in similar lessons.', notes: ''
+    }
+  },
+  assembly: {
+    name: 'School Assembly Report',
+    desc: 'Document the morning assembly, with its segments, goals and results.',
+    info: { place: 'Venue', time: 'Time', audience: 'Audience', date: 'Date' },
+    sections: {
+      summary: ['Brief description of what was implemented', 'Write a short, accurate description'],
+      goals: ['Assembly goals', 'One goal per line'],
+      steps: ['Implementation procedures', 'One step per line, in order'],
+      segments: ['Assembly segments', 'One segment per line'],
+      results: ['Results', 'One result per line'],
+      recs: ['Recommendations', 'Recommendations for development and improvement'],
+      notes: ['Notes', 'Any additional information']
+    },
+    sample: {
+      title: 'School Assembly Report', place: 'School yard', time: 'Morning line-up', audience: 'All students', date: '',
+      summary: 'A morning assembly on the value of cooperation was held, with a group of students presenting the segments.',
+      goals: 'Promote positive behavior and values\nDevelop public-speaking skills and confidence\nEncourage participation in school activities',
+      steps: 'Assign roles to the participating students\nTrain students on delivery\nPresent the assembly to the school community\nDocument the event with photos',
+      segments: 'Holy Quran\nHadith of the day\nMorning speech\nWise saying\nDid you know?',
+      results: 'Active participation from students\nImproved delivery skills\nStronger teamwork',
+      recs: 'Continue holding the assembly regularly and give more students a chance to take part.', notes: ''
+    }
+  },
+  extra: {
+    name: 'Extracurricular Activity Report',
+    desc: 'Document an activity held outside lessons: a trip, competition, event or student club.',
+    info: { place: 'Venue', date: 'Date', audience: 'Target group', count: 'Number of participants' },
+    sections: {
+      summary: ['Activity description', 'Write a short description of the activity'],
+      goals: ['Activity goals', 'One goal per line'],
+      steps: ['Implementation procedures', 'One step per line, in order'],
+      results: ['Results', 'One result per line'],
+      recs: ['Recommendations', 'Recommendations for development and improvement'],
+      notes: ['Notes', 'Any additional information']
+    },
+    sample: {
+      title: 'Extracurricular Activity Report', place: 'School playground', date: '', audience: 'Middle school students', count: '60',
+      summary: 'A sports day was held with team and individual competitions in a friendly spirit.',
+      goals: 'Improve physical fitness\nStrengthen team spirit\nDiscover sporting talents',
+      steps: 'Form the teams and set the competitions\nPrepare the field and equipment\nRun the competitions\nHonor the winning teams',
+      results: 'Wide participation from students\nSeveral sporting talents discovered',
+      recs: 'Hold the sports day every semester.', notes: ''
+    }
+  },
+  waiting: {
+    name: 'Cover Lesson Report',
+    desc: 'Document a cover lesson held in place of an absent teacher, and what was delivered in it.',
+    info: { grade: 'Grade and section', period: 'Period', absent: 'Absent teacher', date: 'Date' },
+    sections: {
+      summary: ['Description of what was done', 'Briefly describe what happened in the lesson'],
+      goals: ['Lesson goals', 'One goal per line'],
+      steps: ['Activities and procedures', 'One activity per line, in order'],
+      results: ['Results', 'One result per line'],
+      recs: ['Recommendations', 'Recommendations for development and improvement'],
+      notes: ['Notes', 'Any additional information']
+    },
+    sample: {
+      title: 'Cover Lesson Report', grade: 'Grade 6 / B', period: 'Third period', absent: '', date: '',
+      summary: 'The lesson was used for a reading activity and a purposeful discussion instead of lost time.',
+      goals: 'Make good use of the lesson time\nDevelop communication skills',
+      steps: 'Settle the students and hand out short texts\nGroup reading followed by discussion\nClosing activity: write the main idea',
+      results: 'Students stayed engaged and well-behaved\nThe activity was completed within the lesson time',
+      recs: 'Prepare a ready-to-use activity kit for cover lessons.', notes: ''
+    }
+  },
+  observation: {
+    name: 'Lesson Observation Report',
+    desc: 'Document a lesson observation by the head of department or school management: strengths, feedback and follow-up actions.',
+    info: { teacher: 'Teacher', visitor: 'Observer', attendance: 'Attendees', subject: 'Subject', grade: 'Grade and section', lesson: 'Lesson', date: 'Observation date', period: 'Period' },
+    sections: {
+      summary: ['Brief description of the observed lesson', 'Briefly describe how the lesson went'],
+      goals: ['Observation goals', 'One goal per line'],
+      strengths: ['Strengths observed', 'One strength per line'],
+      feedback: ['Feedback and suggestions given', 'One comment or suggestion per line'],
+      apply: ['Actions taken after the observation', 'One action per line'],
+      recs: ['Recommendations', 'Recommendations for development and improvement'],
+      notes: ['Notes', 'Any additional information']
+    },
+    sample: {
+      title: 'Lesson Observation Report', teacher: '', visitor: '', attendance: 'Head of department and school principal', subject: 'Arabic', grade: 'Grade 5 / A',
+      lesson: 'Reading aloud', date: '', period: 'Second period',
+      summary: 'The head of department attended the reading-aloud lesson as part of the classroom visits program to follow up on teaching performance.',
+      goals: 'Follow how the lesson is delivered against the plan\nIdentify strengths and areas for improvement\nSupport the teacher professionally',
+      strengths: 'An engaging lesson opening\nVaried questions that involved all students\nGood time management',
+      feedback: 'Allow more time for group activity\nUse quick assessment at the end of the lesson',
+      apply: 'Add a short group activity in the coming lessons\nApply quick-assessment cards',
+      recs: 'Hold a follow-up meeting in two weeks to measure the impact of the improvements.', notes: ''
+    }
+  }
+};
+const RN = (r, l = LANG) => l === 'en' ? EN[r.key].name : r.name;
+const RD = r => LANG === 'en' ? EN[r.key].desc : r.desc;
+const FL = (r, f) => LANG === 'en' ? (EN[r.key].info[f.id] || f.label) : f.label;
+const SL = (r, s) => LANG === 'en' ? ((EN[r.key].sections[s.id] || [])[0] || s.label) : s.label;
+const SP = (r, s) => LANG === 'en' ? ((EN[r.key].sections[s.id] || [])[1] || s.ph) : s.ph;
+const sampleOf = r => LANG === 'en' ? EN[r.key].sample : r.sample;
+const sk = k => LANG === 'en' ? k + 'En' : k;                    // مفتاح إعداد خاص بالغة (الترويسة)
+const sigsFor = () => LANG === 'en' ? settings.sigsEn : settings.sigs;
+
 
 /* ===================== الحالة ===================== */
 const LS_SET = 'rg_settings_v2';
@@ -450,18 +664,22 @@ const MAX_IMG = 10, MAX_SAVED = 10;
 const SCHOOL_LOGO = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAaQAAAGkCAMAAABJkqEHAAABIFBMVEX5+vr6AAEAAAACAQLv6OgWFhY2NjfzFRgoJyjHx8nyJyrX19hHR0jRAAGnp6n119iHh4l0AAG2trj0yMjyR0qOAAHyNThoZ2l2dniWlpjyZ2mvAAH0t7jyh4nzp6nyVlhXVljzlpjydnjzHCHyPUHxXWG+vsDe3uDxfYHznqCenaB+foBeXmA+PkD0vsDw3uBgXmEeHiCAfoEgHiDf4OBAPkCgnqHAvsF/gIHyYF4fICC/wMHzIB3ygH6eoKDzwL8gHh8/QEFeYGH34N8fIB9APz5gXV+Af3+/wL/wQD3xoJ4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABh8A24AAAAYHRSTlP//gD//////////////v////7////+///////+//////////////////////////////////////////////////////////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAA6ykcYAABRsElEQVR42u19h5ajSpYteTMAYSS4QCGJwkgoMyuzfF3fbtrMzHP//0EvPAFEQCAhpVTTrNWrb1WlEbHjnLOPN37493P1j/GdvMebt7Ln3yC9+kOAWJLnTvrQf1zeNmDGrUqNGhjVQ9H6N0gXgGc6On2wbgwq44bwORmeLlT/Bmlu+bk7w3MjSBk3IUB353yuHyjjfzZAtwGUcdUI3V3yWS7/DdJVA3TdAmV83wjZqfsdCJTxfctQlZfp7Su+awLpzZu5tVwSG0Zx+wbKuCIhmt0O2XvDMILaFv4qTW1tnP4NUl/NaRx6Mk13VQEEyQBlwoFJyn16e+Jk3JIQPcb5FB5wQIKEYdonB4JRbsQP09Tev0HSFyIsSKUBqgkH7JYGe+IE67qS/ddt4WTciBBhOYDaa29PMElZ0ALJxSYqOYJF/I8G6c3bKVyhmHrGbsFAwthmAP2A6iiy9z8VpDfTILo7YO1VT/mWNCYYYWiJ9gPVkVRx+T8QpKkQwUPOuUxM4uDwKWyO2NEgvSJMxmvpubeTnSIbS0I8hd/ZRN99Tu7mAOnVYDJuBSJqk6Ydsl3jbyHuLAHpGOLw2jAZt6DoBHYnDfO4SVagp6468QS7Bg0us4D0KjAZNwMRYw49f9at8wBQrzUvkhZM2fEgqQPoy+8cpBMgQkcuO+WkcVnxP9fuLCC5RV7bVyJNxoWN0Ukx1IegT8LdNkYQhcdu9I6BlDexh3HVCr/4ZYBIfrcgnQgR43el21Noraew27kK5r8SCh/rBFjtKjZGkhzL7xKkOVIRRN9VsiCqHCSs4ighJDKnBRKOJ4HsWhiEcRPGqB1BEP1ZN+6BVHcdYHraBKRcA6RE03otvy+QZoGI+7PCObsvALQVXv7QDTlQkOwBkNLK7bnAOmmR7wikIyFys/0+c/v6DtSt463qXARp797ZNpe1utGPJEZUyo4+LYHw98R46QWglt8JSMdquocSIM+nsnv8rpEG++CmyZ/2oiwFL8SxrbOsqiohO0FAkh09Fp3GlBGn2aj1ooTL7wGkYzVdSrl1nNldfWfskzRNkyqri335OQ56BA/LG3wC/E8UU6L6ZEffyWE84p8H/nQ1IQjjaglDzY4+EFBiYe0gz+PgixSc/kOFh5SlVMqEBpex2pjgUF0CJuNaCUPaGJq44pGaOjAmP4xKY5BkvIGqN8bm6EUoJ4TblzcM0im8W3RS88S2XTetihhMx4iTQXz4ha1ODdJ/o8nBekri6rwwGVcpRrQewWCYlFlR5mMIxfGgtsMgyX0feiEo5z4uWr68SZB0xQjKiNu/tA8xqsSq/kYPXsRHgVWZJKXsnxplCUHaH9Q3guFCqvXy6UXktwfSmzdaEKUFZABxWXQzQeik4spN+1GfoMi7NC7Iy5c6xY7Vy8seP2UJqUUcB0FcHzjRBqpwA7FKlFQQuWrpRbuq01dEyXhdVVcxFQXifZYIIpVhH2mfA0loLsV+EWLYcV7ui/oxSdk32vQ5HKB8pkmSVEkjO1WdDKbZCcMg/91igWkBoF3UeJ2bAklX1SUiWUMCwZNBmcoAoQpUFIp4zh4TCI5r69v3gS/F0ToCkttNLdpVrhv0O5MwGRdRdYosp91TZkE2DBILQNj23azP4YVLD8FL4HZM2rU4+fJWQOqLUVqWyUBZnKjMZDJGny/5PkvvzvJg8SGygq+HGMPlXrVeyd9NgCRTdfDIZTo9AUq+3Eu4grxHLmbEqACMKxCTVIo5KRYajNNXYnnGRVhdBaRhlkoNEs3pCCLm3p3rsauyiQPh29HO9xEI9atnl9cOkpwxYDT6KKG/ztvOTSGYa4DJxP+bpxJLRSDsNNsH3eq8fftGHChKpVyS7XOrPOMSGFGR6amLJAZltldVkaRZXWdJSux2PJ8xcrMiI4rTdtM/7f8OeB6KO2hp5/Sp8pVUz7ooEl8k50XJOLc5EmlAl8W6WVYVoiDFbaWGrvxfyReUh9lAgjYGQPe5ruuibEJN7LM9c4ppV89Vx9tN5NUQEnq+vFaQIEaDtQn9WIvtimHtuE56moP2GIF6Rm2XvPRtIeM1dgFYagSKMM9lEWdBBpKhyOIurxOkgUDQoTTkL9PQAxA/P9gSmy6XwVMV3mcFRnf2nwqaCsa5EpDT/D0m5pI69Ie4lQ45D0rGeTByH/C7pY+VKwQt+y/Du7xyaXDMzugZ1DMTurQQySMQup0Zq2C1YtBqIgOWxoqMYQ2UVSvXB1LLHNnPcVln2T4GtEHffqYapv2etOQDKjopwebKMJ/dh7XTmtkjCIN7N+AegLhIbJy3l1FMqiRAZp+P5BlnoXWk3E28YryIsXXeadBWNh3bUUqRnU2ashJFyfeZK2PWz62AYZGVqvQF1dhBXu57YF8XSB1a5zbZBHbALkNJDIERkGT02nYf94GkyGHeiF2aJKmCNlbtuBRQO7NVmeckWt/P5l4RSD3qbZf9glKOkpCpIfWnvXe3H2qBHH8+F0bD+vCxl0IMHuQese26VFH0/fXltYAkcY8KSaCHoQQeO2DWPT2XNwm9uNCZjoFSSCiDxB/4h4N9WqzczfKBIvMqlYUhX85CxY1ZMBoqI2kIHYuBCeqtlnpPkC/gjN5Lv3evCw4qjqwecQEeycWyJ8/Ll32BKiRx1ulYmEC/oAWzzrxog2S/GIpm0eU1gCR1YVNBVzSciKHUeEvEeHVFya2yLGvSrfLKCFIcWUJggi9AWaMCApK+fcZgTcbqUPEXEdgLvEU980ODKvtzxFuNs2AEURKsSqOpD0X3vlVgcvQU4ZMVkJmBKQVeONdeQOgn6kAGk+Cq2fCu9TOARb80Yi6UjPNghKlTlfdQonapCSfTKnrdg7MhPvtcUVisBxVE6mGSSEGYoPoVTh/6r5K8i5uV5V5er7J8XZDUGLXTZUk7nhyk7bCeVkTBfXh83udH4yMghYBKJgB1SGqhbeAxUPSXqYnK8jVBGsaIUICOC0vKhwX7+gg0MhG2m9Qv8en4iEDVyVF8AjmvL1O/cfl6II1hJFRxNCglnXZUkq8uBhGqijkkqKf6jsnIozAQmJ6BXL4WSD+OY9R08DfJTuTLiyQIy5ZyGg0apJF/Mc70QJyyaTgh5yI/IpW/fB2QtDBqeHchFj62BAcpPPk0mkP6uI+BcdYHxPtKX+9hn6E8Rk0uXwOkH3Xr8Wm+oTG2dtb2BHFMRUId3PMjxOWp0hQO7DLkRxXFLC8P0pS2FmKY1PkGpPC66UA7qfPAuNgTlHpqrzeE6oCc6kzLti0vD9KEvhbazq3m2ZDVtkFCQmRc9kFpo/FCChZIxSV6aVWXxGeDJESjpP/SII1j5DalxTTlolbldpaLPZftmNkFxenl0dWRJPiV+7ru+mzxeLT+siBpYFTEjNCxQoZAfdfsB7fRc8XnV4GI1MnWw4orA+N9n7OjZBxpkJZjFTklYCFJXmyiM0/QrfaB8ZoP+DwI08OQFtYo6b8cSD+KGOF4dNot8uHzZWzegqQRR7WTV4aIGqeHgRgK6BDD/b5kbxifaYaKcSJGUDmVeRC0g7+sgOSz2wSGjFaMUgFR8foQ0cKYdMzto41vSOrs9EUfpOVlQGo5sXQkRm7L4qq5+9e/Na801s7dLrN6bZieVTAdIKsB4D9RC6nbqenIz9TBZJzoINF6DYG42TxDAeq0uXZj1SRufUUQ4RPPlJGqKqs6wdlCfxrRESgZpxE76gEJIKVcZYHnZN8rGlJfT+PaHlBW2mmuckprzPlBapPvw0u7Y8X+Ez/sL7WAUVyNcsErfIJ9ogfTxJHj5wbpxzb5dl+Iu111rBEaWFuV/VJrhTEKjCt9FKW18nJX/QzGeUHqRr7tbL8vWOSKVW6T8mrBxgxWCbtXqOlandQaTTeZrjN7nFkyppKGXkKOj1BI2mPnmj8M7T6U9qHcnM6rDX12dwRKxgkGSV5cP8kPvzpOd5zOqyXlkzMqPGOmaFBSqvTFQEfytRKGPs8bEaZMP3p3DErG8aShhZHKroBn+2668F2fznt2x9ndpP6P5XlAGig7ETDCFYsCx1OnJ6rSuJ1nRJhq45woGXMYJPeleRcU2wEFJdUDKZYbEiN239zhGiLdKPJ0hWfMYZB4kiWoUxQnChIXT2EYcI8e9sC4sQe8POikMPSHGcwP0oBBsnl7aXXAdcToc6bZvkjVzT+5cYPP50e1yntsDxuwNfpulnODNFQHSWPASB+QdAvxF9Qf8nBOVed4r6PympxtnqFmHI1ZVcu5QRrIlxNuE6NwJAmKj9SlpWdVdZvtWVVeOlb+YJCR5KBMZlN4xsnKjjZVYlpD50QXwzWt51V1/2t71h+vtrOHcnrUb06Qhou+UacETumx+Wf1eKnk+e76bnVmlqdkrOL4t7iaMbdknKzs0JAGYoYkTbGSGoEv5z1DZ31mkAZiKELTve463PlAEpSdKxvUmcQAXi/eXj5AQt3i3Mx7G54bJMNQGqZmLUAwZ27JmKjskv2+H7vHxd38/Ac6wtLzBxk20fbsv0NtmBqUdIe4LOcCSVB2kL4F5Z/sXsLCbkpO9ofJUdj5Hm8Dthdwk5WZ5gYl3V0X84DUYnbpZ3n2v6lHU1+h6gJpiSg0wkvEMpT0oZnwWyZpmjxmo9moOUDqMLtCHm/kU16Uyti+BEYGtEihZ7wmSo1TG8RxAOLRxSTLGUDquEgsSNWGqRkeXSup90UCqmvPCJ3LhPJUKLVrXDV82tNB6vXzNcun9knfQ1Bp4gthBNbAWEUXCosrUGpVIu/n2HFhTHaRDkLBI03/2zwiEj+8KkZGtIH/m4PeeQ44WpaEl9VLXJwKkiQe5NafBZgghbA5bKr0sRZG3gyh0TCEPyecwycONyvvaLvU7ElhW9CGY+KngSSPB4lNXiAvmkKFwj4aI2+7nsHi76A9AuEsMrmzdqPWTVnTkLLgF24sSat6uA9weRJIqsCqKE2Cj+cei5EX+tb6dIPv7dCnmofePe1M0w9HtF6grDyhs9WgsKV1HoCRzT6ngDQwBUDSMqnaJzmKkRP6pvlxBlK2WuPI0DzMwdmZ96Y1grgaJb6BFSdmRlzb5QkgDQZWuzCpSqGrYEzR+eb9/dc5rj/JJc0VGHL8+/t7098OfjKlX8gm7QKtOWTHg/TjSNdla762Sj8nwz4sWCGI7v1ZnBvyU37ZzMUVrXsE0241pPNU528L0zM1Vm0eDdL4yJOmAlXVxzeCkbNeoIOwonkUFDnNP+aKOWzxh7tf/DT0A1VavnHwQXFaM61xgiCJMKmKt9LBNCzY+uQU5kkvbNf0/+fKVoCNiT+f+XVI0POH4QBRUB9Oc5aMk2ZwUaVXFCqG6ZbDIeufyRls5omJhiEjIrMF1Xf35PGHcFfElF1UfYhmeJyaszCOEST7IavrR42Ah7sfdkXIPb3fzaSedkxp/jFbIHy1oChZQxkQBXdzoX9UaXdaHAOSWpBcvN4a5KPJR9F2St7fZ+8/V7CNs4/tbOE7ENKLdL8YQqljkJXxBTtN3OmiZEwXpIdyJFCnmnnQwciib2/OpZx+2QFjbn3XKLx7a0DjdbLRibToDi09i4O9O1mUjMmCJKTAR6otHrUwmk3ZQabYOEzzJf64whtEqe0uVZ8ljXN2hgfDqasflpNBUgmSqMKGXbRB8h0xXXe/mE01RQ1I8+k7A3xgCu/ejzSJ+EMsMVNJPBzvU4uSMVWQWsN1hqogB8m39/WeK7v5jPxaCDTNl/5wuMIjQu+tnDHygOoke2qNMvIBkJYTQVJapNaYqoEmUVtO7IDjCP7HnMquBdKshQ6NwsM3CmzkIQiRPKBT6ub76uHo2YAoGRMjq+zsA7JqT63v5KTBCzdO67UXM1bJiSD9x4w5dOFK4Y/r7BYfwHDeApdJtiPfzE4M2YjlRJCWQ0WaYJ9kYCCBJF+LjcL/1pZFLmd1Y3sgOXOWSDaflwj+amGuvWGzRJZzi2EYdr0H4+FTQBrZcwlq1yYgqVi4PNIQ+eYatG6m/zRn7nwnBpzmzMpvG4W3xaJ1fy9DSTh/fpntbg1yPT3sYEwMNmAJgTaRxRKyCV4sZN3WU0vZ/TzrUTo7cB6jZLxbt0UJiZYMJUGxUNvdTIGg5G6kEVAfpIGoHcqSIK36f+OheyH1kH6D2CDSBTpvPNvziy/8uO2sP9rhXp2J9ejWlGrqL02rApu6hOckuzb37EeSFkttkH4cbo8tD3c245PJcJC+473iuE1knYM1oMcS2MJq3hLJsKGjgMYhZM6DICeNVQZBWdR0mN9o8bG+JL0d7IWvG5sj5eBS9o28V67Qz8AacIB1dS5JEsSfON9QlKR3rFn/LQ2KxaMRcV2QhvJINSH6LCWejbpSYggMC1JDlfy5S003mzPZpNbHxlcL679fo6Eg3qHf5pMf16JpTKxsqLFJYltjpUNHZcqOELoNu4NnUXbwR+/OxO5awUarcccl5EFwg7rNWKDU2SGpB9JgQvYZ610mSIWussMcFqckuN4w5+9+8Hz0I7coxDarn+QBMfBgkmqXheIdBKvT6rIH6nmhYyhNBalAdogLUqpZHER0BfKRyMtxgwSiWU0Hqo30rI3lGdGcBeErgvj2G/no+D08n0uVOvBgJ2jxE0CbWMtMN/unA9Jw1hy3x1Zf1ILk5jKra/IbyLQd0RTRvC0QKH++2hi7zby8YUVTvtSnJfpu3RiojuFxW+11SVbXWcUWQ9vpKFZLDZCGy09q1OVGqZ10rUGtjFDid/uyFjHy1ptZJcnb4SqUlT9PqXGjCGhVIJEl8bbJEi3q3MChKuPxyiEdSRosP0Hsji01KjSTSB4B5iP6tt8twYsFHxbhvFZpszIg7J61mpU3gPWCSgyRJVFvS0RJGULF4/32h9NBGqnjEmIJwYMma6AWN2zuH400rBbWzL1EIPwD2Y/det6fuzIXW4EB+V7DySVWSXCWJCXxxXSr1AdpeJ+LEN3ea8aDqPb+hq0v8mRZCBm+5nr21kl8ZuuZwfc+8WoZxMSx8wBoLnA7nLQQzibQqTnQAWms2E4oy0z0WAOLe+G3xOEUqiGcHdXu88mREzlOtAq3u/t1tA23s/X8gT+a3DlCCSsFal2/ygILqVrJaEzTXY6ANFr+3TRe2pLyoIE4Pwk3WPc/U98C4WXNye3A9sN25XjwAavF+v9E2204W9wJXTSGUuQTfRfeK/WdLM9Gp/BrjXgfk6SRqlX2q6S/S1p6wsL8mDdsTVa+htnErMG7bSh4tds/wLzUQahDiSys71amEBbvcodK6r0cqe8M7YakDkgSqT3sh4JeG0KTtkJ1h/U0q+HYbJlrDHbear0Jt/MFNTCXYzVdKwu9zBN1y6UEVaJnmDkPJgfwjAnaznbthjjUOrEG0GQmsPnxdmETE59VkCJUwuOEm024Qs15aweVvDjRbL+AxO5ZrTFG3/ObAITXJUASRcOZb9E91v6a2yGQBmmDXe33da42jf2UOUDn9X7RaAWHBgJIsHJGi7T1N7vdGjKF1W8hfLYbY+6H0B+TON/AE6KQyJ9wejXIksQRaysTzw5Vteb7ZJg6GBMESQzqPuvQbxzzoumyBY6lkMUb4WLW8mL4IHPhrbab3Xq9W2+QPK3gn3xrRoZP3sPcNYyRlmqgu+b15lVKaDifWlgIsb1Yvq76WJDEPJFErx56guR8jZocX5Pa9tbm3Llz0FQ3eBHCykfPejunt8SKwpv2CtZihn5LuHOGQnhyUWLrbiRqSQ3SiJP00HhBsfoTCN4/Yt1cKbB/jnYz91LwHMWZH5aqWLBeZ+oAYpAia6MhSi8iQ3fZGAHZyK+lEqQxJ6keuCZ2T5CiX5GsvNs15A7/7T9n7qUgDPL8GDVdMCxiQmULW1vPWmiIEid4EBa+7kaerj0apEySJOa//0s/P/GB5114bIHnN2ctFLoISEIXDB05sRFK8Xb3GqLES91iVphiAMX0IRVIo/2X9FcAyaTefmTVscgV80XlxqsM5w2uRRcBSahz+ug10WJy/zZ9sioheL3SAuWk8aUCpNGQUE5vyEGnrHhLPjVV3IQ3vF+IhaA3B5JQ1ok1Hn03/C5hP9QqC8p0inRy9dDjI0FiRZmuTsmqRyNc9EVwCqbBaOZiLudCIDXNmffrXzgpwtb1vXm/ezcuSvazWPYwNGhNDtKYtmMcO7Z1BAm+zho0TuDWmK+5D/BHCyTwznOciD6O43ie8J2TAw+mWEdD9F1IhaxX/iSL4NlJtuf0wdYLhRv6cTsGxF5trUTPhRI6hwcXTi24A8BzotV/bMPNZg0f6LGiZISDSnmcneJbPAd6Teudb1nWAj3w/31/h8J6K/iN4BSUECTRzxwkFNxbd3+gPJbKzMajbvzOmE7AJRktN5bZ2LABCXpJ3vpojAA+7BAd9mJhNg86dHjkYRRJ/SQHebWLb/AL79sP+lb0jR+2kQMmazyms/3fIfHmNukvliTOJY+lZnrRcDlIb3Vog7T8JAMy5Y0/PH4P5BTxokh/GrEDToQOm8PzjQgElo0/k7+x/J6TYoAo9P/LJICwb7CoQBHcMFQ7EpCdlLZiKK0BNkqEBKHL2KdDhTqRMJpXkoE0pu1YREEShO9HhDDx3vL/gk75kzW9JQkJULiG+BCqi24/UlTYsjg4B7uB/4oFxd+2YAKrNfomc+GvN/wbPPxN0eo91Jgf6U810Zdsp+HEbKv5HvxmsoQS1hjrL+MO7V0aKEtEFEbJ0NV23BGqdWgDTog1IPke7/DZOZMAWmAIED7rcBX1zAgyU9uND++2+WnTJCaij9/Q36zfRx5Q/fQI409+ur9ZeRNwYv6S76DiJzPiIPX0nTQ1CjTTStNBYkBIShskLWMh19XAx3EU6mGYOpUnAGs4LEHY8kD5WTkDhwi8CGqxe9Nak4ZjL7TInDowehGiLb4HU+WJDjgwQ/Qfiwakvr57sVUgGdl0kEYIeJORtTUq9IkDETKat9j8RsNcm3fj8iPigwVI4/DWWzw2b7FxAEAji8ydbn8SBCr8aBHViFK7YMxCAp5YhpKzhr+V2ENCkHp5LIm8cJasPdXd0DJJLl83KqtW6re6kFhQyPCy1mTU04Kks+UHQTSXaIF2GofGiJwH5Qd+o+lvQnRu08awQpKx/hV9t4l/pzPEzX8jmQrvI/mQ8LuIjiO1krved9ZKKhy7R4Ck1HZpETf76g46BZHkEzcg7RbCCCXnfdewvIPwEIJtUoCwAHkTaRcWJvQTFu+n+z/Odk0M1M8WJhtPCj9qRTvVqEcBv4VkFok+93uXQ50vGC8b0gcpLQRtJnPAJDVC2380sr+Bh4aFg5ZxeJuwfYu3m69UvWGypavhJM8THXF4XGAQOCtIQSjlwz7vGrrLTi8UTl0I7vf5QrC1XxEggaJWZ7eHQVKapDYEsrkNkmI74pZvhHg+xwh8aM9R+s2i0kMY9nayAPVo1wmBQYhT+C+mcInX2/PqNiYNarVzzqFqUFL/yBhzyHX1nTFiklo1qUA2BqzvJLHAI4mSbNp9fatF67YBevm/fkAhHnBq3BU5mifWt0AmAf2vjztfUbG1WrBbQFEiIG1URXh9KNiZaus7Q6LtbFde11A+HvRmn9AcErGiH1oTGyBn/Qj6RTgfZkoBwusxT4Qd2skNQWndi7jzX0Euoy+UDknyzRIoCjU/1wUpLcrHPimI6wdbd4iQZ3X1AOtb7NV/O4t522e35mKuVBUNCHejpkh+TKFU+v5XT8jafuj/nD7V5j5nNQkkwSShdlzeyW7T0gn10GSJtqMnTx2ID0IZJHqVttqeGySoTc8MEo6mMJRQsMsSGmH6Xy2j2vzqf061jJLRM0m4i4anq6hkqud4PEhaZCOhHhIra2pq8ZS7di7p99sDCesJVtIOjaAlThCRgATU/qxRppNAWrbYHKfaJKwa66z8FkAyGwWNlDXNTWDS2tHaNwgSMT9Uq8I/LMThcDvJcUiinY+MMwdFao/quy5ITBKLFhNRLzOXFumvzOZaobdYCS/X4V6EOFwlSE+/KmRjtRBQcixSHDkwPVs2qsbNmJn4e/ZXXZBYfx81Qo1Jw6KklqSHeAAkxBzAjr4mzWl+BLcCEtVgfbJISwnphw4XkZCwlYEkj3fz6w2FSQskgTdg9QWe7ZaRUy/EkGk7nt9DUvPLjlZvhaasTOiaQfqk6lym70dezEH9uXyEiLR6ox6uYhxYzrgUQBJ4A9ZvImvEA2+V012lg+1+M5tZSe/W5C3FGQg3Lkl8sBqxtZHXNNDKQZLGu8W2SOVu4TZIS/HY20q0GphmfZCOLGbqDtE7OvNkpfDfbxIk6qALkLBeJTlIUmvB4w7o5ysnQylB6vhYhEvIFetDMAgSPy+WPO+FbK4ZpP9WgsREiUc3GpBkCTPp2bGWuxxbddXcfTlIiMJ3yifcz8pwoNQkNSCFPHR8r3DICXrWNdsk2b+FnTf0Pt0r/SSFUaKRGlBikFRz9xuQ3jSFQsQCJbIaFIlmVQz/jlgUOWwFXGWxzxsFidcQ0vgJH/8pB2k/kDwguTqV0V9ykBreQFsq99IihlpvbkMziYsJTvfe3T5IzbhPEqB0mCTJv1q2YKkeC8MqQaK0sJSC0f9B8unfvC+bfmSOmaQq8ppBsgaOnRshcvGYZCm6rmRGqW0plLNZBZCYSerEGzpo9NoGM/nref8UQeIGSfYGtwpSp4mHg/QbvMtPQMcotS64eu6nBKRClTIk/9ANDz3LMjGC1/ChpRlk9HR2kKwLgfQLr5peC+MCkInytn2FIalkdV90MJKBlKkC6JXMvIm/h0uR12RjMXHgNlXKs5/mpuDW4F63SbG7QZCajjIMjN8wIy/sv41sbleS87iQezcKkkDukPGRrhGkRcZtUZKNxI2cJm6C9FszYVpKfH4/gyTNBNJf/EGQGg0BX4x1BuNo5aY/aVE6CDXZx1+CIBZWJSiYAwLpR6FU/6GQ9wfWMt9ZMm7VC6OGOSBn1hluwHSuF6SnEZBEGs6cDLKKw/9dM8b6kCTJw2E0pWQM7uHpbcNod/lJMucRHkbhNetjQ7630Lg1kH4dBqnpE4EKg6wrIxm0Tf91wGhN8ThIS/mkw7LcZ4nr2m4iLzKWuLJbi6dj8RXj1G797mIgzfSjfh+RJOHdANV9ZFrhWkJjC/tYlEZAwoIC4jgOgPRC2JLyhg3hAO9NquFYYFXVbX7FIDljIHHuAF+OSBUrHOqb39I9D0jiHkzpfej39xng42IlnL1j/GQOj9a4VZA8oWwVlaWQy7ihy0Z8PeYwB0h3bl0Gwp3o7vCWhMAdn0S+iafkO6SunbpIwAHfDUgRtnyUupprB4NEL6gviVF+Sc4FEp70VeRx8J8gCPLiYWyaEE4bhY1R9aNIHLXhhO/ODlJ0KZDItC7KkPwIByA+eVQJfuu/z+NpIL0ZaZY9uClkipLJ8JmU8JAUCz58fysOTQNbZZJzvvkolwLJ8UOjSWYuwq3FPUH4V5JZIvUJ9E4DJPX8u75J2rC0FxlaGpKpaaS9z9ltjO8HpE+/OgZXeOYmbPqaEdGbkd4RkEbnro510Yq8geeMkL7zN77ZZJFC2Tj9WwXJ8ykXwgrP3K0tlrXA13OjlVK6AEiSDZi4jHjFX9HHfVn8bWQDhW4VJAgFpXArNHDDQj0Ymwa1PgfP3dcB6bM0y0IxQXoAf3QW/H5vyoYz3yxIG9PkNayoN9FkbS/4jfqFrKdwcGN8EoqySzOWaOrmFqEFkqgbiyaYoZAtnr4fkJDloaLEwvx04AemEv16lCB5FZAkaVnC6ciHZZHVDX+pT853BBLicGErHE6lB9ey9lNnQfUqIFUKQv0zEft3ra0o6I1l5U7nAAlcAiQUEvrV6X8h8Zx2X+YLsZ4EkqScy/lVqBHaCPEgXCu9Bt8RSBgM6vhhUaImSTUqYGwL8OVAotfIa4IOTJAsRfzuZkHCgS9LKOiiM8iJ7pPcx+JVQKoV14uRcHyn6F1D6Rbz/XcF0qYBA/83ER7PV2Wh968C0rMyw7Lmn5fVDn5SrL+7AZA+GEp6x+/jintJtHhXgmx5CkhvRnaPKZ9CoQOYjsMxIq9hPNLW/esH6SdDSe/E+0jh2ij7m8vjvdnjQbILqR8uFOrD19gISOzAXCANrNyBIGnt4/G6CsnpaagRkMgn/8awIU4TqxqSmN/8RJDmCt3xi0T18yfKeEJTXVR9BEgR/AWngrQzO1+1xgcrLMoaA4kWCJFXDU2C8XtTOVH7VUA6vKgUNTM/YC2MglMsgzoGpC38hhNBAqbZcTchIisI/7oHkiqn3JqBsiLBY1YVKguAxa8BkiS+2vT4EakJd8LYHelatePU3WYRnQrS4r5jIUMEUjgFJJo73/2CvvYjfjtWBC/7fCeB9OOcILHa/H+SDBK24Y4/Xnc3kTgA41R1Z3VBWiEVuhX1KPnc6sUn0UJYVUH6GUNTvYzx6Ajr7CDxFjh8scg8p5+6C5TOzO60QPLvIwlIq3tfHyTW7iLsbhpqyrwekMRSNPZX1lB71XEgOauTicM9/RFsMJiD8IlEYzcGEjNAjW7jqyw24FpAyg0lBxcFfjtY1KUDksMMhbOhAOzunaNAAivmRK3xGF9vYy0sMl/Zu18gpCygbZP47AYGCX956bqUVwEpzQ01vWs+J28KWR0NUkgPCnV57qhFWR8DErIiO0bN4AcEdHGnQ/geQEgBbUkytt/aF9Kx7tW84ZpAYj3N9/8CbSph/eVokHb3C1y2h780IrAtwHSQQjwydUtBCrHD1QiLBUECP/88AST2auxCbtstmtcLUtNE4fCTGeANWiCtyMmu7jfwGHZyBq0B0g7lI9f3Jh30uEFfTI4V/3YfgWQJ7tMoSFxyNm1tJze/VwRSp5e0afqT8wa94sg1hmZ9DyBQC3rg0VSQNngKJIQXLx/xifXBd2pNcEcxiEkgee0xKPzV5WbsikAC63bzZee2HQeSh0nX+t5aw5PebreoUmyqJHlQCBfwqoRoCekW72bYrjakz3AXbkMLXwTfnKDuOHMgWoNzO7n5vSKQjO1/tazn1hzeD6dXZuwjExSK23WsqcRhBQUG6qOfmR3x77vPFv8ifQrebFYjXuEHc3D10PX4SUIrKXk7PnD66RSQLIQJEM7VcqaDtDEc0kSENZK3oFXcjI8SLbibAhJ33cMm4KrU7NcEktf6rODjyII4LZC2lHFv/7W7N3e7XehMjzhEyFn1dmiJ3Xa3+w35SPQHeav1brem2WRnCkgcF+QpOSNLJXP3ekBqGplxk68/4IPrggRpfcSt0/rIsBB1gTz92f3jIHENjCJD3Pn45Fw9SIL9FFrnlStLh0HCw/ZRGSK7Af79yBqKlZLdWfcTh7prgMQ8JXQfuclU3MdTQToqMysb4iBEUwgwLHCnzC0Mg7RbhKFPQwLw+bJTOrHjIK3vVzOC5OFVTewOQpC4mle9avkaIB32xoi+2wgzFvGAc2cqSEQqIXlCSQ+8TG+sPFUN0vY+nBGkiGzWpqwDvh6/m5g2SPY5nFjj8Ga2GoeWDkAVq44YAl+Fk9sxATTq6DigE4ujA2vjaJCioRblySBt/ZXwrtAMrVp0POrfxxf7BJB+mBEkfIF4kAH6C8LUDfhia+dICk4XtJnjsqAGyRtHWB8kEJKS86aWujVzGkgm1+yvpTgyWonUAXrejjAeF4SS5aX6PbPe75HG1hE1SMCcESSPzWrY0PdjgTsSbfB2fbVcXEuZ8XYjbEBB8kPV3UfSqi3ZEHaGxmYVSLtoPpDgv60Fq2k5jDfQtllretOsTZ6ZQXqUgERkhWX/N4Bu3gnJ9ZK88BlGBKii4FNrJodAiqxWWbH1O2lVYNTuw0IDJBv1i1foybKsrotivy/3mT1z60u/P2lrhSLB23mRkIlAtw+8IkjGjCBBARI6ZO/9iKr4kKYCzPHpQocsD8gD0MO8qfTsTWTvFztxJKn/OwGJYINun/edgARpAo1GbnG0dhWaQtJstTB7qrXXRCYPUEsaAk/qmZW0Y64WNH1H1xBuV1ar6rgfZr1NkJCqEHpHTDoLgSo7+K/9ztO4e/pJrAfSiY3NucRFYrk+rAX+gccbsM8OL1s/03KjIK35PyASbvp4kS77Uqgy+lH6XhB8IkjHBu/2MhrAun0/8fEGTHvD2/ct/D5AEscAILz8XTMQhXSTjI/pku7Lkdik00CSeLPww/+DnjcuOP4Vf3gSccS3rxd8vE2QnObuIaNkWtaiyfUhO9xnSD1fVghQQ96ACEQcx2XmzguSZLYQAkK4T/eL/7ZMZpLw7fv67rsACfsYVKVFbE30qjkD2dia3h2v9i8Feuo6y6oKDfpMU9dWDduYsf08bKLAZJ6L2d4U0KsZuk2QhMFp3VEImDNJmhP6vqx9cJUObA+kozm4ZN7dSmgyXy1axVyrxUW2vlwEJExeRQ3RpJ7xHxf97donjlI7GiTJ5Eh05vzEw1ZB+9aUJVtuEyTiFYUCSOzFAC5H6RcZBslrgdTn4DiExT4i2LUmhUjRuEmQaESFqAwSCN+01Ec/KTJchnJIq6xK3GGQjqR3L5KPbwqf2BHiDcRz6qXRrx+kn+RuUnsoALuXyoUBgym/hyIPQBCX1UFqkk4CSdZ/jm8ShwL/SbxwvXt5/SBJUoU05N30MnOytFOVVA8lKqqcfuKgttUgKTm4bbtpUmVFUdmayYq2hsbKe93M++xXadwkSI44Ngm+Abt6rHxXUng3MFkoaaxGkOmDZEN2mD4kWV3syzhAEVp5qYtsfdKmVcSJrhZuKmXpixsC6S9KkGgBKAnQwRejVhewtu6VTtxUWiuSu2qQWszhkNT7sswJOoO/RNZHRok3Y6Q8joUHLMJL9svN+EmREiT6jqyQmukNtlJJUgg6wBtaN72/R2zZX81DVKTEVFa6oxxYlRMT+dBsFYV3X+CWQSIuKx8tywusJXwwV24NsZ+HbdcPUpBs2cZLxbQ22ZKrTXu7p7cj0s8m9zk3B5JyYzMGCWwoTWBbWqVl72reQEJ4cZ6TBYw9FijZ6aegA6oMvSSD3vS/0cOKfFzZ8EHecXDVIJkKkEJx7slqJZIJeQXrwERClLEA+yRN0wxpsO6CMWHx4o+jIMkLkmS7gHlFF8vzryJBwLo9fTcNkqDXvK/3AxWsA7wBBUCp+CC84gc9kDq1CwConTFpPThvHaUshxTj0QqiLhxXDNKTEiTWiRR23VvVnKuBOvAacDlDPK+bwBVBEo0SSRkC6ALnZVHUWVYq6Ym0ipXVf7fEpl2XdiNRcFNBHDa9/dP8Ysqn8wy4shAkVv6AeFisVHdt5oArJMq6QvspcBgdiZZCYGVGib/D/f2vTz2Q3l8cJAA8z3Mcx/MAOBkkDwjV7psO3VMJ0oBJQkuqGHVGeqlrkxQL6rH3E4ghBmzbKt1shdAnK5A58FXeA3M8SACAd573C2iffBsk4DmrbbhZ73a+7+926024XUWOBzRB6lNwvJ6U67awHYFQ9lQMhcDRJjFq8NE5d81KC6S3bUPTwh6VBSkug3yvdiNKdJdIq6q1tUhpOkhQMJwIHf1mTZ5NuHLeAQlI3ipc+9ai81j+Dn6HBlQSkMAfqES3C9K7j8L7yn7qUHQV0TRQo/Qf3snXUYxLESSROWAXVfxirP/qCa0VUSP95h+gDVKIfQs+gpOchCZIAKKD5ML3Lf7gg/d3YUQJPwfJ2a4tjAmSn/er1fvtNgzXH33yLdZuDbEdBEoCUvQp7F44Q9hlqmoNHoyuIl0E8qLYxxLF2AZJ1Hd1B3xXDZKsjFVsUWqYgqjHoQMYtQOyYyBhvfXHmpwwlIX1h+1qFaEHytTaX5gLf4NhYiB52x3+yw4QRAzDzUcMM5Sp7cr5ZRikD2L0m2xW/NjiCIJBUrRgVNrVi0GiBqltlJAEilQw/awGSTEXxRIaxaMW/9mQKBcjthSk/xgEKPptQ/UWlIuftpHTYQBetP1oLayNg0BaQJDA6iP82o26DQPKJAR3h4HCIqUF0tbEu8b4eK6njkFStG8PJvzavXgvB4lJkoKEiYKQ2sAhwHpSK5mgAWh2JTIFpf1kMdkZliTgPUG7skMAQXg+vO/B03xltF4sdhG0SYuNB7Y+gmzM6IBfnO1mh3/2vyRA9ZJ+Hi1mZx0Ultf2kFTTd4Y7k8TYQa8WuQ3Sjx3mIFTpYayVLDKT93p/ve8Y01bP3zv//qM3AhK67JsdV0tqfNjXQ2T8LYJqG1qL3UqPwkH19x4DBe3aT23d2JOkkFohFkPGbPt9cx0V+45HtlSIAYHiINN2UpCIdOypVXILMKRX03hAoYuMbif6ERv2RhKQILPG/AAZIOvX3XocnyaOs1iY5gIe+XpSpzmgErUgt4H6U6vOgnp4zRZ/EUFCBoiNj1TEJrB4PIw0PnCLsXfvhkES9R1hHGWVummSlWCQ6qv6m1dWZ37JRlTbK7M1NenPUDchr8fB5HrN5GcdIoC63hF49+6dB4AEOBq3Nhe9DfHYof1lCGvgrLCRwrQE8sHtdtcZlr+5bw///jlqUyTVPJHyMNaessfnHRc9pv62BVLHnSUSCD6zALq0b2Yo6CCkwJiOW5mChXpa3H8TVYf1ETo8H7HP+cn6FR3TdvUk6B7EypyocY/gl28+9D1T2q2+9nocYb3+il2qQWcWUhTEFT9hCmktkFw2IDXVw1RzozehqUz1RCFDZy/mIamLIktk/WMdkIYD4Wrjp9B3zQwrqvBYzxK/jPit8II5dCRYdvxuUAAzZhI0wM7RYvHN5A9mez4kZ16LsJhCzgoQiyN8i9X8DjlYmO1/2MAnXL33OUjCPkUK0gdxepp6ZJ9exZ20jHXZBakVCO9FtweM30ExGcXw1i2FRzUDGepCekcAmsJ/b/qbMAzxqUDtRmMHAODD+mm9Q/caH/CfFwxM5sX+TE++sUDIFAr2O9pAFwrXatNwA8Xqzwys3xRyRZvv0GfeNIJE3SDiq5uRqOzUnt6othusMO6A1Eqhd5tnxgIbcpR2DUrQqBJ9R33yD/TyoVUcyCAhbfbkYFPjIf2E423YNeInitQbdGCfnKenpwjLFxYwpJb8LRUmB63n/I1JUehjDEnQYYtvAtSpvsXBIj85fI9lV2KxGpDIesX3glKFKqGJrDAaBKZyO1oVbmuB1C1jbUcS4mRaxx9NQgkowZvWqvba0iJK+JfmOvJwOI4e49cdD7ghBcj0H1DF8UIUcNihcJwTbRZoxuDqCTEQJEX3pgXZIftmfAU854mSEyxkRMyoEkRoQTXovQPkibi6w3jQz76iRcZfvnYwAqtJJSgUoaQoy32WyotXuyC97VTsCTmrQbUqLUdZfWEXuxmPIm5VY+X7iJkvdtCmY5sjYLMOQ3Jk4+ybSAz6LmuBC87hf5H/XPgspiexPERe8W/lNm6BDSP8PJvNH/DG+Iw4EMUm7DlGNfk8iURDj2C1mr7bKsXUzgB5v7Rx2QepW3yXFkSYIDVMJw90eEdHgnh82icb6kCjkmRUCrRKITcZ+Hw+rkmI2puU+nlaW1QoBB8aasFwzF3iIXUqWWzOJX24sfndEkj2T4SwctbAOMPTOpqs7RonKehNB5CB1C3btyEx3O+L7GFslIcsfrfaENvjbZqhlySCEoopiid4/aCKw2wamiSkZ47K9UH7gwJxn3YfsVBaCPHNytP/fmQUKVifLCG94W9BEx4WqtrNrfeT2ebe3nrnTEmc46MrB2zK2x5I0t6KsQYndfzO27GOv5BVD2287T94MY03Mr5++gNFIoIi+O4Xj/7XMXBjm4VYCU5tQH3b2vdL+0rJykU6gNX8ypAJLUnI4Xn45GowoBl/kIB0bFemtNwYrK33ndjD4v2q2ThN45K+Z9zCQ+PFIY9kmbvQbxWuIWoxrby4z7k6HGMpB2l5JEiyoqH3C58lwBh98Dc+X/VJXQxzewsYUZZKPyyZ3OCb7Wwl/BpJecOIk0QEKQiALO8kA6mv72zSZmu7o+P05O0VPJj17ifi/lmWKU51UC76u7anVVZMmmIxjRTqcaFmkGT8Rpow8eWO66qqSfNLJtd2bZBa+s7+074sUDzJfd5X9uTGTIiCEBYmKs8UWk1pKM9yrh8jFuBiS/C4d7ThSV3Q7KufQBuQmSAlP+4edEFaykFqR4ZqZGhiyAsheYsze3I7Ge7baQpOOBcXvcPb0HeMa5ML1TDvxgQhjGRv8jyugGj9Q7/YRwVSK4cesFwhLgdLJjei43EBDUqAR8X91n6EnXcr2o6lmBf33dYDEP5ZyoHiZJQV8+rVsmuT3kpBauk7zgVKFzPsEcdZFnXAnehCEVzU2qTE9ypFVw8SC6N+BQ3jWXwQ8ih4afh2at4cH5pYGNnODv6gAEnQd7ygDmQ2Up0jl0La9Ie4gYgSdWyJqeLbPsNb0XZET0e9QkHyWhKNEFQapLhuJg21LNhSCVKj75qqxzx198boCFFZwoLMRBGypOC91UxkZfdz/e7atZ0lltlhViqGFpyPpiJVMRa2I+SOEofuEb9VgCTqO/wDQBzg8koUEh8bEC9L0JLBIeIbPe04lWXhSevK9R1PXmLFjBJW4r0zVr6yKanSGnMWFFWFaxTaX/+DEqRG32EjU1aIPuRpmmvKbi/sQGAQVsbjiCuOGDEDvLhyfsfzLZgZoKF9ogb/sFDmzvdj2T5myAFxZpXargtSo+9QtX9t46L/GoUBwViqXtr1RzcbCsU7iOVhfdesv7puf/Z3S9xis2v186x8ea+IZtq8VsfL3ypBEvVdEuMCSdx9hpMWhT1dlHiRpC8I08oiBeG74W1/1yBEQCDg2CQ9fRJkxlkvBsr0NYa1t8actUp9WoLUBUnQdwVOmjex9NHh4zJR4rrCFHItkY+p0Lal61fXJ08r3ELBTRIW/yZD5YXWUKGQTv2JeK/b5mQYpEbfQVINirRJSo2CJK3A433zqJShSaV6RmePl7MOrw2llYUEhFd5tqOMv2x9HkKxJjb3yVJ+oD2x5u0ASKK+Q2cO4hjol4/JfCWx/I6Xi5A56q0tZWAtRMKuJM6AWehqIel+A6udOdxKoTk6LSGlp924W1uQeiAJ+Yp2xdAYu1MV74OfhNfZ/QfoMnSm7+CZbK7JOEVk5i9350TLGX0U0vTy6mLdzRRutc/jvE4ViXMpSGK+os0E9hrrf6R1kmL5HYRp1VsuTpYivft4f00oRT6REL5KrREXZ7MQl2pKg4/xg/5AOtd1bUWZkAqkjqvE5KHU2u1Yy95XKBlCYiMwiFAkR1CvXA9KKMqAHQVmU3lKReAL6upinWI7jaJINUhclJoEPMgzvTVauN2s9zy1d7o2DIK5IPhFkYm6FpQin6kxNqHmQ8czGq4u1tjfZyd1naVypfh2BCSROtACyaDMtFekyqtZo/bl414T+Ek0yshEm5t3V4IRsZSsaZ7KS0fTqZp9NabiHlC6DsT7Sj5kegykhjqgICuIi2rCMjrFysxVByXmNbVGemGfyryC+APJqYitb+QWgffdNc+Khuzx9X12wToS8v75joMkUAc7yyHvsIcr/3UanZtcUvN6oSck0clF3ZpXgVIk9LW9/yb0Kq4Xehhp0G9R44DuWP0fNEASqEPqtshiOU7DVT1lPZRMvBiMpdCEPCAbKvBajyPM+abMFN+hVW9buq+I34/T7045KSiTIUGSgiSbQO3iaLqGQXxQtCs5O7N7D5FlonEjEvwikT7zVWMPlIv+vBIyfJFQ49ncsq+KGpp83ILX3TfMBmiDDCTJcGPbpU2ZOtSyVi3Q7mkLzOXoOfxFqHt4zeQF8+qI97NhH0eoo+EcVUFEv4yrm94cGVFB9gVJClJHlOy0zoE+t1St2zbA1uqpPIcNqQ4NIVs739zcYzN8Qps5Euxo11V11nuVuBea0e8gDqSpJz2Q2lWSh6SIJ2QbVSE8Yph6Kg+p9dDsVeK8VraWzSO+/5UzGdSA2zNH5lr5AT8PKbukxo2xKHxWJmlS/B30mcYPmiAJATx3H0x2pWulTem665ggvVvzYhteeOi/Ts3kdiEGgbAg7SKvpwHE7NgUFwnyhWCf2CiUg3Gx3QpLwMuwIElB+qGdsJgcOFStrsey0rVM1vYLZn4ElmYl92ugxN05ny82X/zvVc+BHep6Kg5jPRRBgYatMruBbEleDQuSAqSGhXdjphrBcDXD60X5iQVerfmCi6ZV+BVQ4oERItb4j4ud3/641mbogw0yO5ZW6EzDb8VXlxNAahzagnN5Ypvi9OjoEP3Ld6td626avt/sjGp6hdeXDuM1Q1wwtXu37vUOojWYPNDqTXVjWy5kkOiF7dQgiaJE9F3wUh1oNEFn0fpBOhbKY/2rINpYYkaGnARZ7b5pjLP3ShgtWiVnQnvnuukddGRthKC2tRM5f69l0VWpIClBEkQJgLjGLZlEqgIdUZJOWAPbkIdPvfdrq3MK7elKlw6JN6F68ydgtIcjoa4df719Eopp1jIvYTjn1vVNYklq4e0EkERRcjP+wzrju+409G/Hmxdru9AwH38hIEVGPDQh80uiJIStvpKAEOtxRmMgOkMm34W+rD4oH8n0PTx/7kSDurFVuSCpQZJuJ0NdMDrMQWWWtpbfuoF0mA+TKaLgmll5l9N4AkYkuUXGGSw+yYaA/v7R9CVjPMc5lRgWoDHw2h0XJBVIqg7a5Fl3N53ULEGHfvGhd/BYpiyTRe2EMX+XQknEKKJkfOFv0JgOaeCEDV3RN0iNXnppO571uCANgCRf9KdZX6EKD0FNb0rnBQJvFe4WFh7zKQxSuQxKq1872QewXYeRfOgQ8iCI1eoaJM0ZQtSB5Y7VuCApQTqlGZ2p4M8KX2Sxlo8pAVG47VZFmOuz+0tiTJFliBTjJADxxaUGSTt7jSanxZqh1VGQ3ixPREmaAMRevUhmZa6UWLuyezpz3FtIQviDkV1vRcIlsvqgWM8MuOmBGqe4H8F5OxmkGURJTh7IkIrFbjs0yFZMDfhnrUAW4lRDQ0Gh3fzgqzsoNMuDkjKuD6wnGcEkNvcpBWkQpJNFST7qmEYxTWsnjsYfiB5ZoXM+MbKEWjMJS0DzbP6yQiNavwnpld6XPWvZ6odcFLmHfdD6vrdHgDSHKEnJQ2MDTDJubruKIrLvA7SUCw9LmE2B8rxBBlbQjUaxccFmk2u2dOreJ0tw5uRMZu9qn4agF+0Hcf+vWpCGQTpZlPDdGS0eMumELjIjtZmfBonEjuKEBm7NrPS8KGQQWev3HnXbVmy8mml2w0LqfGyphREOgge14muXb48C6ZRBNsORh35ZihDGozs/tnj2ErTVFj/J7Ww4QTQ4/iiwHXnvvN9X4UdRZmSPfDeTJrHDR6FMZQwI0iBIx69yHq3x6tcM9OCy0CKJaLtuUgXIvZwFJw+6ZGI4ao3EZwwgJfnTJHbYQPMcgpu6ti5GIyCNKTzbHTeYj1KUfunlaGVAQZmyFq2/2K06IkEHn0W9CaBId6GBoWG47c6ZdjatmCGbPzjyKMifJkZUkOh52c9xntl3OqxhDKQhUUILt7N9WaRHotRL/ulABllGM3IJrUkQ9iPR1SCAQEdWJ/FJ0529IXi458ZfTPn1ljxnrhvLxBaJl4jgfVYHTUEaA0k6qRDC86caL9xG2zfd49wldJ+tCQj5H4RIJ4r27fyF2U/5/BNi0Y2uNyB/DMVFMC3DNCpG8tKToJpCdBlIWPUVuoI0AlKbO9h/Rdvq/7bPY1Gx6KD0ReULad1l7FF5Lc+/AwJmh9SoIOZhkr/8BNnztw5Q7dG5wNmuP40bo8Va4VAHj9o8N24ypliq4kRXkMZBEprK6rK1D31CbUqmqPJCq6jGEWqxBTztu1O9B+UDGiQvarGRxdaDnM2Lur8C0sTWiQPBIVN8AhVEEzCiBArUhzs7xdX6wrEt354EkohSotp3oBESUaGElrr539RWCK0Sa51o1D3QxSZi6d53LZD4eFEv+tDRq5B+eJ2Yzx9yxQc/wVo1tRoNIJ7MckG+f4m79XkjgjQKksAdVEsptJp4lSgZ4Enmn5g44dZZJYYgkpX9MxuHRebnT4QQmELMr9dX1I9hIMWHxiB/M5tPYHXvyNFy1KuNE2/2GEYaIHFRstsHDeKyoJWTGgrPVqOEBhHTtTiLP/+MedrHztIXeozdo77/1ODgES1oflx576L1t85QAtAvQpWEmpq9mxuNZaeTMOpWfYjZp7cngyRwB1eIl4J9lqQurVUtdCjoYzASBMD7XXBYSHo2Ts9yCLkmRuit7S8UE7M9lEDS1bHYqSKC0uVMx3BvO60ees2t3UDSqCBpgdQovBKA4HMe44/o2nby9yk0tIpPiYX2jftCHB666IgOrQ02v/JslLfpGR1z9/7owK0WRlUelA+SYLPYJr58OwNIIndIH6vEddEcD7BP7XSvX3qM1fLnoyEK+2ZdaLMjcmO2oza0O+AT90HBts8kNXb/yYUq15lKU7c2WD6UXAuldxOUnRZI/UArXp9ZpFSA9RPHibwrZmQxBSTdn/rMa+d0Uqu9Cpd3m654rSTes7kb3JbgRdJ/zjXmNJBliEFTn5IW0P0HQfl4uJui7HRB6kSHbLwLugz69S5j1nMvtTY/DeQhQLSWBSaatA6VGEn/KqCDrhsJc3Yymq1MEkPGt5N2ULxo3MsDxShtmagsSw66GYpJIPWjQ65Q1pxPaE6nt6uXBfT9D9LFvcB5v5Z5u405ohlEU17fzwBs1qFvTIW72pNm6Dxt/J9lCSRQaLwyIQo5K39U7bHSwUgPpL7CayasTRz+gecX9N46XJiLdbfKDYUCfGkoQFg+QGfvqiq/aCFqwwP77YZNGoSvSkXRC+hkL+S98EF90HVe6VIkN6npIPwpWaTpIHXD4dw3E8lkmmo4TNVnRa4We/crvAnMcaL38ihp2xzRAu6BsQJMdJqS00gVfTfRmlmc29h8pUW1C4muix9tXbeIDsGtiDvZX5Ckp+x0QZIovLwfBX6MYx2xeijVWUC8T4zsEVOF0wQFRInAYqhdnXVYitI3EC9s5ZZkSb5Sb9llwWpa7aoMlJknPYx0QeopPJZwFdRzFWi6THLDFOpld5rDZt8x0qwOwm/3HalY+VrBd0mST8scsRBaUNl2+rdAXq2qr+ymgNRSeMwmCfSb+KpaKB2kMaKVP57b+SYEGX76pjdQgMmSIHCeRipLluTTM0cshQaKql2g32nt0lR2+iC1FZ79TC0sV7M8NqfVCWhXuTSqsBjL/DUHx3pTNIY+MJRE0xWN5IWlSb680nTbacEhnSWtKhfXxUgfJOn8fc4abE7agF6MKJWqvOEsoFgkyYZiaA3maFB6J2QOP6p/1zdZIKIdKBgGqT28h4IFCvsojCaAJJol2v7JdZtgZUrNNzlk0jGTysoHs7XqkjVeaA5PYTNGW1QdrNbyZN/iqyzKEGf6q5dbpbugzCrsxA8NLJ4PpMYsEYbGdKzg25b6zQVsSGwHpt8kR4eL7lotgxO3kfDB0Z3d9duN3/5tOM8oLYBMpriDQiFbjMoh8QyUVg3l8u1ZQGoPpI4bSnkcRmyPliwYgyp9fuaFPqwISIKRdhUeM2E9txe6rRtUsgqfX/01rcnsM4Znd5LPzlULGq5xR+aetvvFJmA0CaRWv/NjzOK7Qgx+P+1VFMJEkku/4aK57arfzMUxmjIajxkx86s01xdFePW64puniRFBCQVT2URH7Nrm6VEGaSpIolmyK9rvLOyzLQ6T3yWbnmTiGE3rAuT9gx+n5pDi2r2b/BzwjNVDo2paAYflD+cEqVct2aSFwXSMcAMIOA6jyTNTeNP/NHDBdDGSxv5FN3j55owg9VASHB69xl6ZMOVHHbU/eZIXTydNQelz5p6KUXlEMvYUkDpBvMY9koUPtd+iCCablmNm4oH2EC4tTff8YJ8GEb3GrSzhRIwmg9RGqalTyk/RCXbyoqvzmi0kR7RXAFaYt9b7ZrBPToSIXePW8UzFaDpIrVArN0iTqLfMzFal5rmtTxkPRXWl3szD/sCSo3sd8+TuWNJwLEhvektHCEZuesK9g6ZJCyaSaDh2aCGeJaplzbS3Coy5tZ8N8CLquomk4TiQ2uQBVwARVzop4+KU99KFaeUv/GPHf4KtRSeSjzwzQYSOpWjtdFm+/eESIHVQygMSeMSC3Y7z2sk0nd4dvaOs4Dm+zRk4no4U1endbE+ruuEYjI4CqUUe7JS2UJNScTHmYGeBdgJmojSd84GK7jiIbDepqmTwhY/C6DiQpM1ltI5WQAmX5+3TqUqv/PKaEKH1KfZxFPU5j4NuWd1x+fJZQJKjRPJ+PNZLqd9kcu42VQGvANHjkbbIrdlmvQHtcRxGx4IkHx9AavIpHeex8WLyxWzPIr/cExfJ4Vh6ILgQyhKCIzE6GiQ5SpiRk5A87yI4aiuXndYluBE9R+iTRu/j8ofLg/RGghKagEL6dnityf5Y/VHt44vhhNdNnUCzcSpiv4+HGi6OcJBOBUmBUlqUOM3MU5MnxCLsNLuMdYr3j6f44USzl4mbYA1fVtKS4uMxOgEkBUpk/gaPF8WnxfkPD3V5XnmCMpQdbYmE/oWgclO8Ag6BVSdzYnQKSAqUWslakE1bZCbDKX08m94DcVknJ4cWSElxkqC0UVBAjErQGwl1CkYngaRGiY/XEEyoW++PzWYc0up5fsUX5MVjerQM2Z2qE1AiNzyuUxd1YXUVyEkYnQaSCiW+xEm4UEgnTPZsW958/fI5mFGEnqvjEYI3rgkctVe9Yoy6lvg0jE4ESYFSBfoGiUy+i7MTDDQWqNM1H2qbf3xwT2IKBUDzetIMUcJmncc+cVOcZ+448CdidCpIcpTqvofEXNsTiQQCqt7nwZFIgSDf11XqnpjKw0ULoIDcE/XBcEkK6orQ0bwdVz4Vo5NBkqL03Ct9tjMwD0hU9WVFmUtn6Ch6k4Mgzsuirh7cw+m/nxbV4d+OvEDubgRYzCG/mxej00GSoUQQEavC2XgAUg7tZll6OlJoGlWxR2B9kc5dAASbvNwXWZWcLD6yAilS7dWeNBsUs9qjeUCSoETX+ST918JMAuqHufKe9sFNHxKIVlY/F/DZowf9x3OdZY9Vkjykqeva9mwACZXw2G91O0EhkHcitDNgNAdIfZTIWzQmiY9SIcoOTxULTi/y6AJm2wf62DPDoijHZxVSdkWzYCDvbkWaA6NZQIIodaKtpPSBEXAh1krWMIFet+1NPVxwmr6/tM7jON9nDx2T93YOjOYBqZ9fwkkLNlWSz2Ajf2Z2Nr9RkA5Nn0/Mu8rs9OGhZ/aWb+c53ZlA6qJEEoCoKOrg8iJXUrHOyHiQ3aggoTZHoBM+nguj2UDqFiDTttgveZkHrVwYJ+P7W9V2dw/FPts3bNVN0vNiNB9IXfpgP3ZKvGmtOCN6QXKDis51MTuFfJFtaYUO7D6WRrvmw2hGkHooJe1+CSI5jDUckVR/5QeNNYFOF4vZ8RgydNFkvQqz0Lr5QepRcbE+q0si8vS27BDKPxIXnQ6wa3mw/Rv3dkaMZgUJUfE2yWOvBlgfFmMNILspQWqVA7LrFggdTD1aNydG84Ik6V9yq7rYFxlrIGH0+6ZYQ0dxU+XWxFV7WwZmNEfnAEkSIxK9f6YjWJjVPm9oYC4xwjVQQRy0XAnUFouLjHoTOObGaHaQBnLqzeWjd9GtijIv93V11WKFXT7wuXh8LDs9jfDz7yXZ93lV3VlA6humbrSIuoA2b0nqR7yuBR8UQkCRuvg5SatmQSxnPRI1sJwfozOApBYmHmuoMEZxq8E7vUJTVBRILWd5jiqBYtEqnT/KcG6QVCjxWMPhrlvzCaWpui5hSrN9bHxBoavDQ3ogo5BixvFi1Zzc5ZsfbgUkucpjEX7MGprCgLwkrx6/Eit3E1kK0sWEjmZbbJIvf0n4OOZaIUZnwehMIMmFiUZaC7F6EtVAkeKNU/rXT6FuZQwkS6AScXofGYC+Tw/uy1B9+1lU3TlBkqFk41kAxOpSV5AAY08YaDjzQ+LATeUFW4BXCX9PB3xX9oG0jUCi415OjM4JElZ5PZiqktoeChJN/FH/6RUyTM+i32ZDQ0RK2W0CEr1Qn0lgq8IT8wF0Xu2LYnRGkOQqj3WoUzZOdTsd4sdLV2zbdd2LKD8EBg1aHZI6/8LG2xKSU7aylKjaJc6klePnhOi8IEmFqR17oKNjWclrfcedXOzlnt99crPiGe2vuWv6wFBSnIJEbJWw3SuWc9DzYnRekIbiD0S9UwXHZyPfiTOaARpFNkOd3GDw6eCmyeMzcoj4uDFQ/JWCRKLbvGcRlFKMzgzR2UFSCxOpFEDLY6DXmAukqb3B5/iiInj6KSn2QpVehUQsMXIH0quGfDe+SQPUdDMU3R+PZQwEpbwM7ewYnR2kgfgDSf/FRcYbZNEkZGE0Gzh+2hzqZsvjOA4CVjcJgk6pn53UNbwArP06vRPnPdYFEJl2mhUQZfdVxOgiICmFiQ0kbNIAz0JhdV5kNVkfwAun7ClcQrLcNuAVWPAnoRQRLrqPhWx+g1LecYdUC0EugdElQMLC9Ga5lOVpWr0siEsxCoFq3m0KI0vgZHvIJUhmahytph+lKUHGjpj7UNX7fYV/NKTelMGwwHxrEvZoHcZFILoQSOpGpqrgrSwkd0YLPGjm1n4W6ozQcWKllUDlU4wlOChIwT7LGn2KansKvGk65+4z/cIX966H0sgg+gtBdDGQlDoP+o+Qb3/OSzpCgTq57HhopxOJJNHebtr4grNtaFIM9FwkVJ2qO5wVOTAyUh7u0s9iI0zV/EY2mvkZtET7CjC6GEhE50kZhI0qpZi5oUiwjA3l5pip95YRB0VV5IgZBJIGfwoSrVHac5B4FyIo6wpl7Chz4BU/zbLVwYGll4PokiBRnbccIc57UZJYJSX6o3B4rIcMBBJScNeSwbIFEpRI3hLB6UjRFRtSfRuUAzmuS0J0WZCGc+t3ouywSsqyKRvnufcyq+p4dGkOk0FR3SETxH5MkxKiF0FgCY+fg/w5UXPJy0J0aZCGAkVMlIhNCGrXtlOxkpL5/S+pUKsM+BiSbgydh9mhQ0uJA8CTmbLuTk/6lWL6IU0GAlIQostidGmQNGAiRTj4+D+LPZzMdmRCOA0Uqe0+xrKcNrNgQRwHLa+YilgjScxK7bW8sOWlxeg1QBqHqTeYkKxqpadOWFgi8IuDdCdxGndH09Aw4EPcETxmsHQSJcu3l4foVUDSgekl6O3EEY0M+wPGhVoZ8Lc2SHmr6bzgpVfMe826LtV4U9vrQPRKIGnAlNQvOQq8oeO1e5zazr409IKt/apluRDjP1Ffs0gC7J7g4QmX8V4jvPDmdU7rlUBiMC2HothJVVXcgjOm3BKejBgxWd0BA2mfdqNudZdyu3VZjKauXg+iVwSJwjTGyLsCQCceElzIZD1K+zogyS2V4EEJfR3jpc6vCdGrgjQUhZCARKl5JeBC//Aio+BM8vqcjVAKoN8z8BqE7opA0tB6/Hl4RnM1ylTQZbSYp5SC9CzdSIk9sTguC+1Znq/FFq4IpAla7+C6CTVRNFZNEKM8rjsQp1Z6P26iPf5p+bp67mpA4lpP1zrhTFRW7F/2j2LsqNsIDlk6AOCkutgrEKLrAYmI00Sc7IPL5pFAwMqX7t54NyvqLDt+LuR1CNE1gTSZ7HUVoaxM7xQZuh6ErgokJk7H4TTngxH68YoO5ppAEnBa/huh6wXplXG6RoSuEiSCE+ERy8sCdJUIXStIFxeoKwboqkFqBOrMEkUAul6ErhwkEaiziNTyBgC6BZAaoAhSyznxQSruxxs4gFsAqY/UcgZ4bgOf2wKJI4WgYlgtJ2GD0UHw3BA+NwiSABXGCoHF8KJPgwh/yBe9Iej8eIMvfIsgtcEiaL0RMBNAecOguUlwvgeQJIB1nu/k5b4XkL7r5/8D9y7jDg8iNikAAAAASUVORK5CYII=';
 
 /* صيغة التقرير: m = طلاب/معلمين | f = طالبات/معلمات | sm = طلاب/طالبات | tm = معلمين/معلمات */
-const defaultSigs = g => g === 'f'
-  ? [{role:'المعلمة',name:''},{role:'',name:''},{role:'مديرة المدرسة',name:''}]
-  : (g === 'sm' || g === 'tm')
-    ? [{role:'المعلم / المعلمة',name:''},{role:'',name:''},{role:'مدير / مديرة المدرسة',name:''}]
-    : [{role:'المعلم',name:''},{role:'',name:''},{role:'مدير المدرسة',name:''}];
+const defaultSigs = (g, lang = 'ar') => lang === 'en'
+  ? [{role:'Teacher',name:''},{role:'',name:''},{role:'School Principal',name:''}]
+  : g === 'f'
+    ? [{role:'المعلمة',name:''},{role:'',name:''},{role:'مديرة المدرسة',name:''}]
+    : (g === 'sm' || g === 'tm')
+      ? [{role:'المعلم / المعلمة',name:''},{role:'',name:''},{role:'مدير / مديرة المدرسة',name:''}]
+      : [{role:'المعلم',name:''},{role:'',name:''},{role:'مدير المدرسة',name:''}];
 
 const DEF_SETTINGS = () => ({
   gender: 'm',
   header: 'مدرسة دار العلوم الخاصة فلج هزاع\nDar-Aluloom Private School Falaj Hazza',
   extra: 'العام الدراسي 2026 / 2027\nالفصل الدراسي الأول',
+  headerEn: 'Dar-Aluloom Private School Falaj Hazza',
+  extraEn: 'Academic Year 2026 / 2027\nFirst Semester',
   logo: SCHOOL_LOGO, logoOff: false, logo2: '',
-  sigs: defaultSigs('m'),
+  sigs: defaultSigs('m'), sigsEn: defaultSigs('m', 'en'),
   scheme: 'base', font: 'Tajawal', size: '1',
   ink: false, digits: false, compress: false
 });
@@ -488,7 +706,7 @@ function persistSettings(){
     if (p.logo === SCHOOL_LOGO) delete p.logo;               // لا نكرر الشعار الثابت في التخزين
     localStorage.setItem(LS_SET, JSON.stringify(p));
   }
-  catch(e){ toast('تعذّر حفظ الإعدادات (مساحة التخزين ممتلئة)'); }
+  catch(e){ toast(T('errSettings')); }
 }
 
 /* ===================== أدوات ===================== */
@@ -499,7 +717,7 @@ const lines = s => String(s || '').split('\n').map(l => l.trim()).filter(Boolean
 const stripNum = l => l.replace(/^\s*[0-9٠-٩]+\s*[.\-)،:]\s*/, '');
 let tmr;
 function toast(msg){ const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(tmr); tmr = setTimeout(() => t.classList.remove('on'), 2600); }
-const freshData = () => ({ title: R.name });
+const freshData = () => ({ title: RN(R) });
 
 /* ===================== التوجيه بين الصفحات ===================== */
 function route(){
@@ -516,14 +734,14 @@ function go(key){
 function showHome(){
   R = null;
   $('#home').hidden = false; $('#gen').hidden = true; $('#genBtns').hidden = true;
-  document.title = 'مولّد التقارير التعليمية';
+  document.title = T('brand');
   window.scrollTo(0, 0);
 }
 function openReport(key){
   R = REPORTS[key]; R.key = key;
   data = freshData(); images = []; savedIdx = -1;
   $('#home').hidden = true; $('#gen').hidden = false; $('#genBtns').hidden = false;
-  document.title = R.name + ' | مولّد التقارير';
+  document.title = RN(R) + ' | ' + T('brand');
   buildForm(); syncForm(); refreshSaved(); render();
   window.scrollTo(0, 0);
 }
@@ -532,9 +750,9 @@ function buildCards(){
     const r = REPORTS[k];
     return `<div class="card" style="--acc:${r.acc}">
       <div class="ic">${r.icon}</div>
-      <h3>${esc(r.name)}</h3>
-      <p>${esc(r.desc)}</p>
-      <button type="button" class="btn" data-open="${k}">ابدأ التصميم</button>
+      <h3>${esc(RN(r))}</h3>
+      <p>${esc(RD(r))}</p>
+      <button type="button" class="btn" data-open="${k}">${esc(T('start'))}</button>
     </div>`;
   }).join('');
   $$('[data-open]').forEach(b => b.addEventListener('click', () => go(b.dataset.open)));
@@ -544,12 +762,12 @@ addEventListener('popstate', route);
 
 /* ===================== بناء النموذج ===================== */
 function buildForm(){
-  let h = `<label>عنوان التقرير *</label><input type="text" data-f="title">`;
+  let h = `<label>${esc(T('repTitle'))}</label><input type="text" data-f="title">`;
   h += `<div class="row2">` + R.info.map(f =>
-    `<div><label>${esc(f.label)}</label><input type="${f.type === 'date' ? 'date' : 'text'}" data-f="${f.id}"></div>`).join('') + `</div>`;
+    `<div><label>${esc(FL(R, f))}</label><input type="${f.type === 'date' ? 'date' : 'text'}" data-f="${f.id}"></div>`).join('') + `</div>`;
   R.sections.forEach(s => {
-    h += `<label>${esc(s.label)}</label><textarea data-f="${s.id}" placeholder="${esc(s.ph || '')}"></textarea>`;
-    if (s.type === 'list') h += `<div class="hint">سطر واحد لكل بند — يُرقَّم تلقائياً</div>`;
+    h += `<label>${esc(SL(R, s))}</label><textarea data-f="${s.id}" placeholder="${esc(SP(R, s) || '')}"></textarea>`;
+    if (s.type === 'list') h += `<div class="hint">${esc(T('hintList'))}</div>`;
   });
   $('#formArea').innerHTML = h;
   $$('[data-f]').forEach(el => el.addEventListener('input', () => { data[el.dataset.f] = el.value; render(); }));
@@ -562,30 +780,30 @@ function syncForm(){
 /* ===================== المعاينة ===================== */
 function render(){
   if (!R) return;
-  const S = settings;
-  const t = x => S.digits ? String(x).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]) : String(x);
+  const S = settings, en = LANG === 'en';
+  const t = x => (S.digits && !en) ? String(x).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]) : String(x);
   const fmtDate = v => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || ''); return m ? `${m[3]}/${m[2]}/${m[1]}` : (v || ''); };
   const br = x => esc(x).replace(/\n/g, '<br>');
 
   const logos = [S.logo, S.logo2].filter(Boolean).map(src => `<img src="${src}" alt="">`).join('');
-  const hdrLines = lines(S.header);
+  const hdrLines = lines(S[sk('header')]);
   let h = `<div class="hdr">
       <div class="r">${hdrLines.map(l => `<div>${esc(t(l))}</div>`).join('')}</div>
       <div class="c">${logos}</div>
-      <div class="l">${lines(S.extra).map(l => `<div>${esc(t(l))}</div>`).join('')}</div>
+      <div class="l">${lines(S[sk('extra')]).map(l => `<div>${esc(t(l))}</div>`).join('')}</div>
     </div>
-    <div class="title">${esc(t(data.title || R.name))}</div>
+    <div class="title">${esc(t(data.title || RN(R)))}</div>
     <div class="main">`;
 
   /* خانات البيانات الأساسية */
   const cells = R.info.filter(f => data[f.id]).map(f =>
-    `<div class="box"><span class="lb">${esc(f.label)}</span>${esc(t(f.type === 'date' ? fmtDate(data[f.id]) : data[f.id]))}</div>`);
+    `<div class="box"><span class="lb">${esc(FL(R, f))}</span>${esc(t(f.type === 'date' ? fmtDate(data[f.id]) : data[f.id]))}</div>`);
   if (cells.length) {
     const n = cells.length, ic = n <= 4 ? n : (n <= 6 ? 3 : 4);   // توزيع متوازن بلا خانة منفردة
     h += `<div class="info" style="grid-template-columns:repeat(${ic},1fr)">${cells.join('')}</div>`;
   }
 
-  /* الأقسام: عمودان (الأول يميناً)، والملاحظات بعرض كامل، والقسم الأخير الفردي بعرض كامل */
+  /* الأقسام: عمودان (الأول في جهة البداية)، والملاحظات بعرض كامل، والقسم الأخير الفردي بعرض كامل */
   const secs = R.sections.filter(s => (data[s.id] || '').trim());
   const paired = secs.filter(s => s.id !== 'notes' && !s.full);
   const lastOdd = paired.length % 2 === 1 ? paired[paired.length - 1].id : null;
@@ -596,29 +814,31 @@ function render(){
         ? lines(v).map((l, i) => `<div class="li"><b>${t(i + 1)}.</b><span>${esc(t(stripNum(l)))}</span></div>`).join('')
         : br(t(v));
       const full = (s.id === 'notes' || s.full || s.id === lastOdd) ? ' full' : '';
-      return `<div class="box${full}"><span class="lb">${esc(s.label)}</span>${body}</div>`;
+      return `<div class="box${full}"><span class="lb">${esc(SL(R, s))}</span>${body}</div>`;
     }).join('') + `</div>`;
   }
 
   /* الشواهد (ثلاث في الصف) */
   if (images.length){
     const cols = Math.min(images.length, 3);
-    h += `<div class="evh">الشواهد</div>
+    h += `<div class="evh">${esc(T('evidence'))}</div>
       <div class="ev ${S.compress ? 'cp' : ''}" style="grid-template-columns:repeat(${cols},minmax(0,1fr));max-width:${cols * 62}mm">
       ${images.map(src => `<figure><img src="${src}" alt=""></figure>`).join('')}
       </div>`;
   }
 
   /* التوقيعات تأتي دائماً بعد الشواهد */
-  if (S.sigs.some(g => g.role || g.name)){
-    h += `<div class="sigs">` + S.sigs.map(g => (g.role || g.name)
+  const sg = sigsFor();
+  if (sg.some(g => g.role || g.name)){
+    h += `<div class="sigs">` + sg.map(g => (g.role || g.name)
       ? `<div><b>${esc(g.role)}</b>${g.role && g.name ? ' / ' : ''}${esc(g.name)}</div>` : '<div></div>').join('') + `</div>`;
   }
   h += `</div><div class="ftr">${hdrLines.map(l => esc(t(l))).join(' • ')}</div>`;
 
   const sh = $('#sheet');
   sh.className = `sheet sc-${S.scheme}` + (S.ink ? ' ink' : '');
-  sh.style.fontFamily = `'${S.font}', 'Tajawal', sans-serif`;
+  const ff = (en && S.font === 'Tajawal') ? 'Inter' : S.font;   // خط لاتيني أنسب افتراضياً
+  sh.style.fontFamily = `'${ff}', 'Tajawal', sans-serif`;
   sh.style.setProperty('--fs', S.size);
   sh.innerHTML = h;
   fit();
@@ -635,9 +855,11 @@ function syncSettings(){
     const k = el.dataset.set;
     if (el.type === 'checkbox') el.checked = !!settings[k]; else el.value = settings[k];
   });
+  $$('[data-setl]').forEach(el => { el.value = settings[sk(el.dataset.setl)] ?? ''; });
+  const sg = sigsFor();
   $$('[data-sig]').forEach(el => {
     const [i, p] = el.dataset.sig.split('.');
-    el.value = settings.sigs[i][p] || '';
+    el.value = sg[i][p] || '';
   });
   [['logo', '#logo1Prev', '#logo1Del'], ['logo2', '#logo2Prev', '#logo2Del']].forEach(([k, p, d]) => {
     const has = !!settings[k];
@@ -649,22 +871,29 @@ function syncSettings(){
 $$('[data-set]').forEach(el => el.addEventListener('input', () => {
   const k = el.dataset.set;
   if (k === 'gender'){
-    const old = defaultSigs(settings.gender), nw = defaultSigs(el.value);
-    settings.sigs.forEach((g, i) => { if (g.role === old[i].role) g.role = nw[i].role; });
+    ['ar', 'en'].forEach(lg => {
+      const arr = lg === 'en' ? settings.sigsEn : settings.sigs;
+      const old = defaultSigs(settings.gender, lg), nw = defaultSigs(el.value, lg);
+      arr.forEach((g, i) => { if (g.role === old[i].role) g.role = nw[i].role; });
+    });
     settings.gender = el.value;
     syncSettings();
   } else settings[k] = el.type === 'checkbox' ? el.checked : el.value;
   persistSettings(); render();
 }));
+$$('[data-setl]').forEach(el => el.addEventListener('input', () => {
+  settings[sk(el.dataset.setl)] = el.value;
+  persistSettings(); render();
+}));
 $$('[data-sig]').forEach(el => el.addEventListener('input', () => {
   const [i, p] = el.dataset.sig.split('.');
-  settings.sigs[i][p] = el.value;
+  sigsFor()[i][p] = el.value;
   persistSettings(); render();
 }));
 $('#btnSettings').onclick = () => { syncSettings(); $('#setDlg').showModal(); };
 $('#setClose').onclick = () => $('#setDlg').close();
 $('#btnReset').onclick = () => {
-  if (!confirm('استعادة كل الإعدادات الافتراضية؟')) return;
+  if (!confirm(T('cResetAll'))) return;
   settings = DEF_SETTINGS(); persistSettings(); syncSettings(); render();
 };
 
@@ -692,7 +921,7 @@ function readImg(file, max, type){
 }
 $('#imgInput').addEventListener('change', async e => {
   for (const f of [...e.target.files]){
-    if (images.length >= MAX_IMG){ toast('الحد الأقصى 10 شواهد'); break; }
+    if (images.length >= MAX_IMG){ toast(T('maxImg')); break; }
     const d = await readImg(f, 1200, 'jpeg');
     if (d) images.push(d);
   }
@@ -701,7 +930,7 @@ $('#imgInput').addEventListener('change', async e => {
 });
 function renderThumbs(){
   $('#thumbs').innerHTML = images.map((s, i) =>
-    `<div class="thumb"><img src="${s}" alt=""><button data-rm="${i}" title="حذف">×</button></div>`).join('');
+    `<div class="thumb"><img src="${s}" alt=""><button data-rm="${i}" title="${esc(T('thumbDel'))}">×</button></div>`).join('');
   $$('[data-rm]').forEach(b => b.onclick = () => { images.splice(+b.dataset.rm, 1); renderThumbs(); render(); });
 }
 [['#logo1', 'logo'], ['#logo2', 'logo2']].forEach(([sel, key]) => {
@@ -721,14 +950,14 @@ const repKey = () => 'rg_reports_' + R.key;
 const getSaved = () => { try { return JSON.parse(localStorage.getItem(repKey()) || '[]'); } catch(e){ return []; } };
 function setSaved(list){
   try { localStorage.setItem(repKey(), JSON.stringify(list)); return true; }
-  catch(e){ toast('مساحة التخزين ممتلئة — قلّل عدد الشواهد أو احذف تقارير قديمة'); return false; }
+  catch(e){ toast(T('errStorage')); return false; }
 }
 function refreshSaved(){
   const list = getSaved();
-  $('#savedSel').innerHTML = `<option value="-1">— تقرير جديد —</option>` +
+  $('#savedSel').innerHTML = `<option value="-1">${esc(T('newOpt'))}</option>` +
     list.map((r, i) => `<option value="${i}">${esc(r.name)}</option>`).join('');
   $('#savedSel').value = String(savedIdx);
-  $('#savedCount').textContent = `${list.length}/${MAX_SAVED} تقارير محفوظة من هذا النوع (داخل هذا المتصفح فقط)`;
+  $('#savedCount').textContent = T('savedCount', { n: list.length, max: MAX_SAVED });
 }
 $('#savedSel').onchange = e => {
   savedIdx = +e.target.value;
@@ -740,40 +969,40 @@ $('#savedSel').onchange = e => {
 };
 $('#btnSave').onclick = () => {
   const list = getSaved();
-  $('#dlgName').value = savedIdx >= 0 ? list[savedIdx].name : (data.title || R.name);
+  $('#dlgName').value = savedIdx >= 0 ? list[savedIdx].name : (data.title || RN(R));
   $('#dlgUpdRow').hidden = savedIdx < 0;
   $('#dlgUpd').checked = true;
   $('#dlg').showModal();
 };
 $('#dlgCancel').onclick = () => $('#dlg').close();
 $('#dlgOk').onclick = () => {
-  const name = $('#dlgName').value.trim() || R.name;
+  const name = $('#dlgName').value.trim() || RN(R);
   const list = getSaved();
   const rec = { name, data: { ...data }, images: [...images] };
   if (savedIdx >= 0 && $('#dlgUpd').checked) list[savedIdx] = rec;
   else {
-    if (list.length >= MAX_SAVED){ toast('وصلت للحد الأقصى (10) — احذف تقريراً أولاً'); return; }
+    if (list.length >= MAX_SAVED){ toast(T('maxSaved')); return; }
     list.push(rec); savedIdx = list.length - 1;
   }
-  if (setSaved(list)){ $('#dlg').close(); refreshSaved(); toast('تم الحفظ'); }
+  if (setSaved(list)){ $('#dlg').close(); refreshSaved(); toast(T('saved')); }
 };
 $('#btnDel').onclick = () => {
-  if (savedIdx < 0) return toast('اختر تقريراً محفوظاً أولاً');
-  if (!confirm('حذف التقرير المحفوظ المحدد؟')) return;
+  if (savedIdx < 0) return toast(T('pickSaved'));
+  if (!confirm(T('cDel'))) return;
   const list = getSaved(); list.splice(savedIdx, 1);
   if (setSaved(list)){ savedIdx = -1; data = freshData(); images = []; refreshSaved(); syncForm(); render(); }
 };
 
 /* ===================== أزرار عامة ===================== */
-$('#btnSample').onclick = () => { data = { ...R.sample }; syncForm(); render(); };
+$('#btnSample').onclick = () => { data = { ...sampleOf(R) }; syncForm(); render(); };
 $('#btnClear').onclick = () => {
-  if (!confirm('بدء تقرير جديد؟ ستُفرَّغ الحقول الحالية.')) return;
+  if (!confirm(T('cNew'))) return;
   savedIdx = -1; data = freshData(); images = [];
   refreshSaved(); syncForm(); render();
 };
 $('#btnPrint').onclick = () => {
   const old = document.title;
-  document.title = data.title || R.name;   // يصبح اسم ملف PDF
+  document.title = data.title || RN(R);   // يصبح اسم ملف PDF
   window.print();
   setTimeout(() => document.title = old, 500);
 };
@@ -781,7 +1010,32 @@ $('#btnPrint').onclick = () => {
 /* ===================== تشغيل ===================== */
 $('#brandLink').addEventListener('click', e => { e.preventDefault(); go(null); });
 $('#btnBack').addEventListener('click', () => go(null));
-buildCards(); syncSettings(); route();
+function applyLang(){
+  const H = document.documentElement;
+  H.lang = LANG; H.dir = LANG === 'en' ? 'ltr' : 'rtl';
+  $$('[data-i18n]').forEach(el => { el.textContent = T(el.dataset.i18n); });
+  $$('[data-i18n-ph]').forEach(el => { el.placeholder = T(el.dataset.i18nPh); });
+  $('#btnLang').textContent = LANG === 'en' ? 'العربية' : 'English';
+  $('#digitsRow').hidden = LANG === 'en';           // الأرقام العربية لا تنطبق على الإنجليزية
+  buildCards();
+  if (R){ buildForm(); syncForm(); refreshSaved(); }
+  syncSettings();
+  document.title = R ? RN(R) + ' | ' + T('brand') : T('brand');
+  render();
+}
+function setLang(l){
+  if (l === LANG) return;
+  const old = LANG;
+  /* إن كان العنوان هو الاسم الافتراضي للتقرير نبدّله بالاسم في اللغة الجديدة (ما يكتبه المستخدم لا يُترجَم) */
+  if (R && data.title === RN(R, old)) data.title = RN(R, l);
+  LANG = l;
+  try { localStorage.setItem(LS_LANG, l); } catch(e){}
+  applyLang();
+}
+$('#btnLang').addEventListener('click', () => setLang(LANG === 'en' ? 'ar' : 'en'));
+applyLang(); route();
 </script>
 </body>
 </html>
+
+</body></html>

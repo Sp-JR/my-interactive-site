@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>مولّد التقارير التعليمية</title>
+<title>مولد التقارير التعليمية</title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;800&family=Noto+Naskh+Arabic:wght@400;700&family=Tajawal:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--ui:#1f4e79;--ui-soft:#eaf1f8;--line:#d5dce6;--txt:#1b2430;--mut:#667085;--gold:#f5b301}
@@ -16,8 +16,20 @@ button,input,select,textarea{font-family:inherit;font-size:inherit}
 a{color:inherit}
 
 /* ===== شريط علوي ===== */
-.topbar{position:sticky;top:0;z-index:20;background:var(--ui);color:#fff;display:flex;align-items:center;gap:10px;padding:10px 18px;flex-wrap:wrap}
-.brand{font-size:1.1rem;font-weight:800;text-decoration:none;color:#fff}
+.topbar{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,#f7d3d6,#eeb0b5);border-bottom:4px solid #d9232d;color:#8a1620;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:10px 20px}
+.tb-start{justify-self:start;display:flex;align-items:center}
+.tb-end{justify-self:end;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.top-logo{height:100px;width:auto;display:block}
+.top-logo[src=""],.top-logo:not([src]){display:none}
+.brand{text-align:center}
+.topbar:has(#genBtns:not([hidden])) .tb-end{grid-column:1/-1;grid-row:2;justify-self:center;justify-content:center}
+.topbar:has(#genBtns:not([hidden])) .tb-start,.topbar:has(#genBtns:not([hidden])) .brand{grid-row:1}
+.topbar:has(#genBtns:not([hidden])) .tb-start{grid-column:1}.topbar:has(#genBtns:not([hidden])) .brand{grid-column:2}
+@media(max-width:700px){.topbar{grid-template-columns:auto 1fr}.brand{grid-column:2;grid-row:1}.tb-end{grid-column:1/-1;grid-row:2;justify-self:center;justify-content:center}}
+.brand{font-size:1.9rem;font-weight:800;text-decoration:none;color:#8a1620}
+.topbar .btn{background:#fff;color:#8a1620;border:1px solid #dc9aa0}
+.topbar .btn.sec{background:#fbe3e5;color:#8a1620}
+.topbar .btn.pri{background:var(--gold);color:#3a2a00;border-color:var(--gold)}
 .grow{flex:1}
 .btn{border:0;border-radius:8px;padding:8px 16px;cursor:pointer;font-weight:700;background:#fff;color:var(--ui);text-decoration:none;display:inline-block}
 .btn:hover{filter:brightness(.95)}
@@ -44,7 +56,7 @@ a{color:inherit}
 .card .btn{text-align:center;background:var(--ui);color:#fff}
 .tip{margin-top:22px;background:#fffbe8;border:1px solid #f1e2a0;border-radius:10px;padding:12px 16px;font-size:.9rem;line-height:1.8}
 
-/* ===== المولّد ===== */
+/* ===== المولد ===== */
 .app{display:grid;grid-template-columns:minmax(340px,440px) 1fr;gap:16px;padding:16px;align-items:start}
 .panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;max-height:calc(100vh - 90px);overflow:auto}
 .panel h2{font-size:1rem;margin:18px 0 8px;color:var(--ui);border-bottom:2px solid var(--ui-soft);padding-bottom:5px}
@@ -136,16 +148,16 @@ dialog h3{margin-top:0;color:var(--ui)}
 
 <!-- ================= الشريط العلوي ================= -->
 <div class="topbar">
-  <a class="brand" href="#/" id="brandLink" data-i18n="brand">مولّد التقارير التعليمية</a>
-  <span class="grow"></span>
-  <span class="gen-only" id="genBtns" hidden>
+  <span class="tb-start"><img id="topLogo" alt="" class="top-logo"></span>
+  <a class="brand" href="#/" id="brandLink" data-i18n="brand">مولد التقارير التعليمية</a>
+  <span class="tb-end"><span class="gen-only" id="genBtns" hidden>
     <button type="button" class="btn sec" id="btnBack" data-i18n="back">‹ القوالب</button>
     <button class="btn sec" id="btnSample" data-i18n="sample">تعبئة مثال</button>
     <button class="btn sec" id="btnClear" data-i18n="newReport">تقرير جديد</button>
     <button class="btn pri" id="btnPrint" data-i18n="print">طباعة / حفظ PDF</button>
   </span>
   <button class="btn" id="btnLang" type="button">English</button>
-  <button class="btn" id="btnSettings" data-i18n="settings">الإعدادات العامة</button>
+  <button class="btn" id="btnSettings" data-i18n="settings">الإعدادات العامة</button></span>
 </div>
 
 <!-- ================= الصفحة الرئيسية: قائمة القوالب ================= -->
@@ -156,11 +168,11 @@ dialog h3{margin-top:0;color:var(--ui)}
       <p data-i18n="homeSub">اختر القالب المناسب لتوثيق شاهدك، ثم أدخل بياناتك وأرفق صور الشواهد واطبع التقرير أو احفظه PDF.</p>
     </div>
     <div class="cards" id="cards"></div>
-    <div class="tip" data-i18n="homeTip">قبل البدء: اضغط «الإعدادات العامة» لتكتب بيانات الترويسة والتوقيعات وترفع الشعار مرة واحدة، فتظهر في كل التقارير تلقائياً.</div>
+    <div class="tip" data-i18n="homeTip">قبل البدء: اضغط «الإعدادات العامة» لتكتب بيانات الترويسة والتوقيعات وترفع الشعار مرة واحدة، فتظهر في كل التقارير تلقائيا.</div>
   </div>
 </section>
 
-<!-- ================= المولّد ================= -->
+<!-- ================= المولد ================= -->
 <div class="app" id="gen" hidden>
   <aside class="panel">
     <h2 data-i18n="savedH">التقارير المحفوظة</h2>
@@ -176,8 +188,8 @@ dialog h3{margin-top:0;color:var(--ui)}
 
     <h2 data-i18n="evH">شواهد (صور)</h2>
     <input type="file" id="imgInput" accept="image/*" multiple>
-    <div class="hint" data-i18n="imgHint">حتى 10 شواهد. تُصغَّر الصور تلقائياً قبل الحفظ.</div>
-    <label class="chk"><input type="checkbox" data-set="compress"> <span data-i18n="compress">ضغط الشواهد (أصغر ارتفاعاً لتناسب صفحة واحدة)</span></label>
+    <div class="hint" data-i18n="imgHint">حتى 10 شواهد. تصغر الصور تلقائيا قبل الحفظ.</div>
+    <label class="chk"><input type="checkbox" data-set="compress"> <span data-i18n="compress">ضغط الشواهد (أصغر ارتفاعا لتناسب صفحة واحدة)</span></label>
     <div class="thumbs" id="thumbs"></div>
   </aside>
 
@@ -189,7 +201,7 @@ dialog h3{margin-top:0;color:var(--ui)}
 <!-- ================= نافذة الإعدادات العامة ================= -->
 <dialog id="setDlg">
   <h3 data-i18n="settings">الإعدادات العامة</h3>
-  <div class="hint" data-i18n="settingsHint">تُحفظ مرة واحدة وتُطبَّق على كل التقارير.</div>
+  <div class="hint" data-i18n="settingsHint">تحفظ مرة واحدة وتطبق على كل التقارير.</div>
 
   <label data-i18n="gender">صيغة التقرير</label>
   <select data-set="gender">
@@ -231,7 +243,7 @@ dialog h3{margin-top:0;color:var(--ui)}
       <label data-i18n="scheme">ألوان التقرير</label>
       <select data-set="scheme">
         <option value="base" data-i18n="sc0">أساسي</option>
-        <option value="grad" data-i18n="sc1">تدرّج</option>
+        <option value="grad" data-i18n="sc1">تدرج</option>
         <option value="lav" data-i18n="sc2">لافندر</option>
         <option value="blue" data-i18n="sc3">أزرق</option>
       </select>
@@ -252,7 +264,7 @@ dialog h3{margin-top:0;color:var(--ui)}
     <option value="0.9" data-i18n="sz90">صغير 90%</option>
     <option value="0.85" data-i18n="sz85">أصغر 85%</option>
   </select>
-  <label class="chk"><input type="checkbox" data-set="ink"> <span data-i18n="ink">موفّر الحبر (بلا خلفيات ملوّنة)</span></label>
+  <label class="chk"><input type="checkbox" data-set="ink"> <span data-i18n="ink">موفر الحبر (بلا خلفيات ملونة)</span></label>
   <label class="chk" id="digitsRow"><input type="checkbox" data-set="digits"> <span data-i18n="digits">استخدام الأرقام العربية (١٢٣)</span></label>
 
   <div style="display:flex;gap:8px;margin-top:14px;justify-content:space-between">
@@ -276,27 +288,27 @@ dialog h3{margin-top:0;color:var(--ui)}
 
 <script>
 /* =====================================================================
-   تعريفات التقارير — لإضافة قالب جديد أضف كائناً هنا وأضف مفتاحه إلى ORDER
-   type: text = نص حر | list = قائمة مرقّمة (سطر لكل بند)
+   تعريفات التقارير — لإضافة قالب جديد أضف كائنا هنا وأضف مفتاحه إلى ORDER
+   type: text = نص حر | list = قائمة مرقمة (سطر لكل بند)
 
-   الهيكل المعتمد لكل التقارير (يُرسم تلقائياً من دالة render، ولا يُكرَّر لكل تقرير):
-     1) ترويسة داكنة: نصوص المدرسة يميناً، الشعار وسطاً، العام والفصل يساراً، وعنوان التقرير في حبة على حافتها
+   الهيكل المعتمد لكل التقارير (يرسم تلقائيا من دالة render، ولا يكرر لكل تقرير):
+     1) ترويسة داكنة: نصوص المدرسة يمينا، الشعار وسطا، العام والفصل يسارا، وعنوان التقرير في حبة على حافتها
      2) خانات البيانات الأساسية (info) بعناوين تطفو على الإطار
-     3) الأقسام (sections) في عمودين، الأول يميناً؛ «notes» والقسم الأخير الفردي بعرض كامل
+     3) الأقسام (sections) في عمودين، الأول يمينا؛ «notes» والقسم الأخير الفردي بعرض كامل
      4) الشواهد ثلاث في الصف
      5) التوقيعات ثم الشريط السفلي
-   الذي يختلف من تقرير لآخر هو رؤوس العناوين فقط (label) وترتيب الحقول؛ فلا تُعدَّل أي بنية خارج التعريف.
+   الذي يختلف من تقرير لآخر هو رؤوس العناوين فقط (label) وترتيب الحقول؛ فلا تعدل أي بنية خارج التعريف.
    ===================================================================== */
 const REPORTS = {
   program: {
     name: 'تقرير توثيق تنفيذ برنامج', icon: '📘', acc: '#1f4e79',
-    desc: 'توثيق برنامج أو مبادرة نُفّذت، بأهدافه وإجراءاته ونتائجه وشواهده.',
+    desc: 'توثيق برنامج أو مبادرة نفذت، بأهدافه وإجراءاته ونتائجه وشواهده.',
     info: [
       { id: 'place', label: 'مكان التنفيذ' }, { id: 'date', label: 'تاريخ التنفيذ', type: 'date' },
       { id: 'audience', label: 'الفئة المستفيدة' }, { id: 'count', label: 'عدد المستفيدين' }
     ],
     sections: [
-      { id: 'summary', label: 'وصف مختصر للبرنامج', type: 'text', ph: 'اكتب وصفاً موجزاً ودقيقاً' },
+      { id: 'summary', label: 'وصف مختصر للبرنامج', type: 'text', ph: 'اكتب وصفا موجزا ودقيقا' },
       { id: 'goals',   label: 'أهداف البرنامج',     type: 'list', ph: 'هدف في كل سطر' },
       { id: 'steps',   label: 'إجراءات التنفيذ',    type: 'list', ph: 'خطوة في كل سطر بالتسلسل' },
       { id: 'results', label: 'النتائج',            type: 'list', ph: 'نتيجة في كل سطر' },
@@ -305,22 +317,22 @@ const REPORTS = {
     ],
     sample: {
       title: 'تقرير توثيق تنفيذ برنامج', place: 'قاعة الأنشطة', date: '', audience: 'طلاب الصف الخامس', count: '40',
-      summary: 'نُفّذ برنامج تعزيز القراءة بهدف رفع دافعية الطلاب نحو القراءة الحرة.',
+      summary: 'نفذ برنامج تعزيز القراءة بهدف رفع دافعية الطلاب نحو القراءة الحرة.',
       goals: 'ترسيخ عادة القراءة اليومية\nتنمية الثروة اللغوية\nتشجيع الطلاب على تبادل الكتب',
-      steps: 'الإعلان عن البرنامج وتسجيل المشاركين\nتخصيص وقت يومي للقراءة\nمناقشة ما تم قراءته أسبوعياً\nتكريم المتميزين',
-      results: 'ارتفاع نسبة المشاركة في القراءة\nتحسّن مستوى الطلاب في التعبير',
+      steps: 'الإعلان عن البرنامج وتسجيل المشاركين\nتخصيص وقت يومي للقراءة\nمناقشة ما تم قراءته أسبوعيا\nتكريم المتميزين',
+      results: 'ارتفاع نسبة المشاركة في القراءة\nتحسن مستوى الطلاب في التعبير',
       recs: 'تعميم البرنامج على بقية الصفوف.', notes: ''
     }
   },
   classAct: {
     name: 'تقرير تنفيذ نشاط صفي', icon: '📖', acc: '#0f766e',
-    desc: 'توثيق نشاط نُفّذ داخل الحصة الدراسية مع الاستراتيجية والوسائل والنتائج.',
+    desc: 'توثيق نشاط نفذ داخل الحصة الدراسية مع الاستراتيجية والوسائل والنتائج.',
     info: [
       { id: 'subject', label: 'المادة' }, { id: 'grade', label: 'الصف' },
       { id: 'lesson', label: 'الدرس' }, { id: 'date', label: 'تاريخ التنفيذ', type: 'date' }
     ],
     sections: [
-      { id: 'summary',  label: 'وصف النشاط',                 type: 'text', ph: 'اكتب وصفاً موجزاً للنشاط' },
+      { id: 'summary',  label: 'وصف النشاط',                 type: 'text', ph: 'اكتب وصفا موجزا للنشاط' },
       { id: 'goals',    label: 'أهداف النشاط',               type: 'list', ph: 'هدف في كل سطر' },
       { id: 'tools',    label: 'الاستراتيجية والوسائل المستخدمة', type: 'list', ph: 'عنصر في كل سطر' },
       { id: 'steps',    label: 'إجراءات التنفيذ',            type: 'list', ph: 'خطوة في كل سطر بالتسلسل' },
@@ -330,9 +342,9 @@ const REPORTS = {
     ],
     sample: {
       title: 'تقرير تنفيذ نشاط صفي', subject: 'العلوم', grade: 'الصف الرابع', lesson: 'دورة الماء', date: '',
-      summary: 'نُفّذ نشاط تعليمي جماعي لمحاكاة دورة الماء في الطبيعة.',
+      summary: 'نفذ نشاط تعليمي جماعي لمحاكاة دورة الماء في الطبيعة.',
       goals: 'أن يصف الطالب مراحل دورة الماء\nأن يعمل الطالب ضمن فريق',
-      tools: 'التعلم التعاوني\nنموذج مجسّم لدورة الماء\nبطاقات مصوّرة',
+      tools: 'التعلم التعاوني\nنموذج مجسم لدورة الماء\nبطاقات مصورة',
       steps: 'تقسيم الطلاب إلى مجموعات\nتوزيع الأدوات والبطاقات\nتنفيذ المحاكاة ومناقشتها\nتقويم ختامي قصير',
       results: 'تفاعل جميع المجموعات\nتحقق أهداف الدرس لدى غالبية الطلاب',
       recs: 'تكرار النشاط بأدوات أخرى في دروس مشابهة.', notes: ''
@@ -346,7 +358,7 @@ const REPORTS = {
       { id: 'audience', label: 'المستهدفون' }, { id: 'date', label: 'تاريخ التنفيذ', type: 'date' }
     ],
     sections: [
-      { id: 'summary',  label: 'وصف مختصر لما تم تنفيذه', type: 'text', ph: 'اكتب وصفاً موجزاً ودقيقاً' },
+      { id: 'summary',  label: 'وصف مختصر لما تم تنفيذه', type: 'text', ph: 'اكتب وصفا موجزا ودقيقا' },
       { id: 'goals',    label: 'أهداف الإذاعة المدرسية',   type: 'list', ph: 'هدف في كل سطر' },
       { id: 'steps',    label: 'إجراءات التنفيذ',          type: 'list', ph: 'خطوة في كل سطر بالتسلسل' },
       { id: 'segments', label: 'فقرات الإذاعة',            type: 'list', ph: 'فقرة في كل سطر' },
@@ -356,23 +368,23 @@ const REPORTS = {
     ],
     sample: {
       title: 'تقرير تنفيذ إذاعة مدرسية', place: 'ساحة المدرسة', time: 'الطابور الصباحي', audience: 'جميع الطلاب', date: '',
-      summary: 'نُفّذت إذاعة صباحية تناولت قيمة التعاون، بمشاركة مجموعة من الطلاب في تقديم الفقرات.',
+      summary: 'نفذت إذاعة صباحية تناولت قيمة التعاون، بمشاركة مجموعة من الطلاب في تقديم الفقرات.',
       goals: 'تعزيز القيم السلوكية الإيجابية\nتنمية مهارات الإلقاء والثقة بالنفس\nتشجيع المشاركة في الأنشطة المدرسية',
       steps: 'توزيع الأدوار على الطلاب المشاركين\nالتدريب على الإلقاء\nتنفيذ الإذاعة أمام مجتمع المدرسة\nتوثيق التنفيذ بالصور',
       segments: 'القرآن الكريم\nالحديث الشريف\nكلمة الصباح\nالحكمة\nهل تعلم',
-      results: 'مشاركة فعّالة من الطلاب\nتحسّن مهارات الإلقاء\nتعزيز روح العمل الجماعي',
+      results: 'مشاركة فعالة من الطلاب\nتحسن مهارات الإلقاء\nتعزيز روح العمل الجماعي',
       recs: 'الاستمرار في تقديم الإذاعة بانتظام وإتاحة الفرصة لأكبر عدد من الطلاب.', notes: ''
     }
   },
   extra: {
     name: 'تقرير تنفيذ نشاط لا صفي', icon: '🎯', acc: '#c2410c',
-    desc: 'توثيق نشاط خارج الحصة الدراسية: رحلة، مسابقة، فعالية، نادٍ طلابي.',
+    desc: 'توثيق نشاط خارج الحصة الدراسية: رحلة، مسابقة، فعالية، ناد طلابي.',
     info: [
       { id: 'place', label: 'مكان التنفيذ' }, { id: 'date', label: 'تاريخ التنفيذ', type: 'date' },
       { id: 'audience', label: 'الفئة المستهدفة' }, { id: 'count', label: 'عدد المشاركين' }
     ],
     sections: [
-      { id: 'summary', label: 'وصف النشاط',      type: 'text', ph: 'اكتب وصفاً موجزاً للنشاط' },
+      { id: 'summary', label: 'وصف النشاط',      type: 'text', ph: 'اكتب وصفا موجزا للنشاط' },
       { id: 'goals',   label: 'أهداف النشاط',    type: 'list', ph: 'هدف في كل سطر' },
       { id: 'steps',   label: 'إجراءات التنفيذ', type: 'list', ph: 'خطوة في كل سطر بالتسلسل' },
       { id: 'results', label: 'النتائج',         type: 'list', ph: 'نتيجة في كل سطر' },
@@ -381,7 +393,7 @@ const REPORTS = {
     ],
     sample: {
       title: 'تقرير تنفيذ نشاط لا صفي', place: 'ملعب المدرسة', date: '', audience: 'طلاب المرحلة المتوسطة', count: '60',
-      summary: 'نُفّذ يوم رياضي تضمّن مسابقات جماعية وفردية بروح تنافسية.',
+      summary: 'نفذ يوم رياضي تضمن مسابقات جماعية وفردية بروح تنافسية.',
       goals: 'تنمية اللياقة البدنية\nتعزيز روح الفريق\nاكتشاف المواهب الرياضية',
       steps: 'تشكيل الفرق وتحديد المسابقات\nتجهيز الملعب والأدوات\nتنفيذ المسابقات\nتكريم الفرق الفائزة',
       results: 'مشاركة واسعة من الطلاب\nاكتشاف عدد من المواهب الرياضية',
@@ -390,13 +402,13 @@ const REPORTS = {
   },
   waiting: {
     name: 'تقرير تنفيذ حصة انتظار', icon: '⏳', acc: '#0369a1',
-    desc: 'توثيق حصة انتظار نُفّذت بدلاً من معلم غائب، بما قُدّم فيها من محتوى.',
+    desc: 'توثيق حصة انتظار نفذت بدلا من معلم غائب، بما قدم فيها من محتوى.',
     info: [
       { id: 'grade', label: 'الصف والشعبة' }, { id: 'period', label: 'الحصة' },
       { id: 'absent', label: 'المعلم الغائب' }, { id: 'date', label: 'تاريخ التنفيذ', type: 'date' }
     ],
     sections: [
-      { id: 'summary', label: 'وصف ما تم تنفيذه',   type: 'text', ph: 'اكتب وصفاً موجزاً لما جرى في الحصة' },
+      { id: 'summary', label: 'وصف ما تم تنفيذه',   type: 'text', ph: 'اكتب وصفا موجزا لما جرى في الحصة' },
       { id: 'goals',   label: 'أهداف الحصة',        type: 'list', ph: 'هدف في كل سطر' },
       { id: 'steps',   label: 'الأنشطة والإجراءات', type: 'list', ph: 'نشاط في كل سطر بالتسلسل' },
       { id: 'results', label: 'النتائج',            type: 'list', ph: 'نتيجة في كل سطر' },
@@ -405,7 +417,7 @@ const REPORTS = {
     ],
     sample: {
       title: 'تقرير تنفيذ حصة انتظار', grade: 'الصف السادس / ب', period: 'الحصة الثالثة', absent: '', date: '',
-      summary: 'استثمرت الحصة في نشاط قرائي وحوار هادف بدلاً من ضياع الوقت.',
+      summary: 'استثمرت الحصة في نشاط قرائي وحوار هادف بدلا من ضياع الوقت.',
       goals: 'استثمار وقت الحصة فيما يفيد\nتنمية مهارات التواصل',
       steps: 'تهيئة الطلاب وتوزيع نصوص قصيرة\nقراءة جماعية ثم مناقشة\nنشاط ختامي: كتابة فكرة رئيسية',
       results: 'انضباط الطلاب وتفاعلهم\nإنجاز النشاط في زمن الحصة',
@@ -414,7 +426,7 @@ const REPORTS = {
   },
   observation: {
     name: 'تقرير حصص المشاهدة', icon: '👁️', acc: '#be185d',
-    desc: 'توثيق مشاهدة رئيس القسم أو الإدارة لحصتك: نقاط القوة والملاحظات وما نُفّذ للتحسين.',
+    desc: 'توثيق مشاهدة رئيس القسم أو الإدارة لحصتك: نقاط القوة والملاحظات وما نفذ للتحسين.',
     info: [
       { id: 'teacher', label: 'المعلم' }, { id: 'visitor', label: 'القائم بالمشاهدة' },
       { id: 'attendance', label: 'الحضور' }, { id: 'subject', label: 'المادة' },
@@ -422,10 +434,10 @@ const REPORTS = {
       { id: 'date', label: 'تاريخ المشاهدة', type: 'date' }, { id: 'period', label: 'الحصة' }
     ],
     sections: [
-      { id: 'summary',   label: 'وصف مختصر لحصة المشاهدة',          type: 'text', ph: 'اكتب وصفاً موجزاً لسير الحصة' },
+      { id: 'summary',   label: 'وصف مختصر لحصة المشاهدة',          type: 'text', ph: 'اكتب وصفا موجزا لسير الحصة' },
       { id: 'goals',     label: 'أهداف المشاهدة',                   type: 'list', ph: 'هدف في كل سطر' },
       { id: 'strengths', label: 'نقاط القوة التي لوحظت',            type: 'list', ph: 'نقطة قوة في كل سطر' },
-      { id: 'feedback',  label: 'الملاحظات والمقترحات المقدَّمة',   type: 'list', ph: 'ملاحظة أو مقترح في كل سطر' },
+      { id: 'feedback',  label: 'الملاحظات والمقترحات المقدمة',   type: 'list', ph: 'ملاحظة أو مقترح في كل سطر' },
       { id: 'apply',     label: 'ما تم تنفيذه بعد المشاهدة للتحسين', type: 'list', ph: 'إجراء في كل سطر' },
       { id: 'recs',      label: 'التوصيات',                         type: 'text', ph: 'توصيات للتطوير والتحسين' },
       { id: 'notes',     label: 'الملاحظات',                        type: 'text', ph: 'أي معلومات إضافية' }
@@ -434,8 +446,8 @@ const REPORTS = {
       title: 'تقرير حصص المشاهدة', teacher: '', visitor: '', attendance: 'رئيس القسم ومدير المدرسة', subject: 'اللغة العربية', grade: 'الصف الخامس / أ',
       lesson: 'القراءة الجهرية', date: '', period: 'الحصة الثانية',
       summary: 'حضر رئيس القسم حصة القراءة الجهرية ضمن برنامج الزيارات الصفية لمتابعة الأداء التدريسي.',
-      goals: 'متابعة تنفيذ الدرس وفق الخطة\nالوقوف على نقاط القوة وفرص التحسين\nدعم المعلم مهنياً',
-      strengths: 'تهيئة مشوّقة للدرس\nتنويع الأسئلة وإشراك جميع الطلاب\nحسن إدارة الوقت',
+      goals: 'متابعة تنفيذ الدرس وفق الخطة\nالوقوف على نقاط القوة وفرص التحسين\nدعم المعلم مهنيا',
+      strengths: 'تهيئة مشوقة للدرس\nتنويع الأسئلة وإشراك جميع الطلاب\nحسن إدارة الوقت',
       feedback: 'زيادة وقت النشاط الجماعي\nاستخدام التقويم السريع في ختام الحصة',
       apply: 'إضافة نشاط جماعي قصير في الحصص التالية\nتطبيق بطاقات التقويم السريع',
       recs: 'عقد لقاء متابعة بعد أسبوعين لقياس أثر التحسينات.', notes: ''
@@ -446,7 +458,7 @@ const ORDER = ['program', 'classAct', 'assembly', 'extra', 'waiting', 'observati
 Object.keys(REPORTS).forEach(k => REPORTS[k].key = k);
 
 /* =====================================================================
-   اللغة: ar / en — الزر في الشريط العلوي يبدّل الواجهة والتقارير والاتجاه معاً
+   اللغة: ar / en — الزر في الشريط العلوي يبدل الواجهة والتقارير والاتجاه معا
    ===================================================================== */
 const LS_LANG = 'rg_lang';
 let LANG = 'ar';
@@ -454,29 +466,29 @@ try { if (localStorage.getItem(LS_LANG) === 'en') LANG = 'en'; } catch(e){}
 
 const I18N = {
   ar: {
-    brand:'مولّد التقارير التعليمية', back:'‹ القوالب', sample:'تعبئة مثال', newReport:'تقرير جديد', print:'طباعة / حفظ PDF', settings:'الإعدادات العامة',
+    brand:'مولد التقارير التعليمية', back:'‹ القوالب', sample:'تعبئة مثال', newReport:'تقرير جديد', print:'طباعة / حفظ PDF', settings:'الإعدادات العامة',
     homeTitle:'أداء الواجبات الوظيفية',
     homeSub:'اختر القالب المناسب لتوثيق شاهدك، ثم أدخل بياناتك وأرفق صور الشواهد واطبع التقرير أو احفظه PDF.',
-    homeTip:'قبل البدء: اضغط «الإعدادات العامة» لتكتب بيانات الترويسة والتوقيعات وترفع الشعار مرة واحدة، فتظهر في كل التقارير تلقائياً.',
+    homeTip:'قبل البدء: اضغط «الإعدادات العامة» لتكتب بيانات الترويسة والتوقيعات وترفع الشعار مرة واحدة، فتظهر في كل التقارير تلقائيا.',
     start:'ابدأ التصميم', savedH:'التقارير المحفوظة', save:'حفظ', del:'حذف', newOpt:'— تقرير جديد —',
     savedCount:'{n}/{max} تقارير محفوظة من هذا النوع (داخل هذا المتصفح فقط)',
-    dataH:'بيانات التقرير', repTitle:'عنوان التقرير *', hintList:'سطر واحد لكل بند — يُرقَّم تلقائياً',
-    evH:'شواهد (صور)', imgHint:'حتى 10 شواهد. تُصغَّر الصور تلقائياً قبل الحفظ.', compress:'ضغط الشواهد (أصغر ارتفاعاً لتناسب صفحة واحدة)',
-    settingsHint:'تُحفظ مرة واحدة وتُطبَّق على كل التقارير.', gender:'صيغة التقرير',
+    dataH:'بيانات التقرير', repTitle:'عنوان التقرير *', hintList:'سطر واحد لكل بند — يرقم تلقائيا',
+    evH:'شواهد (صور)', imgHint:'حتى 10 شواهد. تصغر الصور تلقائيا قبل الحفظ.', compress:'ضغط الشواهد (أصغر ارتفاعا لتناسب صفحة واحدة)',
+    settingsHint:'تحفظ مرة واحدة وتطبق على كل التقارير.', gender:'صيغة التقرير',
     gM:'طلاب / معلمين', gF:'طالبات / معلمات', gSM:'طلاب / طالبات', gTM:'معلمين / معلمات',
     hdrR:'الترويسة — الجهة اليمنى', hdrL:'الترويسة — الجهة اليسرى',
     logoMain:'الشعار الرئيسي', logoSub:'شعار فرعي', remove:'إزالة', restoreLogo:'استعادة شعار المدرسة',
     sigs:'التوقيعات', phTitle0:'الصفة (يمين)', phTitle1:'الصفة (وسط)', phTitle2:'الصفة (يسار)', phName:'الاسم',
     sigHint:'اترك الصفة والاسم فارغين لإخفاء التوقيع.',
-    scheme:'ألوان التقرير', sc0:'أساسي', sc1:'تدرّج', sc2:'لافندر', sc3:'أزرق', font:'نوع الخط', size:'حجم النص',
+    scheme:'ألوان التقرير', sc0:'أساسي', sc1:'تدرج', sc2:'لافندر', sc3:'أزرق', font:'نوع الخط', size:'حجم النص',
     sz120:'أكبر 120%', sz110:'كبير 110%', sz100:'عادي 100%', sz95:'وسط 95%', sz90:'صغير 90%', sz85:'أصغر 85%',
-    ink:'موفّر الحبر (بلا خلفيات ملوّنة)', digits:'استخدام الأرقام العربية (١٢٣)', resetDef:'استعادة القيم الافتراضية', saveClose:'حفظ وإغلاق',
+    ink:'موفر الحبر (بلا خلفيات ملونة)', digits:'استخدام الأرقام العربية (١٢٣)', resetDef:'استعادة القيم الافتراضية', saveClose:'حفظ وإغلاق',
     saveH:'حفظ التقرير', repName:'اسم التقرير', updSel:'تحديث التقرير المحدد بدل إنشاء جديد', cancel:'إلغاء',
     evidence:'الشواهد', thumbDel:'حذف',
-    errSettings:'تعذّر حفظ الإعدادات (مساحة التخزين ممتلئة)', maxImg:'الحد الأقصى 10 شواهد',
-    errStorage:'مساحة التخزين ممتلئة — قلّل عدد الشواهد أو احذف تقارير قديمة', maxSaved:'وصلت للحد الأقصى (10) — احذف تقريراً أولاً',
-    saved:'تم الحفظ', pickSaved:'اختر تقريراً محفوظاً أولاً', cResetAll:'استعادة كل الإعدادات الافتراضية؟',
-    cDel:'حذف التقرير المحفوظ المحدد؟', cNew:'بدء تقرير جديد؟ ستُفرَّغ الحقول الحالية.'
+    errSettings:'تعذر حفظ الإعدادات (مساحة التخزين ممتلئة)', maxImg:'الحد الأقصى 10 شواهد',
+    errStorage:'مساحة التخزين ممتلئة — قلل عدد الشواهد أو احذف تقارير قديمة', maxSaved:'وصلت للحد الأقصى (10) — احذف تقريرا أولا',
+    saved:'تم الحفظ', pickSaved:'اختر تقريرا محفوظا أولا', cResetAll:'استعادة كل الإعدادات الافتراضية؟',
+    cDel:'حذف التقرير المحفوظ المحدد؟', cNew:'بدء تقرير جديد؟ ستفرغ الحقول الحالية.'
   },
   en: {
     brand:'Educational Report Generator', back:'‹ Templates', sample:'Fill sample', newReport:'New report', print:'Print / Save PDF', settings:'General settings',
@@ -660,7 +672,7 @@ const sigsFor = () => LANG === 'en' ? settings.sigsEn : settings.sigs;
 const LS_SET = 'rg_settings_v2';
 const MAX_IMG = 10, MAX_SAVED = 10;
 
-/* شعار المدرسة الثابت (يظهر تلقائياً في ترويسة كل التقارير) */
+/* شعار المدرسة الثابت (يظهر تلقائيا في ترويسة كل التقارير) */
 const SCHOOL_LOGO = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAaQAAAGkCAMAAABJkqEHAAABIFBMVEX5+vr6AAEAAAACAQLv6OgWFhY2NjfzFRgoJyjHx8nyJyrX19hHR0jRAAGnp6n119iHh4l0AAG2trj0yMjyR0qOAAHyNThoZ2l2dniWlpjyZ2mvAAH0t7jyh4nzp6nyVlhXVljzlpjydnjzHCHyPUHxXWG+vsDe3uDxfYHznqCenaB+foBeXmA+PkD0vsDw3uBgXmEeHiCAfoEgHiDf4OBAPkCgnqHAvsF/gIHyYF4fICC/wMHzIB3ygH6eoKDzwL8gHh8/QEFeYGH34N8fIB9APz5gXV+Af3+/wL/wQD3xoJ4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABh8A24AAAAYHRSTlP//gD//////////////v////7////+///////+//////////////////////////////////////////////////////////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAA6ykcYAABRsElEQVR42u19h5ajSpYteTMAYSS4QCGJwkgoMyuzfF3fbtrMzHP//0EvPAFEQCAhpVTTrNWrb1WlEbHjnLOPN37493P1j/GdvMebt7Ln3yC9+kOAWJLnTvrQf1zeNmDGrUqNGhjVQ9H6N0gXgGc6On2wbgwq44bwORmeLlT/Bmlu+bk7w3MjSBk3IUB353yuHyjjfzZAtwGUcdUI3V3yWS7/DdJVA3TdAmV83wjZqfsdCJTxfctQlZfp7Su+awLpzZu5tVwSG0Zx+wbKuCIhmt0O2XvDMILaFv4qTW1tnP4NUl/NaRx6Mk13VQEEyQBlwoFJyn16e+Jk3JIQPcb5FB5wQIKEYdonB4JRbsQP09Tev0HSFyIsSKUBqgkH7JYGe+IE67qS/ddt4WTciBBhOYDaa29PMElZ0ALJxSYqOYJF/I8G6c3bKVyhmHrGbsFAwthmAP2A6iiy9z8VpDfTILo7YO1VT/mWNCYYYWiJ9gPVkVRx+T8QpKkQwUPOuUxM4uDwKWyO2NEgvSJMxmvpubeTnSIbS0I8hd/ZRN99Tu7mAOnVYDJuBSJqk6Ydsl3jbyHuLAHpGOLw2jAZt6DoBHYnDfO4SVagp6468QS7Bg0us4D0KjAZNwMRYw49f9at8wBQrzUvkhZM2fEgqQPoy+8cpBMgQkcuO+WkcVnxP9fuLCC5RV7bVyJNxoWN0Ukx1IegT8LdNkYQhcdu9I6BlDexh3HVCr/4ZYBIfrcgnQgR43el21Noraew27kK5r8SCh/rBFjtKjZGkhzL7xKkOVIRRN9VsiCqHCSs4ighJDKnBRKOJ4HsWhiEcRPGqB1BEP1ZN+6BVHcdYHraBKRcA6RE03otvy+QZoGI+7PCObsvALQVXv7QDTlQkOwBkNLK7bnAOmmR7wikIyFys/0+c/v6DtSt463qXARp797ZNpe1utGPJEZUyo4+LYHw98R46QWglt8JSMdquocSIM+nsnv8rpEG++CmyZ/2oiwFL8SxrbOsqiohO0FAkh09Fp3GlBGn2aj1ooTL7wGkYzVdSrl1nNldfWfskzRNkyqri335OQ56BA/LG3wC/E8UU6L6ZEffyWE84p8H/nQ1IQjjaglDzY4+EFBiYe0gz+PgixSc/kOFh5SlVMqEBpex2pjgUF0CJuNaCUPaGJq44pGaOjAmP4xKY5BkvIGqN8bm6EUoJ4TblzcM0im8W3RS88S2XTetihhMx4iTQXz4ha1ODdJ/o8nBekri6rwwGVcpRrQewWCYlFlR5mMIxfGgtsMgyX0feiEo5z4uWr68SZB0xQjKiNu/tA8xqsSq/kYPXsRHgVWZJKXsnxplCUHaH9Q3guFCqvXy6UXktwfSmzdaEKUFZABxWXQzQeik4spN+1GfoMi7NC7Iy5c6xY7Vy8seP2UJqUUcB0FcHzjRBqpwA7FKlFQQuWrpRbuq01dEyXhdVVcxFQXifZYIIpVhH2mfA0loLsV+EWLYcV7ui/oxSdk32vQ5HKB8pkmSVEkjO1WdDKbZCcMg/91igWkBoF3UeJ2bAklX1SUiWUMCwZNBmcoAoQpUFIp4zh4TCI5r69v3gS/F0ToCkttNLdpVrhv0O5MwGRdRdYosp91TZkE2DBILQNj23azP4YVLD8FL4HZM2rU4+fJWQOqLUVqWyUBZnKjMZDJGny/5PkvvzvJg8SGygq+HGMPlXrVeyd9NgCRTdfDIZTo9AUq+3Eu4grxHLmbEqACMKxCTVIo5KRYajNNXYnnGRVhdBaRhlkoNEs3pCCLm3p3rsauyiQPh29HO9xEI9atnl9cOkpwxYDT6KKG/ztvOTSGYa4DJxP+bpxJLRSDsNNsH3eq8fftGHChKpVyS7XOrPOMSGFGR6amLJAZltldVkaRZXWdJSux2PJ8xcrMiI4rTdtM/7f8OeB6KO2hp5/Sp8pVUz7ooEl8k50XJOLc5EmlAl8W6WVYVoiDFbaWGrvxfyReUh9lAgjYGQPe5ruuibEJN7LM9c4ppV89Vx9tN5NUQEnq+vFaQIEaDtQn9WIvtimHtuE56moP2GIF6Rm2XvPRtIeM1dgFYagSKMM9lEWdBBpKhyOIurxOkgUDQoTTkL9PQAxA/P9gSmy6XwVMV3mcFRnf2nwqaCsa5EpDT/D0m5pI69Ie4lQ45D0rGeTByH/C7pY+VKwQt+y/Du7xyaXDMzugZ1DMTurQQySMQup0Zq2C1YtBqIgOWxoqMYQ2UVSvXB1LLHNnPcVln2T4GtEHffqYapv2etOQDKjopwebKMJ/dh7XTmtkjCIN7N+AegLhIbJy3l1FMqiRAZp+P5BlnoXWk3E28YryIsXXeadBWNh3bUUqRnU2ashJFyfeZK2PWz62AYZGVqvQF1dhBXu57YF8XSB1a5zbZBHbALkNJDIERkGT02nYf94GkyGHeiF2aJKmCNlbtuBRQO7NVmeckWt/P5l4RSD3qbZf9glKOkpCpIfWnvXe3H2qBHH8+F0bD+vCxl0IMHuQese26VFH0/fXltYAkcY8KSaCHoQQeO2DWPT2XNwm9uNCZjoFSSCiDxB/4h4N9WqzczfKBIvMqlYUhX85CxY1ZMBoqI2kIHYuBCeqtlnpPkC/gjN5Lv3evCw4qjqwecQEeycWyJ8/Ll32BKiRx1ulYmEC/oAWzzrxog2S/GIpm0eU1gCR1YVNBVzSciKHUeEvEeHVFya2yLGvSrfLKCFIcWUJggi9AWaMCApK+fcZgTcbqUPEXEdgLvEU980ODKvtzxFuNs2AEURKsSqOpD0X3vlVgcvQU4ZMVkJmBKQVeONdeQOgn6kAGk+Cq2fCu9TOARb80Yi6UjPNghKlTlfdQonapCSfTKnrdg7MhPvtcUVisBxVE6mGSSEGYoPoVTh/6r5K8i5uV5V5er7J8XZDUGLXTZUk7nhyk7bCeVkTBfXh83udH4yMghYBKJgB1SGqhbeAxUPSXqYnK8jVBGsaIUICOC0vKhwX7+gg0MhG2m9Qv8en4iEDVyVF8AjmvL1O/cfl6II1hJFRxNCglnXZUkq8uBhGqijkkqKf6jsnIozAQmJ6BXL4WSD+OY9R08DfJTuTLiyQIy5ZyGg0apJF/Mc70QJyyaTgh5yI/IpW/fB2QtDBqeHchFj62BAcpPPk0mkP6uI+BcdYHxPtKX+9hn6E8Rk0uXwOkH3Xr8Wm+oTG2dtb2BHFMRUId3PMjxOWp0hQO7DLkRxXFLC8P0pS2FmKY1PkGpPC66UA7qfPAuNgTlHpqrzeE6oCc6kzLti0vD9KEvhbazq3m2ZDVtkFCQmRc9kFpo/FCChZIxSV6aVWXxGeDJESjpP/SII1j5DalxTTlolbldpaLPZftmNkFxenl0dWRJPiV+7ru+mzxeLT+siBpYFTEjNCxQoZAfdfsB7fRc8XnV4GI1MnWw4orA+N9n7OjZBxpkJZjFTklYCFJXmyiM0/QrfaB8ZoP+DwI08OQFtYo6b8cSD+KGOF4dNot8uHzZWzegqQRR7WTV4aIGqeHgRgK6BDD/b5kbxifaYaKcSJGUDmVeRC0g7+sgOSz2wSGjFaMUgFR8foQ0cKYdMzto41vSOrs9EUfpOVlQGo5sXQkRm7L4qq5+9e/Na801s7dLrN6bZieVTAdIKsB4D9RC6nbqenIz9TBZJzoINF6DYG42TxDAeq0uXZj1SRufUUQ4RPPlJGqKqs6wdlCfxrRESgZpxE76gEJIKVcZYHnZN8rGlJfT+PaHlBW2mmuckprzPlBapPvw0u7Y8X+Ez/sL7WAUVyNcsErfIJ9ogfTxJHj5wbpxzb5dl+Iu111rBEaWFuV/VJrhTEKjCt9FKW18nJX/QzGeUHqRr7tbL8vWOSKVW6T8mrBxgxWCbtXqOlandQaTTeZrjN7nFkyppKGXkKOj1BI2mPnmj8M7T6U9qHcnM6rDX12dwRKxgkGSV5cP8kPvzpOd5zOqyXlkzMqPGOmaFBSqvTFQEfytRKGPs8bEaZMP3p3DErG8aShhZHKroBn+2668F2fznt2x9ndpP6P5XlAGig7ETDCFYsCx1OnJ6rSuJ1nRJhq45woGXMYJPeleRcU2wEFJdUDKZYbEiN239zhGiLdKPJ0hWfMYZB4kiWoUxQnChIXT2EYcI8e9sC4sQe8POikMPSHGcwP0oBBsnl7aXXAdcToc6bZvkjVzT+5cYPP50e1yntsDxuwNfpulnODNFQHSWPASB+QdAvxF9Qf8nBOVed4r6PympxtnqFmHI1ZVcu5QRrIlxNuE6NwJAmKj9SlpWdVdZvtWVVeOlb+YJCR5KBMZlN4xsnKjjZVYlpD50QXwzWt51V1/2t71h+vtrOHcnrUb06Qhou+UacETumx+Wf1eKnk+e76bnVmlqdkrOL4t7iaMbdknKzs0JAGYoYkTbGSGoEv5z1DZ31mkAZiKELTve463PlAEpSdKxvUmcQAXi/eXj5AQt3i3Mx7G54bJMNQGqZmLUAwZ27JmKjskv2+H7vHxd38/Ac6wtLzBxk20fbsv0NtmBqUdIe4LOcCSVB2kL4F5Z/sXsLCbkpO9ofJUdj5Hm8Dthdwk5WZ5gYl3V0X84DUYnbpZ3n2v6lHU1+h6gJpiSg0wkvEMpT0oZnwWyZpmjxmo9moOUDqMLtCHm/kU16Uyti+BEYGtEihZ7wmSo1TG8RxAOLRxSTLGUDquEgsSNWGqRkeXSup90UCqmvPCJ3LhPJUKLVrXDV82tNB6vXzNcun9knfQ1Bp4gthBNbAWEUXCosrUGpVIu/n2HFhTHaRDkLBI03/2zwiEj+8KkZGtIH/m4PeeQ44WpaEl9VLXJwKkiQe5NafBZgghbA5bKr0sRZG3gyh0TCEPyecwycONyvvaLvU7ElhW9CGY+KngSSPB4lNXiAvmkKFwj4aI2+7nsHi76A9AuEsMrmzdqPWTVnTkLLgF24sSat6uA9weRJIqsCqKE2Cj+cei5EX+tb6dIPv7dCnmofePe1M0w9HtF6grDyhs9WgsKV1HoCRzT6ngDQwBUDSMqnaJzmKkRP6pvlxBlK2WuPI0DzMwdmZ96Y1grgaJb6BFSdmRlzb5QkgDQZWuzCpSqGrYEzR+eb9/dc5rj/JJc0VGHL8+/t7098OfjKlX8gm7QKtOWTHg/TjSNdla762Sj8nwz4sWCGI7v1ZnBvyU37ZzMUVrXsE0241pPNU528L0zM1Vm0eDdL4yJOmAlXVxzeCkbNeoIOwonkUFDnNP+aKOWzxh7tf/DT0A1VavnHwQXFaM61xgiCJMKmKt9LBNCzY+uQU5kkvbNf0/+fKVoCNiT+f+XVI0POH4QBRUB9Oc5aMk2ZwUaVXFCqG6ZbDIeufyRls5omJhiEjIrMF1Xf35PGHcFfElF1UfYhmeJyaszCOEST7IavrR42Ah7sfdkXIPb3fzaSedkxp/jFbIHy1oChZQxkQBXdzoX9UaXdaHAOSWpBcvN4a5KPJR9F2St7fZ+8/V7CNs4/tbOE7ENKLdL8YQqljkJXxBTtN3OmiZEwXpIdyJFCnmnnQwciib2/OpZx+2QFjbn3XKLx7a0DjdbLRibToDi09i4O9O1mUjMmCJKTAR6otHrUwmk3ZQabYOEzzJf64whtEqe0uVZ8ljXN2hgfDqasflpNBUgmSqMKGXbRB8h0xXXe/mE01RQ1I8+k7A3xgCu/ejzSJ+EMsMVNJPBzvU4uSMVWQWsN1hqogB8m39/WeK7v5jPxaCDTNl/5wuMIjQu+tnDHygOoke2qNMvIBkJYTQVJapNaYqoEmUVtO7IDjCP7HnMquBdKshQ6NwsM3CmzkIQiRPKBT6ub76uHo2YAoGRMjq+zsA7JqT63v5KTBCzdO67UXM1bJiSD9x4w5dOFK4Y/r7BYfwHDeApdJtiPfzE4M2YjlRJCWQ0WaYJ9kYCCBJF+LjcL/1pZFLmd1Y3sgOXOWSDaflwj+amGuvWGzRJZzi2EYdr0H4+FTQBrZcwlq1yYgqVi4PNIQ+eYatG6m/zRn7nwnBpzmzMpvG4W3xaJ1fy9DSTh/fpntbg1yPT3sYEwMNmAJgTaRxRKyCV4sZN3WU0vZ/TzrUTo7cB6jZLxbt0UJiZYMJUGxUNvdTIGg5G6kEVAfpIGoHcqSIK36f+OheyH1kH6D2CDSBTpvPNvziy/8uO2sP9rhXp2J9ejWlGrqL02rApu6hOckuzb37EeSFkttkH4cbo8tD3c245PJcJC+473iuE1knYM1oMcS2MJq3hLJsKGjgMYhZM6DICeNVQZBWdR0mN9o8bG+JL0d7IWvG5sj5eBS9o28V67Qz8AacIB1dS5JEsSfON9QlKR3rFn/LQ2KxaMRcV2QhvJINSH6LCWejbpSYggMC1JDlfy5S003mzPZpNbHxlcL679fo6Eg3qHf5pMf16JpTKxsqLFJYltjpUNHZcqOELoNu4NnUXbwR+/OxO5awUarcccl5EFwg7rNWKDU2SGpB9JgQvYZ610mSIWussMcFqckuN4w5+9+8Hz0I7coxDarn+QBMfBgkmqXheIdBKvT6rIH6nmhYyhNBalAdogLUqpZHER0BfKRyMtxgwSiWU0Hqo30rI3lGdGcBeErgvj2G/no+D08n0uVOvBgJ2jxE0CbWMtMN/unA9Jw1hy3x1Zf1ILk5jKra/IbyLQd0RTRvC0QKH++2hi7zby8YUVTvtSnJfpu3RiojuFxW+11SVbXWcUWQ9vpKFZLDZCGy09q1OVGqZ10rUGtjFDid/uyFjHy1ptZJcnb4SqUlT9PqXGjCGhVIJEl8bbJEi3q3MChKuPxyiEdSRosP0Hsji01KjSTSB4B5iP6tt8twYsFHxbhvFZpszIg7J61mpU3gPWCSgyRJVFvS0RJGULF4/32h9NBGqnjEmIJwYMma6AWN2zuH400rBbWzL1EIPwD2Y/det6fuzIXW4EB+V7DySVWSXCWJCXxxXSr1AdpeJ+LEN3ea8aDqPb+hq0v8mRZCBm+5nr21kl8ZuuZwfc+8WoZxMSx8wBoLnA7nLQQzibQqTnQAWms2E4oy0z0WAOLe+G3xOEUqiGcHdXu88mREzlOtAq3u/t1tA23s/X8gT+a3DlCCSsFal2/ygILqVrJaEzTXY6ANFr+3TRe2pLyoIE4Pwk3WPc/U98C4WXNye3A9sN25XjwAavF+v9E2204W9wJXTSGUuQTfRfeK/WdLM9Gp/BrjXgfk6SRqlX2q6S/S1p6wsL8mDdsTVa+htnErMG7bSh4tds/wLzUQahDiSys71amEBbvcodK6r0cqe8M7YakDkgSqT3sh4JeG0KTtkJ1h/U0q+HYbJlrDHbear0Jt/MFNTCXYzVdKwu9zBN1y6UEVaJnmDkPJgfwjAnaznbthjjUOrEG0GQmsPnxdmETE59VkCJUwuOEm024Qs15aweVvDjRbL+AxO5ZrTFG3/ObAITXJUASRcOZb9E91v6a2yGQBmmDXe33da42jf2UOUDn9X7RaAWHBgJIsHJGi7T1N7vdGjKF1W8hfLYbY+6H0B+TON/AE6KQyJ9wejXIksQRaysTzw5Vteb7ZJg6GBMESQzqPuvQbxzzoumyBY6lkMUb4WLW8mL4IHPhrbab3Xq9W2+QPK3gn3xrRoZP3sPcNYyRlmqgu+b15lVKaDifWlgIsb1Yvq76WJDEPJFErx56guR8jZocX5Pa9tbm3Llz0FQ3eBHCykfPejunt8SKwpv2CtZihn5LuHOGQnhyUWLrbiRqSQ3SiJP00HhBsfoTCN4/Yt1cKbB/jnYz91LwHMWZH5aqWLBeZ+oAYpAia6MhSi8iQ3fZGAHZyK+lEqQxJ6keuCZ2T5CiX5GsvNs15A7/7T9n7qUgDPL8GDVdMCxiQmULW1vPWmiIEid4EBa+7kaerj0apEySJOa//0s/P/GB5114bIHnN2ctFLoISEIXDB05sRFK8Xb3GqLES91iVphiAMX0IRVIo/2X9FcAyaTefmTVscgV80XlxqsM5w2uRRcBSahz+ug10WJy/zZ9sioheL3SAuWk8aUCpNGQUE5vyEGnrHhLPjVV3IQ3vF+IhaA3B5JQ1ok1Hn03/C5hP9QqC8p0inRy9dDjI0FiRZmuTsmqRyNc9EVwCqbBaOZiLudCIDXNmffrXzgpwtb1vXm/ezcuSvazWPYwNGhNDtKYtmMcO7Z1BAm+zho0TuDWmK+5D/BHCyTwznOciD6O43ie8J2TAw+mWEdD9F1IhaxX/iSL4NlJtuf0wdYLhRv6cTsGxF5trUTPhRI6hwcXTi24A8BzotV/bMPNZg0f6LGiZISDSnmcneJbPAd6Teudb1nWAj3w/31/h8J6K/iN4BSUECTRzxwkFNxbd3+gPJbKzMajbvzOmE7AJRktN5bZ2LABCXpJ3vpojAA+7BAd9mJhNg86dHjkYRRJ/SQHebWLb/AL79sP+lb0jR+2kQMmazyms/3fIfHmNukvliTOJY+lZnrRcDlIb3Vog7T8JAMy5Y0/PH4P5BTxokh/GrEDToQOm8PzjQgElo0/k7+x/J6TYoAo9P/LJICwb7CoQBHcMFQ7EpCdlLZiKK0BNkqEBKHL2KdDhTqRMJpXkoE0pu1YREEShO9HhDDx3vL/gk75kzW9JQkJULiG+BCqi24/UlTYsjg4B7uB/4oFxd+2YAKrNfomc+GvN/wbPPxN0eo91Jgf6U810Zdsp+HEbKv5HvxmsoQS1hjrL+MO7V0aKEtEFEbJ0NV23BGqdWgDTog1IPke7/DZOZMAWmAIED7rcBX1zAgyU9uND++2+WnTJCaij9/Q36zfRx5Q/fQI409+ur9ZeRNwYv6S76DiJzPiIPX0nTQ1CjTTStNBYkBIShskLWMh19XAx3EU6mGYOpUnAGs4LEHY8kD5WTkDhwi8CGqxe9Nak4ZjL7TInDowehGiLb4HU+WJDjgwQ/Qfiwakvr57sVUgGdl0kEYIeJORtTUq9IkDETKat9j8RsNcm3fj8iPigwVI4/DWWzw2b7FxAEAji8ydbn8SBCr8aBHViFK7YMxCAp5YhpKzhr+V2ENCkHp5LIm8cJasPdXd0DJJLl83KqtW6re6kFhQyPCy1mTU04Kks+UHQTSXaIF2GofGiJwH5Qd+o+lvQnRu08awQpKx/hV9t4l/pzPEzX8jmQrvI/mQ8LuIjiO1krved9ZKKhy7R4Ck1HZpETf76g46BZHkEzcg7RbCCCXnfdewvIPwEIJtUoCwAHkTaRcWJvQTFu+n+z/Odk0M1M8WJhtPCj9qRTvVqEcBv4VkFok+93uXQ50vGC8b0gcpLQRtJnPAJDVC2380sr+Bh4aFg5ZxeJuwfYu3m69UvWGypavhJM8THXF4XGAQOCtIQSjlwz7vGrrLTi8UTl0I7vf5QrC1XxEggaJWZ7eHQVKapDYEsrkNkmI74pZvhHg+xwh8aM9R+s2i0kMY9nayAPVo1wmBQYhT+C+mcInX2/PqNiYNarVzzqFqUFL/yBhzyHX1nTFiklo1qUA2BqzvJLHAI4mSbNp9fatF67YBevm/fkAhHnBq3BU5mifWt0AmAf2vjztfUbG1WrBbQFEiIG1URXh9KNiZaus7Q6LtbFde11A+HvRmn9AcErGiH1oTGyBn/Qj6RTgfZkoBwusxT4Qd2skNQWndi7jzX0Euoy+UDknyzRIoCjU/1wUpLcrHPimI6wdbd4iQZ3X1AOtb7NV/O4t522e35mKuVBUNCHejpkh+TKFU+v5XT8jafuj/nD7V5j5nNQkkwSShdlzeyW7T0gn10GSJtqMnTx2ID0IZJHqVttqeGySoTc8MEo6mMJRQsMsSGmH6Xy2j2vzqf061jJLRM0m4i4anq6hkqud4PEhaZCOhHhIra2pq8ZS7di7p99sDCesJVtIOjaAlThCRgATU/qxRppNAWrbYHKfaJKwa66z8FkAyGwWNlDXNTWDS2tHaNwgSMT9Uq8I/LMThcDvJcUiinY+MMwdFao/quy5ITBKLFhNRLzOXFumvzOZaobdYCS/X4V6EOFwlSE+/KmRjtRBQcixSHDkwPVs2qsbNmJn4e/ZXXZBYfx81Qo1Jw6KklqSHeAAkxBzAjr4mzWl+BLcCEtVgfbJISwnphw4XkZCwlYEkj3fz6w2FSQskgTdg9QWe7ZaRUy/EkGk7nt9DUvPLjlZvhaasTOiaQfqk6lym70dezEH9uXyEiLR6ox6uYhxYzrgUQBJ4A9ZvImvEA2+V012lg+1+M5tZSe/W5C3FGQg3Lkl8sBqxtZHXNNDKQZLGu8W2SOVu4TZIS/HY20q0GphmfZCOLGbqDtE7OvNkpfDfbxIk6qALkLBeJTlIUmvB4w7o5ysnQylB6vhYhEvIFetDMAgSPy+WPO+FbK4ZpP9WgsREiUc3GpBkCTPp2bGWuxxbddXcfTlIiMJ3yifcz8pwoNQkNSCFPHR8r3DICXrWNdsk2b+FnTf0Pt0r/SSFUaKRGlBikFRz9xuQ3jSFQsQCJbIaFIlmVQz/jlgUOWwFXGWxzxsFidcQ0vgJH/8pB2k/kDwguTqV0V9ykBreQFsq99IihlpvbkMziYsJTvfe3T5IzbhPEqB0mCTJv1q2YKkeC8MqQaK0sJSC0f9B8unfvC+bfmSOmaQq8ppBsgaOnRshcvGYZCm6rmRGqW0plLNZBZCYSerEGzpo9NoGM/nref8UQeIGSfYGtwpSp4mHg/QbvMtPQMcotS64eu6nBKRClTIk/9ANDz3LMjGC1/ChpRlk9HR2kKwLgfQLr5peC+MCkInytn2FIalkdV90MJKBlKkC6JXMvIm/h0uR12RjMXHgNlXKs5/mpuDW4F63SbG7QZCajjIMjN8wIy/sv41sbleS87iQezcKkkDukPGRrhGkRcZtUZKNxI2cJm6C9FszYVpKfH4/gyTNBNJf/EGQGg0BX4x1BuNo5aY/aVE6CDXZx1+CIBZWJSiYAwLpR6FU/6GQ9wfWMt9ZMm7VC6OGOSBn1hluwHSuF6SnEZBEGs6cDLKKw/9dM8b6kCTJw2E0pWQM7uHpbcNod/lJMucRHkbhNetjQ7630Lg1kH4dBqnpE4EKg6wrIxm0Tf91wGhN8ThIS/mkw7LcZ4nr2m4iLzKWuLJbi6dj8RXj1G797mIgzfSjfh+RJOHdANV9ZFrhWkJjC/tYlEZAwoIC4jgOgPRC2JLyhg3hAO9NquFYYFXVbX7FIDljIHHuAF+OSBUrHOqb39I9D0jiHkzpfej39xng42IlnL1j/GQOj9a4VZA8oWwVlaWQy7ihy0Z8PeYwB0h3bl0Gwp3o7vCWhMAdn0S+iafkO6SunbpIwAHfDUgRtnyUupprB4NEL6gviVF+Sc4FEp70VeRx8J8gCPLiYWyaEE4bhY1R9aNIHLXhhO/ODlJ0KZDItC7KkPwIByA+eVQJfuu/z+NpIL0ZaZY9uClkipLJ8JmU8JAUCz58fysOTQNbZZJzvvkolwLJ8UOjSWYuwq3FPUH4V5JZIvUJ9E4DJPX8u75J2rC0FxlaGpKpaaS9z9ltjO8HpE+/OgZXeOYmbPqaEdGbkd4RkEbnro510Yq8geeMkL7zN77ZZJFC2Tj9WwXJ8ykXwgrP3K0tlrXA13OjlVK6AEiSDZi4jHjFX9HHfVn8bWQDhW4VJAgFpXArNHDDQj0Ymwa1PgfP3dcB6bM0y0IxQXoAf3QW/H5vyoYz3yxIG9PkNayoN9FkbS/4jfqFrKdwcGN8EoqySzOWaOrmFqEFkqgbiyaYoZAtnr4fkJDloaLEwvx04AemEv16lCB5FZAkaVnC6ciHZZHVDX+pT853BBLicGErHE6lB9ey9lNnQfUqIFUKQv0zEft3ra0o6I1l5U7nAAlcAiQUEvrV6X8h8Zx2X+YLsZ4EkqScy/lVqBHaCPEgXCu9Bt8RSBgM6vhhUaImSTUqYGwL8OVAotfIa4IOTJAsRfzuZkHCgS9LKOiiM8iJ7pPcx+JVQKoV14uRcHyn6F1D6Rbz/XcF0qYBA/83ER7PV2Wh968C0rMyw7Lmn5fVDn5SrL+7AZA+GEp6x+/jintJtHhXgmx5CkhvRnaPKZ9CoQOYjsMxIq9hPNLW/esH6SdDSe/E+0jh2ij7m8vjvdnjQbILqR8uFOrD19gISOzAXCANrNyBIGnt4/G6CsnpaagRkMgn/8awIU4TqxqSmN/8RJDmCt3xi0T18yfKeEJTXVR9BEgR/AWngrQzO1+1xgcrLMoaA4kWCJFXDU2C8XtTOVH7VUA6vKgUNTM/YC2MglMsgzoGpC38hhNBAqbZcTchIisI/7oHkiqn3JqBsiLBY1YVKguAxa8BkiS+2vT4EakJd8LYHelatePU3WYRnQrS4r5jIUMEUjgFJJo73/2CvvYjfjtWBC/7fCeB9OOcILHa/H+SDBK24Y4/Xnc3kTgA41R1Z3VBWiEVuhX1KPnc6sUn0UJYVUH6GUNTvYzx6Ajr7CDxFjh8scg8p5+6C5TOzO60QPLvIwlIq3tfHyTW7iLsbhpqyrwekMRSNPZX1lB71XEgOauTicM9/RFsMJiD8IlEYzcGEjNAjW7jqyw24FpAyg0lBxcFfjtY1KUDksMMhbOhAOzunaNAAivmRK3xGF9vYy0sMl/Zu18gpCygbZP47AYGCX956bqUVwEpzQ01vWs+J28KWR0NUkgPCnV57qhFWR8DErIiO0bN4AcEdHGnQ/geQEgBbUkytt/aF9Kx7tW84ZpAYj3N9/8CbSph/eVokHb3C1y2h780IrAtwHSQQjwydUtBCrHD1QiLBUECP/88AST2auxCbtstmtcLUtNE4fCTGeANWiCtyMmu7jfwGHZyBq0B0g7lI9f3Jh30uEFfTI4V/3YfgWQJ7tMoSFxyNm1tJze/VwRSp5e0afqT8wa94sg1hmZ9DyBQC3rg0VSQNngKJIQXLx/xifXBd2pNcEcxiEkgee0xKPzV5WbsikAC63bzZee2HQeSh0nX+t5aw5PebreoUmyqJHlQCBfwqoRoCekW72bYrjakz3AXbkMLXwTfnKDuOHMgWoNzO7n5vSKQjO1/tazn1hzeD6dXZuwjExSK23WsqcRhBQUG6qOfmR3x77vPFv8ifQrebFYjXuEHc3D10PX4SUIrKXk7PnD66RSQLIQJEM7VcqaDtDEc0kSENZK3oFXcjI8SLbibAhJ33cMm4KrU7NcEktf6rODjyII4LZC2lHFv/7W7N3e7XehMjzhEyFn1dmiJ3Xa3+w35SPQHeav1brem2WRnCkgcF+QpOSNLJXP3ekBqGplxk68/4IPrggRpfcSt0/rIsBB1gTz92f3jIHENjCJD3Pn45Fw9SIL9FFrnlStLh0HCw/ZRGSK7Af79yBqKlZLdWfcTh7prgMQ8JXQfuclU3MdTQToqMysb4iBEUwgwLHCnzC0Mg7RbhKFPQwLw+bJTOrHjIK3vVzOC5OFVTewOQpC4mle9avkaIB32xoi+2wgzFvGAc2cqSEQqIXlCSQ+8TG+sPFUN0vY+nBGkiGzWpqwDvh6/m5g2SPY5nFjj8Ga2GoeWDkAVq44YAl+Fk9sxATTq6DigE4ujA2vjaJCioRblySBt/ZXwrtAMrVp0POrfxxf7BJB+mBEkfIF4kAH6C8LUDfhia+dICk4XtJnjsqAGyRtHWB8kEJKS86aWujVzGkgm1+yvpTgyWonUAXrejjAeF4SS5aX6PbPe75HG1hE1SMCcESSPzWrY0PdjgTsSbfB2fbVcXEuZ8XYjbEBB8kPV3UfSqi3ZEHaGxmYVSLtoPpDgv60Fq2k5jDfQtllretOsTZ6ZQXqUgERkhWX/N4Bu3gnJ9ZK88BlGBKii4FNrJodAiqxWWbH1O2lVYNTuw0IDJBv1i1foybKsrotivy/3mT1z60u/P2lrhSLB23mRkIlAtw+8IkjGjCBBARI6ZO/9iKr4kKYCzPHpQocsD8gD0MO8qfTsTWTvFztxJKn/OwGJYINun/edgARpAo1GbnG0dhWaQtJstTB7qrXXRCYPUEsaAk/qmZW0Y64WNH1H1xBuV1ar6rgfZr1NkJCqEHpHTDoLgSo7+K/9ztO4e/pJrAfSiY3NucRFYrk+rAX+gccbsM8OL1s/03KjIK35PyASbvp4kS77Uqgy+lH6XhB8IkjHBu/2MhrAun0/8fEGTHvD2/ct/D5AEscAILz8XTMQhXSTjI/pku7Lkdik00CSeLPww/+DnjcuOP4Vf3gSccS3rxd8vE2QnObuIaNkWtaiyfUhO9xnSD1fVghQQ96ACEQcx2XmzguSZLYQAkK4T/eL/7ZMZpLw7fv67rsACfsYVKVFbE30qjkD2dia3h2v9i8Feuo6y6oKDfpMU9dWDduYsf08bKLAZJ6L2d4U0KsZuk2QhMFp3VEImDNJmhP6vqx9cJUObA+kozm4ZN7dSmgyXy1axVyrxUW2vlwEJExeRQ3RpJ7xHxf97donjlI7GiTJ5Eh05vzEw1ZB+9aUJVtuEyTiFYUCSOzFAC5H6RcZBslrgdTn4DiExT4i2LUmhUjRuEmQaESFqAwSCN+01Ec/KTJchnJIq6xK3GGQjqR3L5KPbwqf2BHiDcRz6qXRrx+kn+RuUnsoALuXyoUBgym/hyIPQBCX1UFqkk4CSdZ/jm8ShwL/SbxwvXt5/SBJUoU05N30MnOytFOVVA8lKqqcfuKgttUgKTm4bbtpUmVFUdmayYq2hsbKe93M++xXadwkSI44Ngm+Abt6rHxXUng3MFkoaaxGkOmDZEN2mD4kWV3syzhAEVp5qYtsfdKmVcSJrhZuKmXpixsC6S9KkGgBKAnQwRejVhewtu6VTtxUWiuSu2qQWszhkNT7sswJOoO/RNZHRok3Y6Q8joUHLMJL9svN+EmREiT6jqyQmukNtlJJUgg6wBtaN72/R2zZX81DVKTEVFa6oxxYlRMT+dBsFYV3X+CWQSIuKx8tywusJXwwV24NsZ+HbdcPUpBs2cZLxbQ22ZKrTXu7p7cj0s8m9zk3B5JyYzMGCWwoTWBbWqVl72reQEJ4cZ6TBYw9FijZ6aegA6oMvSSD3vS/0cOKfFzZ8EHecXDVIJkKkEJx7slqJZIJeQXrwERClLEA+yRN0wxpsO6CMWHx4o+jIMkLkmS7gHlFF8vzryJBwLo9fTcNkqDXvK/3AxWsA7wBBUCp+CC84gc9kDq1CwConTFpPThvHaUshxTj0QqiLhxXDNKTEiTWiRR23VvVnKuBOvAacDlDPK+bwBVBEo0SSRkC6ALnZVHUWVYq6Ym0ipXVf7fEpl2XdiNRcFNBHDa9/dP8Ysqn8wy4shAkVv6AeFisVHdt5oArJMq6QvspcBgdiZZCYGVGib/D/f2vTz2Q3l8cJAA8z3Mcx/MAOBkkDwjV7psO3VMJ0oBJQkuqGHVGeqlrkxQL6rH3E4ghBmzbKt1shdAnK5A58FXeA3M8SACAd573C2iffBsk4DmrbbhZ73a+7+926024XUWOBzRB6lNwvJ6U67awHYFQ9lQMhcDRJjFq8NE5d81KC6S3bUPTwh6VBSkug3yvdiNKdJdIq6q1tUhpOkhQMJwIHf1mTZ5NuHLeAQlI3ipc+9ai81j+Dn6HBlQSkMAfqES3C9K7j8L7yn7qUHQV0TRQo/Qf3snXUYxLESSROWAXVfxirP/qCa0VUSP95h+gDVKIfQs+gpOchCZIAKKD5ML3Lf7gg/d3YUQJPwfJ2a4tjAmSn/er1fvtNgzXH33yLdZuDbEdBEoCUvQp7F44Q9hlqmoNHoyuIl0E8qLYxxLF2AZJ1Hd1B3xXDZKsjFVsUWqYgqjHoQMYtQOyYyBhvfXHmpwwlIX1h+1qFaEHytTaX5gLf4NhYiB52x3+yw4QRAzDzUcMM5Sp7cr5ZRikD2L0m2xW/NjiCIJBUrRgVNrVi0GiBqltlJAEilQw/awGSTEXxRIaxaMW/9mQKBcjthSk/xgEKPptQ/UWlIuftpHTYQBetP1oLayNg0BaQJDA6iP82o26DQPKJAR3h4HCIqUF0tbEu8b4eK6njkFStG8PJvzavXgvB4lJkoKEiYKQ2sAhwHpSK5mgAWh2JTIFpf1kMdkZliTgPUG7skMAQXg+vO/B03xltF4sdhG0SYuNB7Y+gmzM6IBfnO1mh3/2vyRA9ZJ+Hi1mZx0Ultf2kFTTd4Y7k8TYQa8WuQ3Sjx3mIFTpYayVLDKT93p/ve8Y01bP3zv//qM3AhK67JsdV0tqfNjXQ2T8LYJqG1qL3UqPwkH19x4DBe3aT23d2JOkkFohFkPGbPt9cx0V+45HtlSIAYHiINN2UpCIdOypVXILMKRX03hAoYuMbif6ERv2RhKQILPG/AAZIOvX3XocnyaOs1iY5gIe+XpSpzmgErUgt4H6U6vOgnp4zRZ/EUFCBoiNj1TEJrB4PIw0PnCLsXfvhkES9R1hHGWVummSlWCQ6qv6m1dWZ37JRlTbK7M1NenPUDchr8fB5HrN5GcdIoC63hF49+6dB4AEOBq3Nhe9DfHYof1lCGvgrLCRwrQE8sHtdtcZlr+5bw///jlqUyTVPJHyMNaessfnHRc9pv62BVLHnSUSCD6zALq0b2Yo6CCkwJiOW5mChXpa3H8TVYf1ETo8H7HP+cn6FR3TdvUk6B7EypyocY/gl28+9D1T2q2+9nocYb3+il2qQWcWUhTEFT9hCmktkFw2IDXVw1RzozehqUz1RCFDZy/mIamLIktk/WMdkIYD4Wrjp9B3zQwrqvBYzxK/jPit8II5dCRYdvxuUAAzZhI0wM7RYvHN5A9mez4kZ16LsJhCzgoQiyN8i9X8DjlYmO1/2MAnXL33OUjCPkUK0gdxepp6ZJ9exZ20jHXZBakVCO9FtweM30ExGcXw1i2FRzUDGepCekcAmsJ/b/qbMAzxqUDtRmMHAODD+mm9Q/caH/CfFwxM5sX+TE++sUDIFAr2O9pAFwrXatNwA8Xqzwys3xRyRZvv0GfeNIJE3SDiq5uRqOzUnt6othusMO6A1Eqhd5tnxgIbcpR2DUrQqBJ9R33yD/TyoVUcyCAhbfbkYFPjIf2E423YNeInitQbdGCfnKenpwjLFxYwpJb8LRUmB63n/I1JUehjDEnQYYtvAtSpvsXBIj85fI9lV2KxGpDIesX3glKFKqGJrDAaBKZyO1oVbmuB1C1jbUcS4mRaxx9NQgkowZvWqvba0iJK+JfmOvJwOI4e49cdD7ghBcj0H1DF8UIUcNihcJwTbRZoxuDqCTEQJEX3pgXZIftmfAU854mSEyxkRMyoEkRoQTXovQPkibi6w3jQz76iRcZfvnYwAqtJJSgUoaQoy32WyotXuyC97VTsCTmrQbUqLUdZfWEXuxmPIm5VY+X7iJkvdtCmY5sjYLMOQ3Jk4+ybSAz6LmuBC87hf5H/XPgspiexPERe8W/lNm6BDSP8PJvNH/DG+Iw4EMUm7DlGNfk8iURDj2C1mr7bKsXUzgB5v7Rx2QepW3yXFkSYIDVMJw90eEdHgnh82icb6kCjkmRUCrRKITcZ+Hw+rkmI2puU+nlaW1QoBB8aasFwzF3iIXUqWWzOJX24sfndEkj2T4SwctbAOMPTOpqs7RonKehNB5CB1C3btyEx3O+L7GFslIcsfrfaENvjbZqhlySCEoopiid4/aCKw2wamiSkZ47K9UH7gwJxn3YfsVBaCPHNytP/fmQUKVifLCG94W9BEx4WqtrNrfeT2ebe3nrnTEmc46MrB2zK2x5I0t6KsQYndfzO27GOv5BVD2287T94MY03Mr5++gNFIoIi+O4Xj/7XMXBjm4VYCU5tQH3b2vdL+0rJykU6gNX8ypAJLUnI4Xn45GowoBl/kIB0bFemtNwYrK33ndjD4v2q2ThN45K+Z9zCQ+PFIY9kmbvQbxWuIWoxrby4z7k6HGMpB2l5JEiyoqH3C58lwBh98Dc+X/VJXQxzewsYUZZKPyyZ3OCb7Wwl/BpJecOIk0QEKQiALO8kA6mv72zSZmu7o+P05O0VPJj17ifi/lmWKU51UC76u7anVVZMmmIxjRTqcaFmkGT8Rpow8eWO66qqSfNLJtd2bZBa+s7+074sUDzJfd5X9uTGTIiCEBYmKs8UWk1pKM9yrh8jFuBiS/C4d7ThSV3Q7KufQBuQmSAlP+4edEFaykFqR4ZqZGhiyAsheYsze3I7Ge7baQpOOBcXvcPb0HeMa5ML1TDvxgQhjGRv8jyugGj9Q7/YRwVSK4cesFwhLgdLJjei43EBDUqAR8X91n6EnXcr2o6lmBf33dYDEP5ZyoHiZJQV8+rVsmuT3kpBauk7zgVKFzPsEcdZFnXAnehCEVzU2qTE9ypFVw8SC6N+BQ3jWXwQ8ih4afh2at4cH5pYGNnODv6gAEnQd7ygDmQ2Up0jl0La9Ie4gYgSdWyJqeLbPsNb0XZET0e9QkHyWhKNEFQapLhuJg21LNhSCVKj75qqxzx198boCFFZwoLMRBGypOC91UxkZfdz/e7atZ0lltlhViqGFpyPpiJVMRa2I+SOEofuEb9VgCTqO/wDQBzg8koUEh8bEC9L0JLBIeIbPe04lWXhSevK9R1PXmLFjBJW4r0zVr6yKanSGnMWFFWFaxTaX/+DEqRG32EjU1aIPuRpmmvKbi/sQGAQVsbjiCuOGDEDvLhyfsfzLZgZoKF9ogb/sFDmzvdj2T5myAFxZpXargtSo+9QtX9t46L/GoUBwViqXtr1RzcbCsU7iOVhfdesv7puf/Z3S9xis2v186x8ea+IZtq8VsfL3ypBEvVdEuMCSdx9hpMWhT1dlHiRpC8I08oiBeG74W1/1yBEQCDg2CQ9fRJkxlkvBsr0NYa1t8actUp9WoLUBUnQdwVOmjex9NHh4zJR4rrCFHItkY+p0Lal61fXJ08r3ELBTRIW/yZD5YXWUKGQTv2JeK/b5mQYpEbfQVINirRJSo2CJK3A433zqJShSaV6RmePl7MOrw2llYUEhFd5tqOMv2x9HkKxJjb3yVJ+oD2x5u0ASKK+Q2cO4hjol4/JfCWx/I6Xi5A56q0tZWAtRMKuJM6AWehqIel+A6udOdxKoTk6LSGlp924W1uQeiAJ+Yp2xdAYu1MV74OfhNfZ/QfoMnSm7+CZbK7JOEVk5i9350TLGX0U0vTy6mLdzRRutc/jvE4ViXMpSGK+os0E9hrrf6R1kmL5HYRp1VsuTpYivft4f00oRT6REL5KrREXZ7MQl2pKg4/xg/5AOtd1bUWZkAqkjqvE5KHU2u1Yy95XKBlCYiMwiFAkR1CvXA9KKMqAHQVmU3lKReAL6upinWI7jaJINUhclJoEPMgzvTVauN2s9zy1d7o2DIK5IPhFkYm6FpQin6kxNqHmQ8czGq4u1tjfZyd1naVypfh2BCSROtACyaDMtFekyqtZo/bl414T+Ek0yshEm5t3V4IRsZSsaZ7KS0fTqZp9NabiHlC6DsT7Sj5kegykhjqgICuIi2rCMjrFysxVByXmNbVGemGfyryC+APJqYitb+QWgffdNc+Khuzx9X12wToS8v75joMkUAc7yyHvsIcr/3UanZtcUvN6oSck0clF3ZpXgVIk9LW9/yb0Kq4Xehhp0G9R44DuWP0fNEASqEPqtshiOU7DVT1lPZRMvBiMpdCEPCAbKvBajyPM+abMFN+hVW9buq+I34/T7045KSiTIUGSgiSbQO3iaLqGQXxQtCs5O7N7D5FlonEjEvwikT7zVWMPlIv+vBIyfJFQ49ncsq+KGpp83ILX3TfMBmiDDCTJcGPbpU2ZOtSyVi3Q7mkLzOXoOfxFqHt4zeQF8+qI97NhH0eoo+EcVUFEv4yrm94cGVFB9gVJClJHlOy0zoE+t1St2zbA1uqpPIcNqQ4NIVs739zcYzN8Qps5Euxo11V11nuVuBea0e8gDqSpJz2Q2lWSh6SIJ2QbVSE8Yph6Kg+p9dDsVeK8VraWzSO+/5UzGdSA2zNH5lr5AT8PKbukxo2xKHxWJmlS/B30mcYPmiAJATx3H0x2pWulTem665ggvVvzYhteeOi/Ts3kdiEGgbAg7SKvpwHE7NgUFwnyhWCf2CiUg3Gx3QpLwMuwIElB+qGdsJgcOFStrsey0rVM1vYLZn4ElmYl92ugxN05ny82X/zvVc+BHep6Kg5jPRRBgYatMruBbEleDQuSAqSGhXdjphrBcDXD60X5iQVerfmCi6ZV+BVQ4oERItb4j4ud3/641mbogw0yO5ZW6EzDb8VXlxNAahzagnN5Ypvi9OjoEP3Ld6td626avt/sjGp6hdeXDuM1Q1wwtXu37vUOojWYPNDqTXVjWy5kkOiF7dQgiaJE9F3wUh1oNEFn0fpBOhbKY/2rINpYYkaGnARZ7b5pjLP3ShgtWiVnQnvnuukddGRthKC2tRM5f69l0VWpIClBEkQJgLjGLZlEqgIdUZJOWAPbkIdPvfdrq3MK7elKlw6JN6F68ydgtIcjoa4df719Eopp1jIvYTjn1vVNYklq4e0EkERRcjP+wzrju+409G/Hmxdru9AwH38hIEVGPDQh80uiJIStvpKAEOtxRmMgOkMm34W+rD4oH8n0PTx/7kSDurFVuSCpQZJuJ0NdMDrMQWWWtpbfuoF0mA+TKaLgmll5l9N4AkYkuUXGGSw+yYaA/v7R9CVjPMc5lRgWoDHw2h0XJBVIqg7a5Fl3N53ULEGHfvGhd/BYpiyTRe2EMX+XQknEKKJkfOFv0JgOaeCEDV3RN0iNXnppO571uCANgCRf9KdZX6EKD0FNb0rnBQJvFe4WFh7zKQxSuQxKq1872QewXYeRfOgQ8iCI1eoaJM0ZQtSB5Y7VuCApQTqlGZ2p4M8KX2Sxlo8pAVG47VZFmOuz+0tiTJFliBTjJADxxaUGSTt7jSanxZqh1VGQ3ixPREmaAMRevUhmZa6UWLuyezpz3FtIQviDkV1vRcIlsvqgWM8MuOmBGqe4H8F5OxmkGURJTh7IkIrFbjs0yFZMDfhnrUAW4lRDQ0Gh3fzgqzsoNMuDkjKuD6wnGcEkNvcpBWkQpJNFST7qmEYxTWsnjsYfiB5ZoXM+MbKEWjMJS0DzbP6yQiNavwnpld6XPWvZ6odcFLmHfdD6vrdHgDSHKEnJQ2MDTDJubruKIrLvA7SUCw9LmE2B8rxBBlbQjUaxccFmk2u2dOreJ0tw5uRMZu9qn4agF+0Hcf+vWpCGQTpZlPDdGS0eMumELjIjtZmfBonEjuKEBm7NrPS8KGQQWev3HnXbVmy8mml2w0LqfGyphREOgge14muXb48C6ZRBNsORh35ZihDGozs/tnj2ErTVFj/J7Ww4QTQ4/iiwHXnvvN9X4UdRZmSPfDeTJrHDR6FMZQwI0iBIx69yHq3x6tcM9OCy0CKJaLtuUgXIvZwFJw+6ZGI4ao3EZwwgJfnTJHbYQPMcgpu6ti5GIyCNKTzbHTeYj1KUfunlaGVAQZmyFq2/2K06IkEHn0W9CaBId6GBoWG47c6ZdjatmCGbPzjyKMifJkZUkOh52c9xntl3OqxhDKQhUUILt7N9WaRHotRL/ulABllGM3IJrUkQ9iPR1SCAQEdWJ/FJ0529IXi458ZfTPn1ljxnrhvLxBaJl4jgfVYHTUEaA0k6qRDC86caL9xG2zfd49wldJ+tCQj5H4RIJ4r27fyF2U/5/BNi0Y2uNyB/DMVFMC3DNCpG8tKToJpCdBlIWPUVuoI0AlKbO9h/Rdvq/7bPY1Gx6KD0ReULad1l7FF5Lc+/AwJmh9SoIOZhkr/8BNnztw5Q7dG5wNmuP40bo8Va4VAHj9o8N24ypliq4kRXkMZBEprK6rK1D31CbUqmqPJCq6jGEWqxBTztu1O9B+UDGiQvarGRxdaDnM2Lur8C0sTWiQPBIVN8AhVEEzCiBArUhzs7xdX6wrEt354EkohSotp3oBESUaGElrr539RWCK0Sa51o1D3QxSZi6d53LZD4eFEv+tDRq5B+eJ2Yzx9yxQc/wVo1tRoNIJ7MckG+f4m79XkjgjQKksAdVEsptJp4lSgZ4Enmn5g44dZZJYYgkpX9MxuHRebnT4QQmELMr9dX1I9hIMWHxiB/M5tPYHXvyNFy1KuNE2/2GEYaIHFRstsHDeKyoJWTGgrPVqOEBhHTtTiLP/+MedrHztIXeozdo77/1ODgES1oflx576L1t85QAtAvQpWEmpq9mxuNZaeTMOpWfYjZp7cngyRwB1eIl4J9lqQurVUtdCjoYzASBMD7XXBYSHo2Ts9yCLkmRuit7S8UE7M9lEDS1bHYqSKC0uVMx3BvO60ees2t3UDSqCBpgdQovBKA4HMe44/o2nby9yk0tIpPiYX2jftCHB666IgOrQ02v/JslLfpGR1z9/7owK0WRlUelA+SYLPYJr58OwNIIndIH6vEddEcD7BP7XSvX3qM1fLnoyEK+2ZdaLMjcmO2oza0O+AT90HBts8kNXb/yYUq15lKU7c2WD6UXAuldxOUnRZI/UArXp9ZpFSA9RPHibwrZmQxBSTdn/rMa+d0Uqu9Cpd3m654rSTes7kb3JbgRdJ/zjXmNJBliEFTn5IW0P0HQfl4uJui7HRB6kSHbLwLugz69S5j1nMvtTY/DeQhQLSWBSaatA6VGEn/KqCDrhsJc3Yymq1MEkPGt5N2ULxo3MsDxShtmagsSw66GYpJIPWjQ65Q1pxPaE6nt6uXBfT9D9LFvcB5v5Z5u405ohlEU17fzwBs1qFvTIW72pNm6Dxt/J9lCSRQaLwyIQo5K39U7bHSwUgPpL7CayasTRz+gecX9N46XJiLdbfKDYUCfGkoQFg+QGfvqiq/aCFqwwP77YZNGoSvSkXRC+hkL+S98EF90HVe6VIkN6npIPwpWaTpIHXD4dw3E8lkmmo4TNVnRa4We/crvAnMcaL38ihp2xzRAu6BsQJMdJqS00gVfTfRmlmc29h8pUW1C4muix9tXbeIDsGtiDvZX5Ckp+x0QZIovLwfBX6MYx2xeijVWUC8T4zsEVOF0wQFRInAYqhdnXVYitI3EC9s5ZZkSb5Sb9llwWpa7aoMlJknPYx0QeopPJZwFdRzFWi6THLDFOpld5rDZt8x0qwOwm/3HalY+VrBd0mST8scsRBaUNl2+rdAXq2qr+ymgNRSeMwmCfSb+KpaKB2kMaKVP57b+SYEGX76pjdQgMmSIHCeRipLluTTM0cshQaKql2g32nt0lR2+iC1FZ79TC0sV7M8NqfVCWhXuTSqsBjL/DUHx3pTNIY+MJRE0xWN5IWlSb680nTbacEhnSWtKhfXxUgfJOn8fc4abE7agF6MKJWqvOEsoFgkyYZiaA3maFB6J2QOP6p/1zdZIKIdKBgGqT28h4IFCvsojCaAJJol2v7JdZtgZUrNNzlk0jGTysoHs7XqkjVeaA5PYTNGW1QdrNbyZN/iqyzKEGf6q5dbpbugzCrsxA8NLJ4PpMYsEYbGdKzg25b6zQVsSGwHpt8kR4eL7lotgxO3kfDB0Z3d9duN3/5tOM8oLYBMpriDQiFbjMoh8QyUVg3l8u1ZQGoPpI4bSnkcRmyPliwYgyp9fuaFPqwISIKRdhUeM2E9txe6rRtUsgqfX/01rcnsM4Znd5LPzlULGq5xR+aetvvFJmA0CaRWv/NjzOK7Qgx+P+1VFMJEkku/4aK57arfzMUxmjIajxkx86s01xdFePW64puniRFBCQVT2URH7Nrm6VEGaSpIolmyK9rvLOyzLQ6T3yWbnmTiGE3rAuT9gx+n5pDi2r2b/BzwjNVDo2paAYflD+cEqVct2aSFwXSMcAMIOA6jyTNTeNP/NHDBdDGSxv5FN3j55owg9VASHB69xl6ZMOVHHbU/eZIXTydNQelz5p6KUXlEMvYUkDpBvMY9koUPtd+iCCablmNm4oH2EC4tTff8YJ8GEb3GrSzhRIwmg9RGqalTyk/RCXbyoqvzmi0kR7RXAFaYt9b7ZrBPToSIXePW8UzFaDpIrVArN0iTqLfMzFal5rmtTxkPRXWl3szD/sCSo3sd8+TuWNJwLEhvektHCEZuesK9g6ZJCyaSaDh2aCGeJaplzbS3Coy5tZ8N8CLquomk4TiQ2uQBVwARVzop4+KU99KFaeUv/GPHf4KtRSeSjzwzQYSOpWjtdFm+/eESIHVQygMSeMSC3Y7z2sk0nd4dvaOs4Dm+zRk4no4U1endbE+ruuEYjI4CqUUe7JS2UJNScTHmYGeBdgJmojSd84GK7jiIbDepqmTwhY/C6DiQpM1ltI5WQAmX5+3TqUqv/PKaEKH1KfZxFPU5j4NuWd1x+fJZQJKjRPJ+PNZLqd9kcu42VQGvANHjkbbIrdlmvQHtcRxGx4IkHx9AavIpHeex8WLyxWzPIr/cExfJ4Vh6ILgQyhKCIzE6GiQ5SpiRk5A87yI4aiuXndYluBE9R+iTRu/j8ofLg/RGghKagEL6dnityf5Y/VHt44vhhNdNnUCzcSpiv4+HGi6OcJBOBUmBUlqUOM3MU5MnxCLsNLuMdYr3j6f44USzl4mbYA1fVtKS4uMxOgEkBUpk/gaPF8WnxfkPD3V5XnmCMpQdbYmE/oWgclO8Ag6BVSdzYnQKSAqUWslakE1bZCbDKX08m94DcVknJ4cWSElxkqC0UVBAjErQGwl1CkYngaRGiY/XEEyoW++PzWYc0up5fsUX5MVjerQM2Z2qE1AiNzyuUxd1YXUVyEkYnQaSCiW+xEm4UEgnTPZsW958/fI5mFGEnqvjEYI3rgkctVe9Yoy6lvg0jE4ESYFSBfoGiUy+i7MTDDQWqNM1H2qbf3xwT2IKBUDzetIMUcJmncc+cVOcZ+448CdidCpIcpTqvofEXNsTiQQCqt7nwZFIgSDf11XqnpjKw0ULoIDcE/XBcEkK6orQ0bwdVz4Vo5NBkqL03Ct9tjMwD0hU9WVFmUtn6Ch6k4Mgzsuirh7cw+m/nxbV4d+OvEDubgRYzCG/mxej00GSoUQQEavC2XgAUg7tZll6OlJoGlWxR2B9kc5dAASbvNwXWZWcLD6yAilS7dWeNBsUs9qjeUCSoETX+ST918JMAuqHufKe9sFNHxKIVlY/F/DZowf9x3OdZY9Vkjykqeva9mwACZXw2G91O0EhkHcitDNgNAdIfZTIWzQmiY9SIcoOTxULTi/y6AJm2wf62DPDoijHZxVSdkWzYCDvbkWaA6NZQIIodaKtpPSBEXAh1krWMIFet+1NPVxwmr6/tM7jON9nDx2T93YOjOYBqZ9fwkkLNlWSz2Ajf2Z2Nr9RkA5Nn0/Mu8rs9OGhZ/aWb+c53ZlA6qJEEoCoKOrg8iJXUrHOyHiQ3aggoTZHoBM+nguj2UDqFiDTttgveZkHrVwYJ+P7W9V2dw/FPts3bNVN0vNiNB9IXfpgP3ZKvGmtOCN6QXKDis51MTuFfJFtaYUO7D6WRrvmw2hGkHooJe1+CSI5jDUckVR/5QeNNYFOF4vZ8RgydNFkvQqz0Lr5QepRcbE+q0si8vS27BDKPxIXnQ6wa3mw/Rv3dkaMZgUJUfE2yWOvBlgfFmMNILspQWqVA7LrFggdTD1aNydG84Ik6V9yq7rYFxlrIGH0+6ZYQ0dxU+XWxFV7WwZmNEfnAEkSIxK9f6YjWJjVPm9oYC4xwjVQQRy0XAnUFouLjHoTOObGaHaQBnLqzeWjd9GtijIv93V11WKFXT7wuXh8LDs9jfDz7yXZ93lV3VlA6humbrSIuoA2b0nqR7yuBR8UQkCRuvg5SatmQSxnPRI1sJwfozOApBYmHmuoMEZxq8E7vUJTVBRILWd5jiqBYtEqnT/KcG6QVCjxWMPhrlvzCaWpui5hSrN9bHxBoavDQ3ogo5BixvFi1Zzc5ZsfbgUkucpjEX7MGprCgLwkrx6/Eit3E1kK0sWEjmZbbJIvf0n4OOZaIUZnwehMIMmFiUZaC7F6EtVAkeKNU/rXT6FuZQwkS6AScXofGYC+Tw/uy1B9+1lU3TlBkqFk41kAxOpSV5AAY08YaDjzQ+LATeUFW4BXCX9PB3xX9oG0jUCi415OjM4JElZ5PZiqktoeChJN/FH/6RUyTM+i32ZDQ0RK2W0CEr1Qn0lgq8IT8wF0Xu2LYnRGkOQqj3WoUzZOdTsd4sdLV2zbdd2LKD8EBg1aHZI6/8LG2xKSU7aylKjaJc6klePnhOi8IEmFqR17oKNjWclrfcedXOzlnt99crPiGe2vuWv6wFBSnIJEbJWw3SuWc9DzYnRekIbiD0S9UwXHZyPfiTOaARpFNkOd3GDw6eCmyeMzcoj4uDFQ/JWCRKLbvGcRlFKMzgzR2UFSCxOpFEDLY6DXmAukqb3B5/iiInj6KSn2QpVehUQsMXIH0quGfDe+SQPUdDMU3R+PZQwEpbwM7ewYnR2kgfgDSf/FRcYbZNEkZGE0Gzh+2hzqZsvjOA4CVjcJgk6pn53UNbwArP06vRPnPdYFEJl2mhUQZfdVxOgiICmFiQ0kbNIAz0JhdV5kNVkfwAun7ClcQrLcNuAVWPAnoRQRLrqPhWx+g1LecYdUC0EugdElQMLC9Ga5lOVpWr0siEsxCoFq3m0KI0vgZHvIJUhmahytph+lKUHGjpj7UNX7fYV/NKTelMGwwHxrEvZoHcZFILoQSOpGpqrgrSwkd0YLPGjm1n4W6ozQcWKllUDlU4wlOChIwT7LGn2KansKvGk65+4z/cIX966H0sgg+gtBdDGQlDoP+o+Qb3/OSzpCgTq57HhopxOJJNHebtr4grNtaFIM9FwkVJ2qO5wVOTAyUh7u0s9iI0zV/EY2mvkZtET7CjC6GEhE50kZhI0qpZi5oUiwjA3l5pip95YRB0VV5IgZBJIGfwoSrVHac5B4FyIo6wpl7Chz4BU/zbLVwYGll4PokiBRnbccIc57UZJYJSX6o3B4rIcMBBJScNeSwbIFEpRI3hLB6UjRFRtSfRuUAzmuS0J0WZCGc+t3ouywSsqyKRvnufcyq+p4dGkOk0FR3SETxH5MkxKiF0FgCY+fg/w5UXPJy0J0aZCGAkVMlIhNCGrXtlOxkpL5/S+pUKsM+BiSbgydh9mhQ0uJA8CTmbLuTk/6lWL6IU0GAlIQostidGmQNGAiRTj4+D+LPZzMdmRCOA0Uqe0+xrKcNrNgQRwHLa+YilgjScxK7bW8sOWlxeg1QBqHqTeYkKxqpadOWFgi8IuDdCdxGndH09Aw4EPcETxmsHQSJcu3l4foVUDSgekl6O3EEY0M+wPGhVoZ8Lc2SHmr6bzgpVfMe826LtV4U9vrQPRKIGnAlNQvOQq8oeO1e5zazr409IKt/apluRDjP1Ffs0gC7J7g4QmX8V4jvPDmdU7rlUBiMC2HothJVVXcgjOm3BKejBgxWd0BA2mfdqNudZdyu3VZjKauXg+iVwSJwjTGyLsCQCceElzIZD1K+zogyS2V4EEJfR3jpc6vCdGrgjQUhZCARKl5JeBC//Aio+BM8vqcjVAKoN8z8BqE7opA0tB6/Hl4RnM1ylTQZbSYp5SC9CzdSIk9sTguC+1Znq/FFq4IpAla7+C6CTVRNFZNEKM8rjsQp1Z6P26iPf5p+bp67mpA4lpP1zrhTFRW7F/2j2LsqNsIDlk6AOCkutgrEKLrAYmI00Sc7IPL5pFAwMqX7t54NyvqLDt+LuR1CNE1gTSZ7HUVoaxM7xQZuh6ErgokJk7H4TTngxH68YoO5ppAEnBa/huh6wXplXG6RoSuEiSCE+ERy8sCdJUIXStIFxeoKwboqkFqBOrMEkUAul6ErhwkEaiziNTyBgC6BZAaoAhSyznxQSruxxs4gFsAqY/UcgZ4bgOf2wKJI4WgYlgtJ2GD0UHw3BA+NwiSABXGCoHF8KJPgwh/yBe9Iej8eIMvfIsgtcEiaL0RMBNAecOguUlwvgeQJIB1nu/k5b4XkL7r5/8D9y7jDg8iNikAAAAASUVORK5CYII=';
 
 /* صيغة التقرير: m = طلاب/معلمين | f = طالبات/معلمات | sm = طلاب/طالبات | tm = معلمين/معلمات */
@@ -700,7 +712,7 @@ function loadSettings(){
     return s;
   } catch(e){ return DEF_SETTINGS(); }
 }
-function persistSettings(){
+function persistSettings(){ try{setTopLogo()}catch(e){}
   try {
     const p = { ...settings };
     if (p.logo === SCHOOL_LOGO) delete p.logo;               // لا نكرر الشعار الثابت في التخزين
@@ -827,7 +839,7 @@ function render(){
       </div>`;
   }
 
-  /* التوقيعات تأتي دائماً بعد الشواهد */
+  /* التوقيعات تأتي دائما بعد الشواهد */
   const sg = sigsFor();
   if (sg.some(g => g.role || g.name)){
     h += `<div class="sigs">` + sg.map(g => (g.role || g.name)
@@ -837,7 +849,7 @@ function render(){
 
   const sh = $('#sheet');
   sh.className = `sheet sc-${S.scheme}` + (S.ink ? ' ink' : '');
-  const ff = (en && S.font === 'Tajawal') ? 'Inter' : S.font;   // خط لاتيني أنسب افتراضياً
+  const ff = (en && S.font === 'Tajawal') ? 'Inter' : S.font;   // خط لاتيني أنسب افتراضيا
   sh.style.fontFamily = `'${ff}', 'Tajawal', sans-serif`;
   sh.style.setProperty('--fs', S.size);
   sh.innerHTML = h;
@@ -1010,7 +1022,8 @@ $('#btnPrint').onclick = () => {
 /* ===================== تشغيل ===================== */
 $('#brandLink').addEventListener('click', e => { e.preventDefault(); go(null); });
 $('#btnBack').addEventListener('click', () => go(null));
-function applyLang(){
+function setTopLogo(){ const i=$('#topLogo'); const src=(settings.logo||SCHOOL_LOGO); if(src) i.src=src; else i.removeAttribute('src'); }
+function applyLang(){ setTopLogo();
   const H = document.documentElement;
   H.lang = LANG; H.dir = LANG === 'en' ? 'ltr' : 'rtl';
   $$('[data-i18n]').forEach(el => { el.textContent = T(el.dataset.i18n); });
@@ -1026,7 +1039,7 @@ function applyLang(){
 function setLang(l){
   if (l === LANG) return;
   const old = LANG;
-  /* إن كان العنوان هو الاسم الافتراضي للتقرير نبدّله بالاسم في اللغة الجديدة (ما يكتبه المستخدم لا يُترجَم) */
+  /* إن كان العنوان هو الاسم الافتراضي للتقرير نبدله بالاسم في اللغة الجديدة (ما يكتبه المستخدم لا يترجم) */
   if (R && data.title === RN(R, old)) data.title = RN(R, l);
   LANG = l;
   try { localStorage.setItem(LS_LANG, l); } catch(e){}

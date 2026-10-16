@@ -120,7 +120,8 @@ dialog h3{margin-top:0;color:var(--ui)}
 .sheet .evh{text-align:center;font-weight:800;color:var(--lb);margin:14px 0 6px}
 .sheet .ev{display:grid;gap:8px;margin:0 auto 12px;width:100%}
 .sheet .ev figure{margin:0;break-inside:avoid}
-.sheet .ev img{width:100%;height:44mm;object-fit:cover;border:1px solid var(--ac);border-radius:9px;display:block}
+.sheet .ev img{width:100%;height:44mm;object-fit:contain;background:#f4f6f8;border:1px solid var(--ac);border-radius:9px;display:block}
+.sheet.ink .ev img{background:#fff}
 .sheet .ev.cp img{height:30mm}
 /* التوقيعات */
 .sheet .sigs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:auto;padding-top:7mm;border-top:1px solid #d3d9e0;break-inside:avoid;font-size:.95em}
@@ -161,10 +162,24 @@ dialog{overflow-x:hidden}
 #home .tip{position:sticky;top:calc(var(--tbh,120px) + 8px);z-index:15;margin:0 0 16px;display:flex;align-items:flex-start;gap:10px;box-shadow:0 6px 18px #0002}
 #home .tip>span{flex:1}
 .tip[hidden]{display:none!important}
+#home .tip{transition:opacity .2s,transform .2s}
+#home .tip.tuck{opacity:0;transform:translateY(-12px);pointer-events:none}
+@media(prefers-reduced-motion:reduce){#home .tip{transition:none}}
 .tip-x{border:0;background:transparent;font-size:1.3rem;line-height:1;cursor:pointer;color:#7a6a20;padding:0 4px}
 
 .topbar{padding-inline:clamp(18px,4.5vw,64px)}
 
+
+/* ===== ترقيم الصفحات ===== */
+.sheets{display:flex;flex-direction:column;align-items:center;gap:14px}
+.sheet.page{height:297mm;min-height:0}
+.sheet .g2row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.sheet .g2row.first{margin-top:20px}
+.sheet .g2row .full{grid-column:1/-1}
+.sheet .g2row.single{grid-template-columns:1fr}
+.sheet .hdr.mini{padding:4mm 12mm 6mm}
+.sheet .hdr.mini img{max-height:13mm}
+.sheet .hdr.mini+.main{padding-top:6mm}
 /* ===== آخر التقارير + زر السجل ===== */
 .recent{margin:0 0 20px}
 .recent-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
@@ -201,7 +216,9 @@ dialog{overflow-x:hidden}
   .topbar,.panel,.toast,#home{display:none!important}
   .app{display:block;padding:0}
   .stage{overflow:visible;padding:0}
-  .sheet{zoom:1!important;box-shadow:none;margin:0;min-height:284mm;width:210mm;overflow:visible}
+  #sheet{zoom:1!important;display:block}
+  .sheet,.sheet.page{zoom:1!important;box-shadow:none;margin:0;height:284mm;min-height:0;width:210mm;overflow:hidden;break-after:page;page-break-after:always}
+  .sheet:last-child{break-after:auto;page-break-after:auto}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
@@ -547,6 +564,7 @@ const I18N = {
     homeTitle:'أداء الواجبات الوظيفية',
     homeSub:'اختر القالب المناسب لتوثيق شاهدك، ثم أدخل بياناتك وأرفق صور الشواهد واطبع التقرير أو احفظه PDF.',
     recentTitle:'آخر التقارير', viewLog:'عرض السجل', logBtn:'السجل', logTitle:'سجل التقارير', close:'إغلاق', logEmpty:'لا توجد تقارير بعد. ابدأ بأي قالب وسيظهر عملك هنا تلقائيا.', allTypes:'كل أنواع التقارير', draft:'مسودة', savedBadge:'محفوظ', logCount:'{n} تقرير', logCount1:'تقرير واحد', cLogDel:'حذف هذا التقرير من السجل؟ إن كان محفوظا فسيُحذف من المحفوظات أيضا.', now:'الآن', delBtn:'حذف',
+    page:'صفحة', of:'من', cont:'تابع',
     homeTip:'قبل البدء: اضغط «الإعدادات العامة» لتكتب بياناتك المطلوبة من توقيعات أو تغيير في الترويسة فتظهر في كل التقارير تلقائيا.',
     start:'ابدأ التصميم', savedH:'التقارير المحفوظة', save:'حفظ', del:'حذف', newOpt:'— تقرير جديد —',
     savedCount:'{n}/{max} تقارير محفوظة من هذا النوع (داخل هذا المتصفح فقط)',
@@ -573,6 +591,7 @@ const I18N = {
     homeTitle:'Job Duties Performance',
     homeSub:'Choose the template that fits your evidence, enter your details, attach evidence photos, then print the report or save it as a PDF.',
     recentTitle:'Recent reports', viewLog:'View history', logBtn:'History', logTitle:'Report history', close:'Close', logEmpty:'No reports yet. Start any template and your work will appear here automatically.', allTypes:'All report types', draft:'Draft', savedBadge:'Saved', logCount:'{n} reports', logCount1:'1 report', cLogDel:'Remove this report from the history? If it is saved, it will be deleted from saved reports too.', now:'Just now', delBtn:'Delete',
+    page:'Page', of:'of', cont:'cont.',
     homeTip:'Before you start: open “General settings” to enter your signatures or change the header details — they will appear in every report automatically.',
     start:'Start designing', savedH:'Saved reports', save:'Save', del:'Delete', newOpt:'— New report —',
     savedCount:'{n}/{max} saved reports of this type (stored in this browser only)',
@@ -877,6 +896,10 @@ function syncForm(){
 }
 
 /* ===================== المعاينة ===================== */
+/* ===================== المعاينة (ترقيم تلقائي للصفحات) ===================== */
+const MM = 3.7795;                       // بكسل لكل مم
+let rndTmr;
+const scheduleRender = () => { clearTimeout(rndTmr); rndTmr = setTimeout(render, 60); };
 function render(){
   if (!R) return;
   const S = settings, en = LANG === 'en';
@@ -886,60 +909,143 @@ function render(){
 
   const logos = [S.logo, S.logo2].filter(Boolean).map(src => `<img src="${src}" alt="">`).join('');
   const hdrLines = lines(S[sk('header')]);
-  let h = `<div class="hdr">
+  const hdrHTML = mini => `<div class="hdr${mini ? ' mini' : ''}">
       <div class="r">${hdrLines.map(l => `<div>${esc(t(l))}</div>`).join('')}</div>
       <div class="c">${logos}</div>
       <div class="l">${lines(S[sk('extra')]).map(l => `<div>${esc(t(l))}</div>`).join('')}</div>
-    </div>
-    <div class="title">${esc(t(data.title || RN(R)))}</div>
-    <div class="main">`;
+    </div>`;
+  const titleHTML = `<div class="title">${esc(t(data.title || RN(R)))}</div>`;
+  const ftrHTML = (i, n) => `<div class="ftr">${hdrLines.map(l => esc(t(l))).join(' • ')}${n > 1 ? ` &nbsp;|&nbsp; ${esc(T('page'))} ${t(i)} ${esc(T('of'))} ${t(n)}` : ''}</div>`;
 
-  /* خانات البيانات الأساسية */
+  /* ---- كتل المحتوى ---- */
+  const blocks = [];
   const cells = R.info.filter(f => data[f.id]).map(f =>
     `<div class="box"><span class="lb">${esc(FL(R, f))}</span>${esc(t(f.type === 'date' ? fmtDate(data[f.id]) : data[f.id]))}</div>`);
-  if (cells.length) {
+  if (cells.length){
     const n = cells.length, ic = n <= 4 ? n : (n <= 6 ? 3 : 4);   // توزيع متوازن بلا خانة منفردة
-    h += `<div class="info" style="grid-template-columns:repeat(${ic},1fr)">${cells.join('')}</div>`;
+    blocks.push({ kind: 'info', html: `<div class="info" style="grid-template-columns:repeat(${ic},1fr)">${cells.join('')}</div>` });
   }
 
-  /* الأقسام: عمودان (الأول في جهة البداية)، والملاحظات بعرض كامل، والقسم الأخير الفردي بعرض كامل */
-  const secs = R.sections.filter(s => (data[s.id] || '').trim());
-  const paired = secs.filter(s => s.id !== 'notes' && !s.full);
+  const secs = R.sections.filter(sc => (data[sc.id] || '').trim());
+  const paired = secs.filter(sc => sc.id !== 'notes' && !sc.full);
   const lastOdd = paired.length % 2 === 1 ? paired[paired.length - 1].id : null;
-  if (secs.length){
-    h += `<div class="grid2">` + secs.map(s => {
-      const v = data[s.id];
-      const body = s.type === 'list'
-        ? lines(v).map((l, i) => `<div class="li"><b>${t(i + 1)}.</b><span>${esc(t(stripNum(l)))}</span></div>`).join('')
-        : br(t(v));
-      const full = (s.id === 'notes' || s.full || s.id === lastOdd) ? ' full' : '';
-      return `<div class="box${full}"><span class="lb">${esc(SL(R, s))}</span>${body}</div>`;
-    }).join('') + `</div>`;
-  }
+  const boxes = secs.map(sc => {
+    const v = data[sc.id];
+    const atoms = sc.type === 'list'
+      ? lines(v).map((l, i) => `<div class="li"><b>${t(i + 1)}.</b><span>${esc(t(stripNum(l)))}</span></div>`)
+      : String(v).split('\n').map(l => esc(t(l)));
+    return { label: SL(R, sc), list: sc.type === 'list', atoms, full: (sc.id === 'notes' || sc.full || sc.id === lastOdd) };
+  });
+  const boxHTML = (bx, label, atoms, forceFull) =>
+    `<div class="box${(bx.full || forceFull) ? ' full' : ''}"><span class="lb">${esc(label)}</span>${bx.list ? atoms.join('') : atoms.join('<br>')}</div>`;
+  const rowHTML = (bxs, first) => `<div class="g2row${first ? ' first' : ''}">${bxs.map(bx => boxHTML(bx, bx.label, bx.atoms)).join('')}</div>`;
+  const rows = []; let pend = [];
+  boxes.forEach(bx => {
+    if (bx.full){ if (pend.length){ rows.push(pend); pend = []; } rows.push([bx]); }
+    else { pend.push(bx); if (pend.length === 2){ rows.push(pend); pend = []; } }
+  });
+  if (pend.length) rows.push(pend);
+  rows.forEach((r, i) => blocks.push({ kind: 'row', boxes: r, html: rowHTML(r, i === 0) }));
 
-  /* الشواهد (ثلاث في الصف) */
   if (images.length){
     const cols = Math.min(images.length, 3);
-    h += `<div class="evh">${esc(T('evidence'))}</div>
-      <div class="ev ${S.compress ? 'cp' : ''}" style="grid-template-columns:repeat(${cols},minmax(0,1fr));max-width:${cols * 62}mm">
-      ${images.map(src => `<figure><img src="${src}" alt=""></figure>`).join('')}
-      </div>`;
+    const evRow = chunk => `<div class="ev ${S.compress ? 'cp' : ''}" style="grid-template-columns:repeat(${cols},minmax(0,1fr));max-width:${cols * 62}mm">${chunk.map(src => `<figure><img src="${src}" alt=""></figure>`).join('')}</div>`;
+    for (let i = 0; i < images.length; i += 3){
+      const row = evRow(images.slice(i, i + 3));
+      blocks.push({ kind: 'ev', html: i === 0 ? `<div class="evblk"><div class="evh">${esc(T('evidence'))}</div>${row}</div>` : row });
+    }
   }
-
-  /* التوقيعات تأتي دائما بعد الشواهد */
   const sg = sigsFor();
-  if (sg.some(g => g.role || g.name)){
-    h += `<div class="sigs">` + sg.map(g => (g.role || g.name)
-      ? `<div><b>${esc(g.role)}</b>${g.role && g.name ? ' / ' : ''}${g.name ? `<b>${esc(g.name)}</b>` : ''}</div>` : '<div></div>').join('') + `</div>`;
-  }
-  h += `</div><div class="ftr">${hdrLines.map(l => esc(t(l))).join(' • ')}</div>`;
+  const sigsHTML = sg.some(g => g.role || g.name)
+    ? `<div class="sigs">` + sg.map(g => (g.role || g.name)
+        ? `<div><b>${esc(g.role)}</b>${g.role && g.name ? ' / ' : ''}${g.name ? `<b>${esc(g.name)}</b>` : ''}</div>` : '<div></div>').join('') + `</div>`
+    : '';
 
-  const sh = $('#sheet');
-  sh.className = `sheet sc-${S.scheme}` + (S.ink ? ' ink' : '');
+  /* ---- قياس وتوزيع على صفحات A4 ---- */
   const ff = (en && S.font === 'Tajawal') ? 'Inter' : S.font;   // خط لاتيني أنسب افتراضيا
-  sh.style.fontFamily = `'${ff}', 'Tajawal', sans-serif`;
-  sh.style.setProperty('--fs', S.size);
-  sh.innerHTML = h;
+  const pageCls = `sheet page sc-${S.scheme}` + (S.ink ? ' ink' : '');
+  const styleFont = `font-family:'${ff}','Tajawal',sans-serif;--fs:${S.size};`;
+  const hostCss = 'position:absolute;left:-10000px;top:0;visibility:hidden;pointer-events:none;';
+  const meas = document.createElement('div');
+  meas.className = pageCls + ' measure';
+  meas.style.cssText = hostCss + 'height:auto;min-height:0;' + styleFont;
+  meas.innerHTML = '<div class="main"></div>';
+  document.body.appendChild(meas);
+  const mm = meas.firstElementChild;
+  const hOf = html => {
+    mm.innerHTML = html;
+    const el = mm.firstElementChild, cs = getComputedStyle(el);
+    return el.getBoundingClientRect().height + (parseFloat(cs.marginTop) || 0) + (parseFloat(cs.marginBottom) || 0);
+  };
+  const availFor = first => {
+    const sh = document.createElement('div');
+    sh.className = pageCls;
+    sh.style.cssText = hostCss + 'height:284mm;min-height:0;' + styleFont;
+    sh.innerHTML = (first ? hdrHTML(false) + titleHTML : hdrHTML(true)) + '<div class="main"></div>' + ftrHTML(1, 1);
+    document.body.appendChild(sh);
+    const m = sh.querySelector('.main'), cs = getComputedStyle(m);
+    const a = m.clientHeight - (parseFloat(cs.paddingBottom) || 0) - (parseFloat(cs.paddingTop) || 0) - 4 * MM;
+    sh.remove();
+    return a;
+  };
+  const availFirst = availFor(true), availCont = availFor(false);
+
+  const pages = [];
+  let cur = { items: [], used: 0, avail: availFirst };
+  const newPage = () => { pages.push(cur); cur = { items: [], used: 0, avail: availCont }; };
+  const room = () => cur.avail - cur.used;
+  const put = (html, h) => { cur.items.push({ html, h }); cur.used += h; };
+
+  const placeSplit = bx => {            // تقسيم قسم طويل على عدة صفحات (بند/سطر)
+    let rest = bx.atoms.slice(), first = true;
+    const chunkHTML = (atoms, label) => `<div class="g2row single">${boxHTML(bx, label, atoms, true)}</div>`;
+    while (rest.length){
+      if (room() < 35 * MM && cur.items.length) newPage();
+      const space = room(), lab = first ? bx.label : bx.label + ' (' + T('cont') + ')';
+      if (hOf(chunkHTML(rest.slice(0, 1), lab)) > space && cur.items.length){ newPage(); continue; }
+      let lo = 1, hi = rest.length, best = 1;
+      while (lo <= hi){
+        const mid = (lo + hi) >> 1;
+        if (hOf(chunkHTML(rest.slice(0, mid), lab)) <= space){ best = mid; lo = mid + 1; } else hi = mid - 1;
+      }
+      const html = chunkHTML(rest.slice(0, best), lab);
+      put(html, hOf(html));
+      rest = rest.slice(best); first = false;
+      if (rest.length) newPage();
+    }
+  };
+  blocks.forEach(b => {
+    const h = hOf(b.html);
+    if (h <= room()){ put(b.html, h); return; }
+    if (h <= availCont && !(b.kind === 'row' && room() > 0.5 * availCont)){ newPage(); put(b.html, h); return; }
+    if (b.kind === 'row'){ b.boxes.forEach(placeSplit); return; }
+    if (cur.items.length) newPage();
+    put(b.html, h);
+  });
+  if (sigsHTML){
+    const hs = hOf(sigsHTML), gap = 6 * MM;
+    if (hs + gap > room()){
+      if (cur.items.length > 1){ const last = cur.items.pop(); cur.used -= last.h; newPage(); cur.items.push(last); cur.used += last.h; }
+      else newPage();
+    }
+    put(sigsHTML, hs);
+  }
+  pages.push(cur);
+  meas.remove();
+
+  /* ---- بناء الصفحات النهائية ---- */
+  const sh = $('#sheet');
+  sh.className = 'sheets';
+  sh.innerHTML = '';
+  pages.forEach((pg, i) => {
+    const el = document.createElement('div');
+    el.className = pageCls;
+    el.style.cssText = styleFont;
+    el.innerHTML = (i === 0 ? hdrHTML(false) + titleHTML : hdrHTML(true)) +
+      `<div class="main">${pg.items.map(x => x.html).join('')}</div>` + ftrHTML(i + 1, pages.length);
+    sh.appendChild(el);
+  });
+  sh.querySelectorAll('.hdr img').forEach(im => { if (!im.complete) im.addEventListener('load', scheduleRender, { once: true }); });
   fit();
 }
 function fit(){
@@ -1239,6 +1345,7 @@ function setLang(l){
 $('#btnLang').addEventListener('click', () => setLang(LANG === 'en' ? 'ar' : 'en'));
 applyLang(); route(); setTbh(); const _lg=$('#topLogo'); if(_lg) _lg.addEventListener('load',setTbh);
 $('#tipX').addEventListener('click',()=>{$('#homeTip').hidden=true;});
+addEventListener('scroll',()=>{ const t=$('#homeTip'); if(t) t.classList.toggle('tuck', window.scrollY > 40); },{passive:true});
 </script>
 </body>
 </html>

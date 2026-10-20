@@ -97,7 +97,8 @@ dialog h3{margin-top:0;color:var(--ui)}
 .sheet .hdr .r,.sheet .hdr .l{font-size:.82em;line-height:1.55;font-weight:700;overflow-wrap:anywhere}
 .sheet .hdr .r{text-align:start}
 .sheet .hdr .l{text-align:end}
-.sheet .hdr .r div:nth-child(n+2){font-size:.92em;font-weight:600}
+.sheet .hdr .r div,.sheet .hdr .l div{font-size:1em;font-weight:700}
+.sheet .hdr .l div{font-size:calc(1em + 1pt)}
 .sheet .hdr .c{display:flex;gap:8px;align-items:center;justify-content:center}
 .sheet .hdr img{max-height:26mm;max-width:38mm;object-fit:contain}
 /* العنوان: حبة تتداخل مع حافة الترويسة */
@@ -128,7 +129,7 @@ dialog h3{margin-top:0;color:var(--ui)}
 .sheet .sigs>div:nth-child(1){text-align:start}
 .sheet .sigs>div:nth-child(2){text-align:center}
 .sheet .sigs>div:nth-child(3){text-align:end}
-.sheet .sigs b{font-weight:800}
+.sheet .sigs b{font-weight:800;white-space:nowrap}
 /* الشريط السفلي */
 .sheet .ftr{background:var(--hd);color:var(--hf);text-align:center;font-size:.7em;padding:5px 12mm}
 .sheet.ink .ftr{border-top:2px solid #000}
@@ -395,160 +396,29 @@ dialog{overflow-x:hidden}
    ===================================================================== */
 const REPORTS = {
   program: {
-    name: 'تقرير توثيق تنفيذ برنامج', icon: '📘', acc: '#1f4e79',
-    desc: 'توثيق برنامج أو مبادرة نفذت، بأهدافه وإجراءاته ونتائجه وشواهده.',
+    name: 'حضور ورشة عمل / تدريب', icon: '📘', acc: '#1f4e79',
+    desc: 'توثيق حضور ورشة عمل أو تدريب: الجهة المنظمة والموضوع والمحاور والإجراءات والتوصيات وشواهد الحضور.',
     info: [
-      { id: 'place', label: 'مكان التنفيذ' }, { id: 'date', label: 'تاريخ التنفيذ', type: 'date' },
-      { id: 'audience', label: 'الفئة المستفيدة' }, { id: 'count', label: 'عدد المستفيدين' }
+      { id: 'place', label: 'الجهة المنظمة' }, { id: 'date', label: 'التاريخ', type: 'date' },
+      { id: 'duration', label: 'المدة' }
     ],
     sections: [
-      { id: 'summary', label: 'وصف مختصر للبرنامج', type: 'text', ph: 'اكتب وصفا موجزا ودقيقا' },
-      { id: 'goals',   label: 'أهداف البرنامج',     type: 'list', ph: 'هدف في كل سطر' },
+      { id: 'summary', label: 'الموضوع', type: 'text', ph: 'اكتب موضوع الورشة / التدريب' },
+      { id: 'goals',   label: 'المحاور / أهداف الورشة / التدريب', type: 'list', ph: 'محور أو هدف في كل سطر' },
       { id: 'steps',   label: 'إجراءات التنفيذ',    type: 'list', ph: 'خطوة في كل سطر بالتسلسل' },
-      { id: 'results', label: 'النتائج',            type: 'list', ph: 'نتيجة في كل سطر' },
       { id: 'recs',    label: 'التوصيات',           type: 'text', ph: 'توصيات للتطوير والتحسين' },
       { id: 'notes',   label: 'الملاحظات',          type: 'text', ph: 'أي معلومات إضافية' }
     ],
     sample: {
-      title: 'تقرير توثيق تنفيذ برنامج', place: 'قاعة الأنشطة', date: '', audience: 'طلاب الصف الخامس', count: '40',
-      summary: 'نفذ برنامج تعزيز القراءة بهدف رفع دافعية الطلاب نحو القراءة الحرة.',
-      goals: 'ترسيخ عادة القراءة اليومية\nتنمية الثروة اللغوية\nتشجيع الطلاب على تبادل الكتب',
-      steps: 'الإعلان عن البرنامج وتسجيل المشاركين\nتخصيص وقت يومي للقراءة\nمناقشة ما تم قراءته أسبوعيا\nتكريم المتميزين',
-      results: 'ارتفاع نسبة المشاركة في القراءة\nتحسن مستوى الطلاب في التعبير',
-      recs: 'تعميم البرنامج على بقية الصفوف.', notes: ''
+      title: 'حضور ورشة عمل / تدريب', place: 'إدارة التطوير المهني', date: '', duration: 'ثلاث ساعات',
+      summary: 'ورشة عمل حول توظيف استراتيجيات التعلم النشط في الحصة الدراسية.',
+      goals: 'التعرف على مفهوم التعلم النشط\nتطبيق استراتيجيات تعاونية داخل الصف\nتصميم أنشطة تقيس مخرجات التعلم',
+      steps: 'استعراض الإطار النظري للتعلم النشط\nتنفيذ تطبيقات عملية في مجموعات\nمناقشة النماذج المقدمة\nتقديم تغذية راجعة وختام الورشة',
+      recs: 'توظيف ما تم التدرب عليه في الحصص القادمة ومشاركة الزملاء بالخبرات المكتسبة.', notes: ''
     }
   },
-  classAct: {
-    name: 'تقرير تنفيذ نشاط صفي', icon: '📖', acc: '#0f766e',
-    desc: 'توثيق نشاط نفذ داخل الحصة الدراسية مع الاستراتيجية والوسائل والنتائج.',
-    info: [
-      { id: 'subject', label: 'المادة' }, { id: 'grade', label: 'الصف' },
-      { id: 'lesson', label: 'الدرس' }, { id: 'date', label: 'تاريخ التنفيذ', type: 'date' }
-    ],
-    sections: [
-      { id: 'summary',  label: 'وصف النشاط',                 type: 'text', ph: 'اكتب وصفا موجزا للنشاط' },
-      { id: 'goals',    label: 'أهداف النشاط',               type: 'list', ph: 'هدف في كل سطر' },
-      { id: 'tools',    label: 'الاستراتيجية والوسائل المستخدمة', type: 'list', ph: 'عنصر في كل سطر' },
-      { id: 'steps',    label: 'إجراءات التنفيذ',            type: 'list', ph: 'خطوة في كل سطر بالتسلسل' },
-      { id: 'results',  label: 'النتائج',                    type: 'list', ph: 'نتيجة في كل سطر' },
-      { id: 'recs',     label: 'التوصيات',                   type: 'text', ph: 'توصيات للتطوير والتحسين' },
-      { id: 'notes',    label: 'الملاحظات',                  type: 'text', ph: 'أي معلومات إضافية' }
-    ],
-    sample: {
-      title: 'تقرير تنفيذ نشاط صفي', subject: 'العلوم', grade: 'الصف الرابع', lesson: 'دورة الماء', date: '',
-      summary: 'نفذ نشاط تعليمي جماعي لمحاكاة دورة الماء في الطبيعة.',
-      goals: 'أن يصف الطالب مراحل دورة الماء\nأن يعمل الطالب ضمن فريق',
-      tools: 'التعلم التعاوني\nنموذج مجسم لدورة الماء\nبطاقات مصورة',
-      steps: 'تقسيم الطلاب إلى مجموعات\nتوزيع الأدوات والبطاقات\nتنفيذ المحاكاة ومناقشتها\nتقويم ختامي قصير',
-      results: 'تفاعل جميع المجموعات\nتحقق أهداف الدرس لدى غالبية الطلاب',
-      recs: 'تكرار النشاط بأدوات أخرى في دروس مشابهة.', notes: ''
-    }
-  },
-  assembly: {
-    name: 'تقرير تنفيذ إذاعة مدرسية', icon: '🎙️', acc: '#6d4aa8',
-    desc: 'توثيق إذاعة الطابور الصباحي، بفقراتها وأهدافها ونتائجها.',
-    info: [
-      { id: 'place', label: 'مكان التنفيذ' }, { id: 'time', label: 'وقت التنفيذ' },
-      { id: 'audience', label: 'المستهدفون' }, { id: 'date', label: 'تاريخ التنفيذ', type: 'date' }
-    ],
-    sections: [
-      { id: 'summary',  label: 'وصف مختصر لما تم تنفيذه', type: 'text', ph: 'اكتب وصفا موجزا ودقيقا' },
-      { id: 'goals',    label: 'أهداف الإذاعة المدرسية',   type: 'list', ph: 'هدف في كل سطر' },
-      { id: 'steps',    label: 'إجراءات التنفيذ',          type: 'list', ph: 'خطوة في كل سطر بالتسلسل' },
-      { id: 'segments', label: 'فقرات الإذاعة',            type: 'list', ph: 'فقرة في كل سطر' },
-      { id: 'results',  label: 'النتائج',                  type: 'list', ph: 'نتيجة في كل سطر' },
-      { id: 'recs',     label: 'التوصيات',                 type: 'text', ph: 'توصيات للتطوير والتحسين' },
-      { id: 'notes',    label: 'الملاحظات',                type: 'text', ph: 'أي معلومات إضافية' }
-    ],
-    sample: {
-      title: 'تقرير تنفيذ إذاعة مدرسية', place: 'ساحة المدرسة', time: 'الطابور الصباحي', audience: 'جميع الطلاب', date: '',
-      summary: 'نفذت إذاعة صباحية تناولت قيمة التعاون، بمشاركة مجموعة من الطلاب في تقديم الفقرات.',
-      goals: 'تعزيز القيم السلوكية الإيجابية\nتنمية مهارات الإلقاء والثقة بالنفس\nتشجيع المشاركة في الأنشطة المدرسية',
-      steps: 'توزيع الأدوار على الطلاب المشاركين\nالتدريب على الإلقاء\nتنفيذ الإذاعة أمام مجتمع المدرسة\nتوثيق التنفيذ بالصور',
-      segments: 'القرآن الكريم\nالحديث الشريف\nكلمة الصباح\nالحكمة\nهل تعلم',
-      results: 'مشاركة فعالة من الطلاب\nتحسن مهارات الإلقاء\nتعزيز روح العمل الجماعي',
-      recs: 'الاستمرار في تقديم الإذاعة بانتظام وإتاحة الفرصة لأكبر عدد من الطلاب.', notes: ''
-    }
-  },
-  extra: {
-    name: 'تقرير تنفيذ نشاط لا صفي', icon: '🎯', acc: '#c2410c',
-    desc: 'توثيق نشاط خارج الحصة الدراسية: رحلة، مسابقة، فعالية، ناد طلابي.',
-    info: [
-      { id: 'place', label: 'مكان التنفيذ' }, { id: 'date', label: 'تاريخ التنفيذ', type: 'date' },
-      { id: 'audience', label: 'الفئة المستهدفة' }, { id: 'count', label: 'عدد المشاركين' }
-    ],
-    sections: [
-      { id: 'summary', label: 'وصف النشاط',      type: 'text', ph: 'اكتب وصفا موجزا للنشاط' },
-      { id: 'goals',   label: 'أهداف النشاط',    type: 'list', ph: 'هدف في كل سطر' },
-      { id: 'steps',   label: 'إجراءات التنفيذ', type: 'list', ph: 'خطوة في كل سطر بالتسلسل' },
-      { id: 'results', label: 'النتائج',         type: 'list', ph: 'نتيجة في كل سطر' },
-      { id: 'recs',    label: 'التوصيات',        type: 'text', ph: 'توصيات للتطوير والتحسين' },
-      { id: 'notes',   label: 'الملاحظات',       type: 'text', ph: 'أي معلومات إضافية' }
-    ],
-    sample: {
-      title: 'تقرير تنفيذ نشاط لا صفي', place: 'ملعب المدرسة', date: '', audience: 'طلاب المرحلة المتوسطة', count: '60',
-      summary: 'نفذ يوم رياضي تضمن مسابقات جماعية وفردية بروح تنافسية.',
-      goals: 'تنمية اللياقة البدنية\nتعزيز روح الفريق\nاكتشاف المواهب الرياضية',
-      steps: 'تشكيل الفرق وتحديد المسابقات\nتجهيز الملعب والأدوات\nتنفيذ المسابقات\nتكريم الفرق الفائزة',
-      results: 'مشاركة واسعة من الطلاب\nاكتشاف عدد من المواهب الرياضية',
-      recs: 'تنظيم اليوم الرياضي بشكل فصلي.', notes: ''
-    }
-  },
-  waiting: {
-    name: 'تقرير تنفيذ حصة انتظار', icon: '⏳', acc: '#0369a1',
-    desc: 'توثيق حصة انتظار نفذت بدلا من معلم غائب، بما قدم فيها من محتوى.',
-    info: [
-      { id: 'grade', label: 'الصف والشعبة' }, { id: 'period', label: 'الحصة' },
-      { id: 'absent', label: 'المعلم الغائب' }, { id: 'date', label: 'تاريخ التنفيذ', type: 'date' }
-    ],
-    sections: [
-      { id: 'summary', label: 'وصف ما تم تنفيذه',   type: 'text', ph: 'اكتب وصفا موجزا لما جرى في الحصة' },
-      { id: 'goals',   label: 'أهداف الحصة',        type: 'list', ph: 'هدف في كل سطر' },
-      { id: 'steps',   label: 'الأنشطة والإجراءات', type: 'list', ph: 'نشاط في كل سطر بالتسلسل' },
-      { id: 'results', label: 'النتائج',            type: 'list', ph: 'نتيجة في كل سطر' },
-      { id: 'recs',    label: 'التوصيات',           type: 'text', ph: 'توصيات للتطوير والتحسين' },
-      { id: 'notes',   label: 'الملاحظات',          type: 'text', ph: 'أي معلومات إضافية' }
-    ],
-    sample: {
-      title: 'تقرير تنفيذ حصة انتظار', grade: 'الصف السادس / ب', period: 'الحصة الثالثة', absent: '', date: '',
-      summary: 'استثمرت الحصة في نشاط قرائي وحوار هادف بدلا من ضياع الوقت.',
-      goals: 'استثمار وقت الحصة فيما يفيد\nتنمية مهارات التواصل',
-      steps: 'تهيئة الطلاب وتوزيع نصوص قصيرة\nقراءة جماعية ثم مناقشة\nنشاط ختامي: كتابة فكرة رئيسية',
-      results: 'انضباط الطلاب وتفاعلهم\nإنجاز النشاط في زمن الحصة',
-      recs: 'إعداد حقيبة أنشطة جاهزة لحصص الانتظار.', notes: ''
-    }
-  },
-  observation: {
-    name: 'تقرير حصص المشاهدة', icon: '👁️', acc: '#be185d',
-    desc: 'توثيق مشاهدة رئيس القسم أو الإدارة لحصتك: نقاط القوة والملاحظات وما نفذ للتحسين.',
-    info: [
-      { id: 'teacher', label: 'المعلم' }, { id: 'visitor', label: 'القائم بالمشاهدة' },
-      { id: 'attendance', label: 'الحضور' }, { id: 'subject', label: 'المادة' },
-      { id: 'grade', label: 'الصف والشعبة' }, { id: 'lesson', label: 'الدرس' },
-      { id: 'date', label: 'تاريخ المشاهدة', type: 'date' }, { id: 'period', label: 'الحصة' }
-    ],
-    sections: [
-      { id: 'summary',   label: 'وصف مختصر لحصة المشاهدة',          type: 'text', ph: 'اكتب وصفا موجزا لسير الحصة' },
-      { id: 'goals',     label: 'أهداف المشاهدة',                   type: 'list', ph: 'هدف في كل سطر' },
-      { id: 'strengths', label: 'نقاط القوة التي لوحظت',            type: 'list', ph: 'نقطة قوة في كل سطر' },
-      { id: 'feedback',  label: 'الملاحظات والمقترحات المقدمة',   type: 'list', ph: 'ملاحظة أو مقترح في كل سطر' },
-      { id: 'apply',     label: 'ما تم تنفيذه بعد المشاهدة للتحسين', type: 'list', ph: 'إجراء في كل سطر' },
-      { id: 'recs',      label: 'التوصيات',                         type: 'text', ph: 'توصيات للتطوير والتحسين' },
-      { id: 'notes',     label: 'الملاحظات',                        type: 'text', ph: 'أي معلومات إضافية' }
-    ],
-    sample: {
-      title: 'تقرير حصص المشاهدة', teacher: '', visitor: '', attendance: 'رئيس القسم ومدير المدرسة', subject: 'اللغة العربية', grade: 'الصف الخامس / أ',
-      lesson: 'القراءة الجهرية', date: '', period: 'الحصة الثانية',
-      summary: 'حضر رئيس القسم حصة القراءة الجهرية ضمن برنامج الزيارات الصفية لمتابعة الأداء التدريسي.',
-      goals: 'متابعة تنفيذ الدرس وفق الخطة\nالوقوف على نقاط القوة وفرص التحسين\nدعم المعلم مهنيا',
-      strengths: 'تهيئة مشوقة للدرس\nتنويع الأسئلة وإشراك جميع الطلاب\nحسن إدارة الوقت',
-      feedback: 'زيادة وقت النشاط الجماعي\nاستخدام التقويم السريع في ختام الحصة',
-      apply: 'إضافة نشاط جماعي قصير في الحصص التالية\nتطبيق بطاقات التقويم السريع',
-      recs: 'عقد لقاء متابعة بعد أسبوعين لقياس أثر التحسينات.', notes: ''
-    }
-  }
 };
-const ORDER = ['program', 'classAct', 'assembly', 'extra', 'waiting', 'observation'];
+const ORDER = ['program'];
 Object.keys(REPORTS).forEach(k => REPORTS[k].key = k);
 
 /* =====================================================================
@@ -565,6 +435,7 @@ const I18N = {
     homeSub:'اختر القالب المناسب لتوثيق شاهدك، ثم أدخل بياناتك وأرفق صور الشواهد واطبع التقرير أو احفظه PDF.',
     recentTitle:'آخر التقارير', viewLog:'عرض السجل', logBtn:'السجل', logTitle:'سجل التقارير', close:'إغلاق', logEmpty:'لا توجد تقارير بعد. ابدأ بأي قالب وسيظهر عملك هنا تلقائيا.', allTypes:'كل أنواع التقارير', draft:'مسودة', savedBadge:'محفوظ', logCount:'{n} تقرير', logCount1:'تقرير واحد', cLogDel:'حذف هذا التقرير من السجل؟ إن كان محفوظا فسيُحذف من المحفوظات أيضا.', now:'الآن', delBtn:'حذف',
     page:'صفحة', of:'من', cont:'تابع',
+    vision:'رؤيتنا: تعليم متميز في بيئة جاذبة لإعداد جيل مبدع يطور ذاته ويواجه تحديات المستقبل ويحافظ على هويته الوطنية في ظل مشاركة مجتمعية فاعلة',
     homeTip:'قبل البدء: اضغط «الإعدادات العامة» لتكتب بياناتك المطلوبة من توقيعات أو تغيير في الترويسة فتظهر في كل التقارير تلقائيا.',
     start:'ابدأ التصميم', savedH:'التقارير المحفوظة', save:'حفظ', del:'حذف', newOpt:'— تقرير جديد —',
     savedCount:'{n}/{max} تقارير محفوظة من هذا النوع (داخل هذا المتصفح فقط)',
@@ -592,6 +463,7 @@ const I18N = {
     homeSub:'Choose the template that fits your evidence, enter your details, attach evidence photos, then print the report or save it as a PDF.',
     recentTitle:'Recent reports', viewLog:'View history', logBtn:'History', logTitle:'Report history', close:'Close', logEmpty:'No reports yet. Start any template and your work will appear here automatically.', allTypes:'All report types', draft:'Draft', savedBadge:'Saved', logCount:'{n} reports', logCount1:'1 report', cLogDel:'Remove this report from the history? If it is saved, it will be deleted from saved reports too.', now:'Just now', delBtn:'Delete',
     page:'Page', of:'of', cont:'cont.',
+    vision:'Our vision: Distinguished education in an attractive environment to prepare a creative generation that develops itself, faces future challenges and preserves its national identity, with active community participation',
     homeTip:'Before you start: open “General settings” to enter your signatures or change the header details — they will appear in every report automatically.',
     start:'Start designing', savedH:'Saved reports', save:'Save', del:'Delete', newOpt:'— New report —',
     savedCount:'{n}/{max} saved reports of this type (stored in this browser only)',
@@ -623,138 +495,24 @@ const T = (k, v) => {
 /* النسخة الإنجليزية من التقارير: العناوين فقط (نفس الهيكل) + مثال جاهز */
 const EN = {
   program: {
-    name: 'Program Implementation Report',
-    desc: 'Document a program or initiative you carried out — its goals, procedures, results and evidence.',
-    info: { place: 'Venue', date: 'Date', audience: 'Target group', count: 'Number of beneficiaries' },
+    name: 'Workshop / Training Attendance',
+    desc: 'Document attending a workshop or training: the organizer, topic, themes, procedures, recommendations and attendance evidence.',
+    info: { place: 'Organizing body', date: 'Date', duration: 'Duration' },
     sections: {
-      summary: ['Brief description of the program', 'Write a short, accurate description'],
-      goals: ['Program goals', 'One goal per line'],
+      summary: ['Topic', 'Write the topic of the workshop / training'],
+      goals: ['Themes / workshop / training objectives', 'One theme or objective per line'],
       steps: ['Implementation procedures', 'One step per line, in order'],
-      results: ['Results', 'One result per line'],
       recs: ['Recommendations', 'Recommendations for development and improvement'],
       notes: ['Notes', 'Any additional information']
     },
     sample: {
-      title: 'Program Implementation Report', place: 'Activity hall', date: '', audience: 'Grade 5 students', count: '40',
-      summary: 'A reading program was implemented to raise students’ motivation for independent reading.',
-      goals: 'Build a daily reading habit\nEnrich students’ vocabulary\nEncourage students to exchange books',
-      steps: 'Announce the program and register participants\nSet aside a daily reading time\nDiscuss what was read every week\nHonor outstanding readers',
-      results: 'Higher participation in reading\nImproved students’ written expression',
-      recs: 'Extend the program to the remaining grades.', notes: ''
+      title: 'Workshop / Training Attendance', place: 'Professional Development Department', date: '', duration: 'Three hours',
+      summary: 'A workshop on applying active-learning strategies in the classroom.',
+      goals: 'Understand the concept of active learning\nApply collaborative strategies in class\nDesign activities that measure learning outcomes',
+      steps: 'Review the theoretical framework of active learning\nCarry out practical group applications\nDiscuss the models presented\nGive feedback and close the workshop',
+      recs: 'Apply what was learned in upcoming lessons and share the gained experience with colleagues.', notes: ''
     }
   },
-  classAct: {
-    name: 'Classroom Activity Report',
-    desc: 'Document an activity carried out during the lesson, with its strategy, resources and results.',
-    info: { subject: 'Subject', grade: 'Grade', lesson: 'Lesson', date: 'Date' },
-    sections: {
-      summary: ['Activity description', 'Write a short description of the activity'],
-      goals: ['Activity goals', 'One goal per line'],
-      tools: ['Strategy and resources used', 'One item per line'],
-      steps: ['Implementation procedures', 'One step per line, in order'],
-      results: ['Results', 'One result per line'],
-      recs: ['Recommendations', 'Recommendations for development and improvement'],
-      notes: ['Notes', 'Any additional information']
-    },
-    sample: {
-      title: 'Classroom Activity Report', subject: 'Science', grade: 'Grade 4', lesson: 'The Water Cycle', date: '',
-      summary: 'A group learning activity was held to simulate the water cycle in nature.',
-      goals: 'Students describe the stages of the water cycle\nStudents work as part of a team',
-      tools: 'Cooperative learning\nA 3D model of the water cycle\nIllustrated cards',
-      steps: 'Divide students into groups\nDistribute the materials and cards\nRun the simulation and discuss it\nShort closing assessment',
-      results: 'All groups took part actively\nMost students achieved the lesson goals',
-      recs: 'Repeat the activity with other materials in similar lessons.', notes: ''
-    }
-  },
-  assembly: {
-    name: 'School Assembly Report',
-    desc: 'Document the morning assembly, with its segments, goals and results.',
-    info: { place: 'Venue', time: 'Time', audience: 'Audience', date: 'Date' },
-    sections: {
-      summary: ['Brief description of what was implemented', 'Write a short, accurate description'],
-      goals: ['Assembly goals', 'One goal per line'],
-      steps: ['Implementation procedures', 'One step per line, in order'],
-      segments: ['Assembly segments', 'One segment per line'],
-      results: ['Results', 'One result per line'],
-      recs: ['Recommendations', 'Recommendations for development and improvement'],
-      notes: ['Notes', 'Any additional information']
-    },
-    sample: {
-      title: 'School Assembly Report', place: 'School yard', time: 'Morning line-up', audience: 'All students', date: '',
-      summary: 'A morning assembly on the value of cooperation was held, with a group of students presenting the segments.',
-      goals: 'Promote positive behavior and values\nDevelop public-speaking skills and confidence\nEncourage participation in school activities',
-      steps: 'Assign roles to the participating students\nTrain students on delivery\nPresent the assembly to the school community\nDocument the event with photos',
-      segments: 'Holy Quran\nHadith of the day\nMorning speech\nWise saying\nDid you know?',
-      results: 'Active participation from students\nImproved delivery skills\nStronger teamwork',
-      recs: 'Continue holding the assembly regularly and give more students a chance to take part.', notes: ''
-    }
-  },
-  extra: {
-    name: 'Extracurricular Activity Report',
-    desc: 'Document an activity held outside lessons: a trip, competition, event or student club.',
-    info: { place: 'Venue', date: 'Date', audience: 'Target group', count: 'Number of participants' },
-    sections: {
-      summary: ['Activity description', 'Write a short description of the activity'],
-      goals: ['Activity goals', 'One goal per line'],
-      steps: ['Implementation procedures', 'One step per line, in order'],
-      results: ['Results', 'One result per line'],
-      recs: ['Recommendations', 'Recommendations for development and improvement'],
-      notes: ['Notes', 'Any additional information']
-    },
-    sample: {
-      title: 'Extracurricular Activity Report', place: 'School playground', date: '', audience: 'Middle school students', count: '60',
-      summary: 'A sports day was held with team and individual competitions in a friendly spirit.',
-      goals: 'Improve physical fitness\nStrengthen team spirit\nDiscover sporting talents',
-      steps: 'Form the teams and set the competitions\nPrepare the field and equipment\nRun the competitions\nHonor the winning teams',
-      results: 'Wide participation from students\nSeveral sporting talents discovered',
-      recs: 'Hold the sports day every semester.', notes: ''
-    }
-  },
-  waiting: {
-    name: 'Cover Lesson Report',
-    desc: 'Document a cover lesson held in place of an absent teacher, and what was delivered in it.',
-    info: { grade: 'Grade and section', period: 'Period', absent: 'Absent teacher', date: 'Date' },
-    sections: {
-      summary: ['Description of what was done', 'Briefly describe what happened in the lesson'],
-      goals: ['Lesson goals', 'One goal per line'],
-      steps: ['Activities and procedures', 'One activity per line, in order'],
-      results: ['Results', 'One result per line'],
-      recs: ['Recommendations', 'Recommendations for development and improvement'],
-      notes: ['Notes', 'Any additional information']
-    },
-    sample: {
-      title: 'Cover Lesson Report', grade: 'Grade 6 / B', period: 'Third period', absent: '', date: '',
-      summary: 'The lesson was used for a reading activity and a purposeful discussion instead of lost time.',
-      goals: 'Make good use of the lesson time\nDevelop communication skills',
-      steps: 'Settle the students and hand out short texts\nGroup reading followed by discussion\nClosing activity: write the main idea',
-      results: 'Students stayed engaged and well-behaved\nThe activity was completed within the lesson time',
-      recs: 'Prepare a ready-to-use activity kit for cover lessons.', notes: ''
-    }
-  },
-  observation: {
-    name: 'Lesson Observation Report',
-    desc: 'Document a lesson observation by the head of department or school management: strengths, feedback and follow-up actions.',
-    info: { teacher: 'Teacher', visitor: 'Observer', attendance: 'Attendees', subject: 'Subject', grade: 'Grade and section', lesson: 'Lesson', date: 'Observation date', period: 'Period' },
-    sections: {
-      summary: ['Brief description of the observed lesson', 'Briefly describe how the lesson went'],
-      goals: ['Observation goals', 'One goal per line'],
-      strengths: ['Strengths observed', 'One strength per line'],
-      feedback: ['Feedback and suggestions given', 'One comment or suggestion per line'],
-      apply: ['Actions taken after the observation', 'One action per line'],
-      recs: ['Recommendations', 'Recommendations for development and improvement'],
-      notes: ['Notes', 'Any additional information']
-    },
-    sample: {
-      title: 'Lesson Observation Report', teacher: '', visitor: '', attendance: 'Head of department and school principal', subject: 'Arabic', grade: 'Grade 5 / A',
-      lesson: 'Reading aloud', date: '', period: 'Second period',
-      summary: 'The head of department attended the reading-aloud lesson as part of the classroom visits program to follow up on teaching performance.',
-      goals: 'Follow how the lesson is delivered against the plan\nIdentify strengths and areas for improvement\nSupport the teacher professionally',
-      strengths: 'An engaging lesson opening\nVaried questions that involved all students\nGood time management',
-      feedback: 'Allow more time for group activity\nUse quick assessment at the end of the lesson',
-      apply: 'Add a short group activity in the coming lessons\nApply quick-assessment cards',
-      recs: 'Hold a follow-up meeting in two weeks to measure the impact of the improvements.', notes: ''
-    }
-  }
 };
 const RN = (r, l = LANG) => l === 'en' ? EN[r.key].name : r.name;
 const RD = r => LANG === 'en' ? EN[r.key].desc : r.desc;
@@ -785,10 +543,10 @@ const defaultSigs = (g, lang = 'ar') => lang === 'en'
 
 const DEF_SETTINGS = () => ({
   gender: 'm',
-  header: 'مدرسة دار العلوم الخاصة فلج هزاع\nDar-Aluloom Private School Falaj Hazza',
-  extra: 'العام الدراسي 2026 / 2027\nالفصل الدراسي الأول',
-  headerEn: 'Dar-Aluloom Private School Falaj Hazza',
-  extraEn: 'Academic Year 2026 / 2027\nFirst Semester',
+  header: 'مدرسة دار العلوم الخاصة - العين\nDar-Aluloom Private School - Al Ain\nالعام الدراسي 2026 / 2027\nالفصل الدراسي الأول',
+  extra: '037676514\n9186@adek.gov.ae\nhttps://dufschool.ae',
+  headerEn: 'Dar-Aluloom Private School - Al Ain\nAcademic Year 2026 / 2027\nFirst Semester',
+  extraEn: '037676514\n9186@adek.gov.ae\nhttps://dufschool.ae',
   logo: SCHOOL_LOGO, logoOff: false, logo2: '',
   sigs: defaultSigs('m'), sigsEn: defaultSigs('m', 'en'),
   scheme: 'base', font: 'Tajawal', size: '1',
@@ -815,6 +573,12 @@ function loadSettings(){
       if (!s[k][2].name) s[k][2].name = PRINCIPAL[lg];
       if (lg === 'ar' && /مديرة|مدير \//.test(s[k][2].role)) s[k][2].role = 'مدير المدرسة';
     });
+    // ترحيل الترويسة الافتراضية القديمة إلى الجديدة (إن لم يعدّلها المستخدم)
+    const D = DEF_SETTINGS();
+    if (s.header === 'مدرسة دار العلوم الخاصة فلج هزاع\nDar-Aluloom Private School Falaj Hazza' || s.header === 'مدرسة دار العلوم - العين\nDar-Aluloom Private School - Al Ain\nالعام الدراسي 2026 / 2027\nالفصل الدراسي الأول') s.header = D.header;
+    if (s.extra === 'العام الدراسي 2026 / 2027\nالفصل الدراسي الأول') s.extra = D.extra;
+    if (s.headerEn === 'Dar-Aluloom Private School Falaj Hazza') s.headerEn = D.headerEn;
+    if (s.extraEn === 'Academic Year 2026 / 2027\nFirst Semester') s.extraEn = D.extraEn;
     return s;
   } catch(e){ return DEF_SETTINGS(); }
 }
@@ -888,6 +652,11 @@ function buildForm(){
     if (s.type === 'list') h += `<div class="hint">${esc(T('hintList'))}</div>`;
   });
   $('#formArea').innerHTML = h;
+  // فتح التقويم عند النقر على أي مكان في خانة التاريخ
+  $$('#formArea input[type=date]').forEach(el => {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', () => { try { el.showPicker(); } catch(e){} });
+  });
   $$('[data-f]').forEach(el => el.addEventListener('input', () => { data[el.dataset.f] = el.value; render(); markDirty(); }));
 }
 function syncForm(){
@@ -909,13 +678,14 @@ function render(){
 
   const logos = [S.logo, S.logo2].filter(Boolean).map(src => `<img src="${src}" alt="">`).join('');
   const hdrLines = lines(S[sk('header')]);
+  const hl = l => /[\u0600-\u06FF]/.test(l) ? esc(t(l)) : `<bdi dir="ltr">${esc(t(l))}</bdi>`;   // السطور اللاتينية (بريد/رابط/هاتف) تبقى بترتيبها
   const hdrHTML = mini => `<div class="hdr${mini ? ' mini' : ''}">
-      <div class="r">${hdrLines.map(l => `<div>${esc(t(l))}</div>`).join('')}</div>
+      <div class="r">${hdrLines.map(l => `<div>${hl(l)}</div>`).join('')}</div>
       <div class="c">${logos}</div>
-      <div class="l">${lines(S[sk('extra')]).map(l => `<div>${esc(t(l))}</div>`).join('')}</div>
+      <div class="l">${lines(S[sk('extra')]).map(l => `<div>${hl(l)}</div>`).join('')}</div>
     </div>`;
   const titleHTML = `<div class="title">${esc(t(data.title || RN(R)))}</div>`;
-  const ftrHTML = (i, n) => `<div class="ftr">${hdrLines.map(l => esc(t(l))).join(' • ')}${n > 1 ? ` &nbsp;|&nbsp; ${esc(T('page'))} ${t(i)} ${esc(T('of'))} ${t(n)}` : ''}</div>`;
+  const ftrHTML = (i, n) => `<div class="ftr">${esc(T('vision'))}${n > 1 ? ` &nbsp;|&nbsp; ${esc(T('page'))} ${t(i)} ${esc(T('of'))} ${t(n)}` : ''}</div>`;
 
   /* ---- كتل المحتوى ---- */
   const blocks = [];

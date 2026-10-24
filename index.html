@@ -64,6 +64,11 @@ a{color:inherit}
 label{display:block;font-weight:700;margin:10px 0 4px;font-size:.92rem}
 input[type=text],input[type=date],select,textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#fff;color:var(--txt)}
 textarea{min-height:84px;resize:vertical;line-height:1.7}
+.lblrow{display:flex;align-items:flex-end;justify-content:space-between;gap:8px}
+.lblrow label{flex:1}
+.sz{display:flex;gap:4px;margin-bottom:3px}
+.sz button{width:26px;height:26px;border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;font-weight:800;line-height:1;color:var(--ui)}
+.sz button:hover{background:var(--ui-soft)}
 input:focus,select:focus,textarea:focus{outline:2px solid #9bbbe0;border-color:#9bbbe0}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .hint{color:var(--mut);font-size:.8rem;margin-top:3px}
@@ -119,11 +124,10 @@ dialog h3{margin-top:0;color:var(--ui)}
 .sheet .li b{color:var(--lb);min-width:1.4em}
 /* الشواهد */
 .sheet .evh{text-align:center;font-weight:800;color:var(--lb);margin:14px 0 6px}
-.sheet .ev{display:grid;gap:8px;margin:0 auto 12px;width:100%}
-.sheet .ev figure{margin:0;break-inside:avoid}
-.sheet .ev img{width:100%;height:44mm;object-fit:contain;background:#f4f6f8;border:1px solid var(--ac);border-radius:9px;display:block}
+.sheet .ev{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:0 auto 12px;width:100%}
+.sheet .ev figure{margin:0;break-inside:avoid;min-width:0}
+.sheet .ev img{width:100%;height:var(--eh,44mm);object-fit:contain;background:#f4f6f8;border:1px solid var(--ac);border-radius:9px;display:block}
 .sheet.ink .ev img{background:#fff}
-.sheet .ev.cp img{height:30mm}
 /* التوقيعات */
 .sheet .sigs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:auto;padding-top:7mm;border-top:1px solid #d3d9e0;break-inside:avoid;font-size:.95em}
 .sheet .sigs>div:nth-child(1){text-align:start}
@@ -211,6 +215,155 @@ dialog{overflow-x:hidden}
 .log-empty{text-align:center;color:var(--mut);padding:26px 0}
 @media(max-width:700px){.fab{padding:11px 15px;inset-inline-end:12px;bottom:12px}}
 @media print{.fab,#logDlg{display:none!important}}
+
+/* ===== اتجاه التصميم: Swiss — يخص واجهة التطبيق فقط (لا يمس ورقة التقرير) ===== */
+:root{--sw-red:#E4002B;--sw-ink:#111;--sw-bg:#F7F7F8;--sw-rule:#d9dadd;--ui:#111;--ui-soft:#F7F7F8;--line:#d9dadd;--gold:#E4002B;--mut:#5b5f66}
+body{background:var(--sw-bg);font-family:'Tajawal',sans-serif}
+/* الشريط العلوي: أبيض، خط أحمر علوي، خط رفيع سفلي، نص محاذٍ للبداية */
+.topbar{background:#fff;border-bottom:1px solid var(--sw-ink);border-top:6px solid var(--sw-red);color:var(--sw-ink);grid-template-columns:auto 1fr auto;gap:18px;padding:12px clamp(18px,4.5vw,64px)}
+.top-logo{height:84px}
+.brand{text-align:start;color:var(--sw-ink);font-size:1.9rem;letter-spacing:0;line-height:1.2}
+.topbar .btn,.topbar .btn.sec{background:#fff;color:var(--sw-ink);border:1px solid var(--sw-ink)}
+.topbar .btn.pri{background:var(--sw-red);color:#fff;border-color:var(--sw-red)}
+.topbar .btn:hover{background:var(--sw-ink);color:#fff;filter:none}
+.topbar .btn.pri:hover{background:#b80022;border-color:#b80022}
+.topbar:has(#genBtns:not([hidden])) .tb-end{justify-self:start;justify-content:flex-start;grid-column:1/-1}
+.topbar:has(#genBtns:not([hidden])) .brand{grid-column:2}
+/* الأزرار والحقول: مسطحة بزوايا حادة */
+.btn{border-radius:0;border:1px solid var(--sw-ink);background:#fff;color:var(--sw-ink)}
+.btn.sec{background:#fff;color:var(--sw-ink)}
+.btn.pri{background:var(--sw-red);color:#fff;border-color:var(--sw-red)}
+.btn.dng{background:#fff;color:var(--sw-red);border-color:var(--sw-red)}
+.btn:hover{filter:none;background:var(--sw-ink);color:#fff}
+.btn.pri:hover{background:#b80022;border-color:#b80022}
+.btn.dng:hover{background:var(--sw-red);color:#fff}
+input[type=text],input[type=date],select,textarea,.log-tools select{border-radius:0;border:1px solid #9a9ca2;background:#fff}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--sw-red);outline-offset:0;border-color:var(--sw-red)}
+label{font-size:.86rem;font-weight:700;margin:12px 0 4px}
+.sz button{border-radius:0;border:1px solid var(--sw-ink);color:var(--sw-ink)}
+.sz button:hover{background:var(--sw-ink);color:#fff}
+/* الصفحة الرئيسية */
+.wrap{max-width:1120px;padding:30px 20px 60px}
+.hero{background:transparent;border:0;border-top:1px solid var(--sw-ink);border-radius:0;padding:18px 0 26px;margin-bottom:22px}
+.hero h1{color:var(--sw-ink);font-size:2.6rem;line-height:1.15;margin:0 0 10px;font-weight:800}
+.hero p{max-width:none;color:var(--mut);font-size:1rem}
+@media(min-width:701px){.hero p{white-space:nowrap}}
+.card{text-align:center;align-items:stretch}
+.card h3,.card p{text-align:center}
+.card .btn{text-align:center}
+.cards{gap:0;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));border-top:1px solid var(--sw-ink);border-inline-start:1px solid var(--sw-ink)}
+.card{background:#fff;border:0;border-bottom:1px solid var(--sw-ink);border-inline-end:1px solid var(--sw-ink);border-radius:0;padding:20px 20px 22px;gap:12px;transition:background .15s}
+.card:hover{transform:none;box-shadow:none;background:var(--sw-bg)}
+.card .ic{display:none}
+.card h3{font-size:1.2rem;font-weight:800}
+.card .btn{text-align:center;background:var(--sw-ink);color:#fff;border-color:var(--sw-ink)}
+.card .btn:hover{background:var(--sw-red);border-color:var(--sw-red)}
+.tip{background:#fff;border:1px solid var(--sw-ink);border-inline-start:6px solid var(--sw-red);border-radius:0}
+#home .tip{box-shadow:none}
+.tip button,.tip .x{color:var(--sw-ink)!important}
+.recent-hd h2{font-weight:800}
+.rc{border:1px solid var(--sw-ink);border-inline-start:6px solid var(--sw-red);border-radius:0}
+.rc:hover{box-shadow:none;transform:none;background:var(--sw-bg)}
+.rc .ic{display:none}
+/* المولد */
+.app{gap:20px}
+.panel{border:1px solid var(--sw-ink);border-radius:0}
+.panel h2{color:var(--sw-ink);border-bottom:1px solid var(--sw-ink);border-top:0;padding-bottom:6px;font-size:1.05rem;font-weight:800}
+.panel h2::before{content:"";display:inline-block;width:10px;height:10px;background:var(--sw-red);margin-inline-end:8px}
+.thumb{border-radius:0;border-color:var(--sw-ink)}
+.thumb button{border-radius:0;background:var(--sw-red)}
+/* الحوارات والتنبيه والسجل */
+dialog{border:1px solid var(--sw-ink);border-radius:0;box-shadow:none}
+dialog::backdrop{background:#000a}
+dialog h3{color:var(--sw-ink)}
+.toast{border-radius:0;background:var(--sw-ink)}
+.fab{border-radius:0;background:var(--sw-red);box-shadow:none;border:1px solid var(--sw-ink)}
+.log-item{border:1px solid var(--sw-ink);border-inline-start:6px solid var(--sw-red);border-radius:0}
+.log-del{border-radius:0;background:#fff;color:var(--sw-red);border:1px solid var(--sw-red)}
+
+/* موجة بلون القالب في خلفية البطاقة عند تمرير الماوس */
+.card::before,.card::after{content:"";position:absolute;inset:auto 0 0 0;height:0;z-index:0;pointer-events:none;opacity:0;background:var(--acc,#E4002B);
+  transition:height .6s cubic-bezier(.2,.7,.2,1),opacity .3s}
+.card::after{--m:.16;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='24' viewBox='0 0 400 24'%3E%3Cpath d='M0 12 C50 0 100 0 150 12 S250 24 300 12 S350 0 400 12 V24 H0Z'/%3E%3C/svg%3E") repeat-x 0 0/400px 24px,linear-gradient(#000,#000) no-repeat 0 23px/100% calc(100% - 23px);
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='24' viewBox='0 0 400 24'%3E%3Cpath d='M0 12 C50 0 100 0 150 12 S250 24 300 12 S350 0 400 12 V24 H0Z'/%3E%3C/svg%3E") repeat-x 0 0/400px 24px,linear-gradient(#000,#000) no-repeat 0 23px/100% calc(100% - 23px);animation:cardWave 7s linear infinite}
+.card::before{-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='24' viewBox='0 0 300 24'%3E%3Cpath d='M0 12 C37 24 75 24 112 12 S187 0 225 12 S262 24 300 12 V24 H0Z'/%3E%3C/svg%3E") repeat-x 0 6px/300px 24px;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='24' viewBox='0 0 300 24'%3E%3Cpath d='M0 12 C37 24 75 24 112 12 S187 0 225 12 S262 24 300 12 V24 H0Z'/%3E%3C/svg%3E") repeat-x 0 6px/300px 24px;animation:cardWave2 5s linear infinite}
+.card:hover::after,.card:focus-within::after{height:78%;opacity:.16}
+.card:hover::before,.card:focus-within::before{height:78%;opacity:.11}
+.card>*{position:relative;z-index:1}
+@keyframes cardWave{to{-webkit-mask-position:400px 0,0 24px;mask-position:400px 0,0 24px}}
+@keyframes cardWave2{to{-webkit-mask-position:-300px 6px;mask-position:-300px 6px}}
+@media(prefers-reduced-motion:reduce){.card::before,.card::after{animation:none}}
+
+
+/* مشهد الخلفية: معالم العين (ظلال) */
+#home{position:relative;isolation:isolate}
+#scene{position:fixed;inset:auto 0 0 0;width:100%;height:clamp(160px,28vh,290px);z-index:0;pointer-events:none;--sc:#7d8a9a}
+#home .wrap{position:relative;z-index:1}
+#scene .L1{fill:var(--sc);opacity:.17}
+#scene .L1 .road{fill:none;stroke:var(--sw-bg,#F7F7F8);stroke-width:2.2;stroke-linecap:round;opacity:.9}
+#scene .L1 .strata path{fill:none;stroke:var(--sw-bg,#F7F7F8);stroke-width:1.4;opacity:.7}
+#scene .L2{fill:var(--sc);opacity:.34}
+#scene .L2 .cut{fill:var(--sw-bg,#F7F7F8)}
+#scene .L2 .cutln{fill:none;stroke:var(--sw-bg,#F7F7F8);stroke-width:1.6}
+#scene .L2 .ln{fill:none}
+#scene .L3{opacity:.40}
+#scene .palm .tr{fill:none;stroke:var(--sc);stroke-width:6;stroke-linecap:round}
+#scene .palm .fr{fill:none;stroke:var(--sc);stroke-width:3.8;stroke-linecap:round}
+#scene .palm .dt{fill:var(--sc)}
+#scene .palm{animation:scSway 6s ease-in-out infinite alternate}
+#scene .sky{fill:var(--sc);opacity:.10}
+#scene .cl{animation:scCloud 140s linear infinite;transform:translate(-200px,var(--y))}
+@keyframes scSway{from{transform:rotate(-1.1deg)}to{transform:rotate(1.1deg)}}
+@keyframes scCloud{from{transform:translate(-200px,var(--y))}to{transform:translate(1640px,var(--y))}}
+@media(prefers-reduced-motion:reduce){#scene .palm,#scene .cl{animation:none}}
+@media print{#scene{display:none}}
+
+/* ===== مراجعة UI/UX: وصول، لمس، تركيز ===== */
+:focus-visible{outline:3px solid var(--sw-red);outline-offset:2px}
+.btn:focus-visible,.sz button:focus-visible,.fab:focus-visible,.log-del:focus-visible{outline:3px solid var(--sw-ink);outline-offset:2px;box-shadow:0 0 0 5px #fff}
+.hint{font-size:.85rem}
+.tip-x{min-width:44px;min-height:44px;background:none;border:0;cursor:pointer;font-size:1.3rem;color:var(--sw-ink)}
+.btn,.sz button,.fab,.log-del,select,input[type=text],input[type=date]{touch-action:manipulation}
+@media(max-width:700px),(pointer:coarse){
+  .btn,.btn.sm,.log-del{min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center}
+  .card .btn{display:flex}
+  input[type=text],input[type=date],select,.log-tools select{min-height:44px}
+  .sz button{width:44px;height:44px}
+  .sz{gap:8px}
+  .brand{display:inline-block;padding-block:10px}
+  .chk input{width:24px;height:24px}
+  input[type=file]{min-height:44px;padding-block:9px}
+}
+
+/* ===== مراجعة مهارة UI/UX: تبويب الهاتف، رابط التخطي، ضغط الأزرار ===== */
+.skip{position:absolute;inset-inline-start:12px;top:-60px;z-index:100;background:var(--sw-ink);color:#fff;padding:12px 18px;font-weight:800;text-decoration:none;transition:top .15s}
+.skip:focus{top:8px}
+.mtabs{display:none}
+.btn:active,.fab:active,.sz button:active,.log-del:active{opacity:.85}
+.btn:active,.fab:active{transform:translateY(1px)}
+.card:active{background:#eceef1}
+@media(max-width:980px){
+  .mtabs{display:grid;grid-template-columns:1fr 1fr;position:sticky;top:var(--tbh,120px);z-index:18;background:#fff;border:1px solid var(--sw-ink)}
+  .mtab{min-height:48px;border:0;background:#fff;font:inherit;font-weight:800;cursor:pointer;color:var(--sw-ink)}
+  .mtab+.mtab{border-inline-start:1px solid var(--sw-ink)}
+  .mtab[aria-selected="true"]{background:var(--sw-ink);color:#fff;box-shadow:inset 0 -4px 0 var(--sw-red)}
+  .app[data-view="form"] .stage{display:none}
+  .app[data-view="preview"] .panel{display:none}
+}
+@media(max-width:700px){.topbar{position:static}.mtabs{top:0}#home .tip{top:8px}}
+/* رسالة التنبيه: النص في الوسط وبخط أكبر */
+#home .tip{align-items:center;padding:10px 14px}
+#home .tip>span{text-align:center;font-size:1.1rem;font-weight:700;line-height:1.7;padding-inline-start:44px;color:var(--sw-ink)}
+@media(min-width:1000px){#home .tip>span{white-space:nowrap;font-size:clamp(.95rem,1.65vw,1.1rem)}}
+@media(max-width:700px){#home .tip>span{font-size:1.05rem;padding-inline-start:0}}
+@media print{.mtabs{display:none!important}.app .stage{display:block!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;scroll-behavior:auto!important}}
+@media(max-width:700px){
+  .topbar{grid-template-columns:auto 1fr;padding:10px 14px}
+  .top-logo{height:56px}.brand{font-size:1.25rem}
+  .hero h1{font-size:1.8rem}
+  .tb-end{justify-content:flex-start!important}
+}
 @media print{
   @page{size:A4;margin:6mm 0}
   html,body{background:#fff}
@@ -225,6 +378,7 @@ dialog{overflow-x:hidden}
 </style>
 </head>
 <body>
+<a href="#" class="skip" id="skipLink" data-i18n="skipTo">انتقل إلى المحتوى</a>
 
 <!-- ================= الشريط العلوي ================= -->
 <div class="topbar">
@@ -242,6 +396,11 @@ dialog{overflow-x:hidden}
 
 <!-- ================= الصفحة الرئيسية: قائمة القوالب ================= -->
 <section id="home">
+<svg id="scene" aria-hidden="true" viewBox="0 0 1440 260" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+<g class="sky"><g class="cl" style="animation-duration:120s;animation-delay:-10s;--y:56px"><ellipse cx="0" cy="0" rx="70" ry="15"/><ellipse cx="28" cy="-8" rx="38" ry="14"/></g><g class="cl" style="animation-duration:160s;animation-delay:-80s;--y:100px"><ellipse cx="0" cy="0" rx="50" ry="11"/><ellipse cx="20" cy="-6" rx="28" ry="10"/></g><g class="cl" style="animation-duration:140s;animation-delay:-40s;--y:30px"><ellipse cx="0" cy="0" rx="60" ry="13"/><ellipse cx="24" cy="-7" rx="33" ry="12"/></g></g>
+<g class="L1"><path d="M600 236 L650 222 L700 205 L760 190 L820 176 L880 152 L930 138 L975 114 L1010 98 L1050 84 L1072 76 L1108 76 L1132 80 L1160 92 L1190 88 L1224 104 L1262 122 L1302 152 L1342 178 L1392 202 L1440 214 V236 Z"/><path class="road" d="M985 236 C975 228 1010 224 996 214 C982 206 1020 200 1006 190 C992 182 1032 178 1020 168 C1008 160 1042 154 1034 144 C1026 134 1056 130 1050 120 C1044 110 1068 106 1066 96 C1064 88 1078 86 1080 80"/><path d="M1072 78 h38 v-10 h-6 v-7 h-26 v7 h-6 Z"/><path d="M1082 61 h18 v-5 h-18 Z"/><g class="strata"><path d="M950 150 L1000 138 L1050 124 L1100 128 L1150 150"/><path d="M880 188 L940 176 L1010 160 L1090 160 L1170 178 L1230 190"/><path d="M780 214 L860 204 L950 196 L1060 198 L1180 210 L1290 218"/></g></g>
+<g class="L2"><g transform="translate(100 0)"><path d="M64 236 L70 198 H158 L164 236 Z"/><path d="M70 198 H158" class="ln"/><path class="cut" d="M100 236 V212 H122 V236 Z"/><path class="cutln" d="M68 210 H160 M66 223 H162"/><path class="cutln" d="M84 198 V210 M112 198 V212 M138 198 V210 M92 210 V223 M126 210 V223 M76 223 V236 M148 223 V236"/><path d="M210 236 V186 H340 V150 H400 V236 Z"/><path d="M400 236 L404 168 Q404 160 412 160 H438 Q446 160 446 168 L452 236 Z"/><path d="M214.0 186 V182.0 H216.0 V178.0 H221.0 V182.0 H223.0 V186 Z M230.0 186 V182.0 H232.0 V178.0 H237.0 V182.0 H239.0 V186 Z M246.0 186 V182.0 H248.0 V178.0 H253.0 V182.0 H255.0 V186 Z M262.0 186 V182.0 H264.0 V178.0 H269.0 V182.0 H271.0 V186 Z M278.0 186 V182.0 H280.0 V178.0 H285.0 V182.0 H287.0 V186 Z M294.0 186 V182.0 H296.0 V178.0 H301.0 V182.0 H303.0 V186 Z M310.0 186 V182.0 H312.0 V178.0 H317.0 V182.0 H319.0 V186 Z M326.0 186 V182.0 H328.0 V178.0 H333.0 V182.0 H335.0 V186 Z"/><path d="M342.0 150 V145.5 H344.0 V141.0 H350.0 V145.5 H352.0 V150 Z M359.0 150 V145.5 H361.0 V141.0 H367.0 V145.5 H369.0 V150 Z M376.0 150 V145.5 H378.0 V141.0 H384.0 V145.5 H386.0 V150 Z"/><path d="M406.0 160 V156.0 H408.0 V152.0 H412.0 V156.0 H414.0 V160 Z M420.0 160 V156.0 H422.0 V152.0 H426.0 V156.0 H428.0 V160 Z M434.0 160 V156.0 H436.0 V152.0 H440.0 V156.0 H442.0 V160 Z"/><path d="M286 186 V138 H322 V186 Z"/><path d="M286.0 138 V134.0 H288.0 V130.0 H292.0 V134.0 H294.0 V138 Z M299.0 138 V134.0 H301.0 V130.0 H305.0 V134.0 H307.0 V138 Z M312.0 138 V134.0 H314.0 V130.0 H318.0 V134.0 H320.0 V138 Z"/><path class="cut" d="M262 236 V206 Q262 192 276 192 Q290 192 290 206 V236 Z"/><rect class="cut" x="352" y="172" width="7" height="16" rx="3.5"/><rect class="cut" x="378" y="172" width="7" height="16" rx="3.5"/><rect class="cut" x="422" y="186" width="6" height="14" rx="3"/><rect class="cut" x="298" y="152" width="6" height="14" rx="3"/><rect class="cut" x="228" y="204" width="5" height="12" rx="2.5"/><rect class="cut" x="316" y="204" width="5" height="12" rx="2.5"/></g><path d="M756 236 V160 H802 V176 H924 V236 Z"/><path d="M924 236 V172 Q924 164 932 164 H952 Q960 164 960 172 V236 Z"/><path d="M758.0 160 V155.5 H760.0 V151.0 H765.0 V155.5 H767.0 V160 Z M772.0 160 V155.5 H774.0 V151.0 H779.0 V155.5 H781.0 V160 Z M786.0 160 V155.5 H788.0 V151.0 H793.0 V155.5 H795.0 V160 Z"/><path d="M806.0 176 V172.0 H808.0 V168.0 H813.0 V172.0 H815.0 V176 Z M822.0 176 V172.0 H824.0 V168.0 H829.0 V172.0 H831.0 V176 Z M838.0 176 V172.0 H840.0 V168.0 H845.0 V172.0 H847.0 V176 Z M854.0 176 V172.0 H856.0 V168.0 H861.0 V172.0 H863.0 V176 Z M870.0 176 V172.0 H872.0 V168.0 H877.0 V172.0 H879.0 V176 Z M886.0 176 V172.0 H888.0 V168.0 H893.0 V172.0 H895.0 V176 Z M902.0 176 V172.0 H904.0 V168.0 H909.0 V172.0 H911.0 V176 Z"/><path d="M926.0 164 V160.0 H928.0 V156.0 H932.0 V160.0 H934.0 V164 Z M939.0 164 V160.0 H941.0 V156.0 H945.0 V160.0 H947.0 V164 Z"/><path d="M764 160 V138 H794 V160 Z"/><path d="M764.0 138 V134.5 H766.0 V131.0 H769.0 V134.5 H771.0 V138 Z M776.0 138 V134.5 H778.0 V131.0 H781.0 V134.5 H783.0 V138 Z"/><path class="cut" d="M842 236 V204 Q842 192 856 192 Q870 192 870 204 V236 Z"/><rect class="cut" x="771" y="150" width="6" height="12" rx="3"/><rect class="cut" x="784" y="150" width="6" height="12" rx="3"/><rect class="cut" x="938" y="184" width="5" height="12" rx="2.5"/><g transform="translate(56 0)"><path d="M470 236 V224 H690 V236 Z"/></g><path d="M0 232 H1440 V260 H0Z"/></g>
+<g class="L3"><g transform="translate(56 0)"><g class="palm" style="animation-delay:-0s;transform-origin:520px 236px"><path class="tr" d="M520 236 C525.0 194.4 516.0 158.0 522.0 132"/><path class="fr" d="M522.0 132 q-31.9 -16.0 -58.0 22.0"/><path class="fr" d="M522.0 132 q-24.2 -24.0 -44.0 30.0"/><path class="fr" d="M522.0 132 q-14.3 -26.0 -26.0 34.0"/><path class="fr" d="M522.0 132 q14.3 -26.0 26.0 34.0"/><path class="fr" d="M522.0 132 q24.2 -24.0 44.0 30.0"/><path class="fr" d="M522.0 132 q31.9 -16.0 58.0 22.0"/><path class="fr" d="M522.0 132 q-5.5 -34.0 -10.0 6.0"/><path class="fr" d="M522.0 132 q6.6 -34.0 12.0 6.0"/><ellipse cx="522.0" cy="133.0" rx="7.0" ry="5.0" class="dt"/><circle cx="519.0" cy="138.0" r="2.2" class="dt"/><circle cx="525.0" cy="138.0" r="2.2" class="dt"/></g><g class="palm" style="animation-delay:-3s;transform-origin:552px 236px"><path class="tr" d="M552 236 C556.2 204.8 548.6 177.5 553.7 158"/><path class="fr" d="M553.7 158 q-27.1 -13.6 -49.3 18.7"/><path class="fr" d="M553.7 158 q-20.6 -20.4 -37.4 25.5"/><path class="fr" d="M553.7 158 q-12.2 -22.1 -22.1 28.9"/><path class="fr" d="M553.7 158 q12.2 -22.1 22.1 28.9"/><path class="fr" d="M553.7 158 q20.6 -20.4 37.4 25.5"/><path class="fr" d="M553.7 158 q27.1 -13.6 49.3 18.7"/><path class="fr" d="M553.7 158 q-4.7 -28.9 -8.5 5.1"/><path class="fr" d="M553.7 158 q5.6 -28.9 10.2 5.1"/><ellipse cx="553.7" cy="159.0" rx="6.0" ry="4.2" class="dt"/><circle cx="551.2" cy="163.1" r="1.9" class="dt"/><circle cx="556.2" cy="163.1" r="1.9" class="dt"/></g><g class="palm" style="animation-delay:-6s;transform-origin:584px 236px"><path class="tr" d="M584 236 C589.2 191.2 579.8 152.0 586.1 124"/><path class="fr" d="M586.1 124 q-33.5 -16.8 -60.9 23.1"/><path class="fr" d="M586.1 124 q-25.4 -25.2 -46.2 31.5"/><path class="fr" d="M586.1 124 q-15.0 -27.3 -27.3 35.7"/><path class="fr" d="M586.1 124 q15.0 -27.3 27.3 35.7"/><path class="fr" d="M586.1 124 q25.4 -25.2 46.2 31.5"/><path class="fr" d="M586.1 124 q33.5 -16.8 60.9 23.1"/><path class="fr" d="M586.1 124 q-5.8 -35.7 -10.5 6.3"/><path class="fr" d="M586.1 124 q6.9 -35.7 12.6 6.3"/><ellipse cx="586.1" cy="125.0" rx="7.4" ry="5.2" class="dt"/><circle cx="583.0" cy="130.3" r="2.3" class="dt"/><circle cx="589.2" cy="130.3" r="2.3" class="dt"/></g><g class="palm" style="animation-delay:-2s;transform-origin:616px 236px"><path class="tr" d="M616 236 C620.5 201.6 612.4 171.5 617.8 150"/><path class="fr" d="M617.8 150 q-28.7 -14.4 -52.2 19.8"/><path class="fr" d="M617.8 150 q-21.8 -21.6 -39.6 27.0"/><path class="fr" d="M617.8 150 q-12.9 -23.4 -23.4 30.6"/><path class="fr" d="M617.8 150 q12.9 -23.4 23.4 30.6"/><path class="fr" d="M617.8 150 q21.8 -21.6 39.6 27.0"/><path class="fr" d="M617.8 150 q28.7 -14.4 52.2 19.8"/><path class="fr" d="M617.8 150 q-5.0 -30.6 -9.0 5.4"/><path class="fr" d="M617.8 150 q5.9 -30.6 10.8 5.4"/><ellipse cx="617.8" cy="151.0" rx="6.3" ry="4.5" class="dt"/><circle cx="615.1" cy="155.4" r="2.0" class="dt"/><circle cx="620.5" cy="155.4" r="2.0" class="dt"/></g><g class="palm" style="animation-delay:-5s;transform-origin:648px 236px"><path class="tr" d="M648 236 C652.8 196.8 644.2 162.5 649.9 138"/><path class="fr" d="M649.9 138 q-30.3 -15.2 -55.1 20.9"/><path class="fr" d="M649.9 138 q-23.0 -22.8 -41.8 28.5"/><path class="fr" d="M649.9 138 q-13.6 -24.7 -24.7 32.3"/><path class="fr" d="M649.9 138 q13.6 -24.7 24.7 32.3"/><path class="fr" d="M649.9 138 q23.0 -22.8 41.8 28.5"/><path class="fr" d="M649.9 138 q30.3 -15.2 55.1 20.9"/><path class="fr" d="M649.9 138 q-5.2 -32.3 -9.5 5.7"/><path class="fr" d="M649.9 138 q6.3 -32.3 11.4 5.7"/><ellipse cx="649.9" cy="139.0" rx="6.6" ry="4.8" class="dt"/><circle cx="647.0" cy="143.7" r="2.1" class="dt"/><circle cx="652.8" cy="143.7" r="2.1" class="dt"/></g><g class="palm" style="animation-delay:-4s;transform-origin:484px 236px"><path class="tr" d="M484 236 C488.0 207.2 480.8 182.0 485.6 164"/><path class="fr" d="M485.6 164 q-25.5 -12.8 -46.4 17.6"/><path class="fr" d="M485.6 164 q-19.4 -19.2 -35.2 24.0"/><path class="fr" d="M485.6 164 q-11.4 -20.8 -20.8 27.2"/><path class="fr" d="M485.6 164 q11.4 -20.8 20.8 27.2"/><path class="fr" d="M485.6 164 q19.4 -19.2 35.2 24.0"/><path class="fr" d="M485.6 164 q25.5 -12.8 46.4 17.6"/><path class="fr" d="M485.6 164 q-4.4 -27.2 -8.0 4.8"/><path class="fr" d="M485.6 164 q5.3 -27.2 9.6 4.8"/><ellipse cx="485.6" cy="165.0" rx="5.6" ry="4.0" class="dt"/><circle cx="483.2" cy="168.8" r="1.8" class="dt"/><circle cx="488.0" cy="168.8" r="1.8" class="dt"/></g></g><g class="palm" style="animation-delay:-1s;transform-origin:30px 236px"><path class="tr" d="M30 236 C34.5 199.2 26.4 167.0 31.8 144"/><path class="fr" d="M31.8 144 q-28.7 -14.4 -52.2 19.8"/><path class="fr" d="M31.8 144 q-21.8 -21.6 -39.6 27.0"/><path class="fr" d="M31.8 144 q-12.9 -23.4 -23.4 30.6"/><path class="fr" d="M31.8 144 q12.9 -23.4 23.4 30.6"/><path class="fr" d="M31.8 144 q21.8 -21.6 39.6 27.0"/><path class="fr" d="M31.8 144 q28.7 -14.4 52.2 19.8"/><path class="fr" d="M31.8 144 q-5.0 -30.6 -9.0 5.4"/><path class="fr" d="M31.8 144 q5.9 -30.6 10.8 5.4"/><ellipse cx="31.8" cy="145.0" rx="6.3" ry="4.5" class="dt"/><circle cx="29.1" cy="149.4" r="2.0" class="dt"/><circle cx="34.5" cy="149.4" r="2.0" class="dt"/></g><g class="palm" style="animation-delay:-7s;transform-origin:1270px 236px"><path class="tr" d="M1270 236 C1275.0 196.0 1266.0 161.0 1272.0 136"/><path class="fr" d="M1272 136 q-31.9 -16.0 -58.0 22.0"/><path class="fr" d="M1272 136 q-24.2 -24.0 -44.0 30.0"/><path class="fr" d="M1272 136 q-14.3 -26.0 -26.0 34.0"/><path class="fr" d="M1272 136 q14.3 -26.0 26.0 34.0"/><path class="fr" d="M1272 136 q24.2 -24.0 44.0 30.0"/><path class="fr" d="M1272 136 q31.9 -16.0 58.0 22.0"/><path class="fr" d="M1272 136 q-5.5 -34.0 -10.0 6.0"/><path class="fr" d="M1272 136 q6.6 -34.0 12.0 6.0"/><ellipse cx="1272.0" cy="137.0" rx="7.0" ry="5.0" class="dt"/><circle cx="1269.0" cy="142.0" r="2.2" class="dt"/><circle cx="1275.0" cy="142.0" r="2.2" class="dt"/></g><g class="palm" style="animation-delay:-3s;transform-origin:1330px 236px"><path class="tr" d="M1330 236 C1334.2 205.6 1326.6 179.0 1331.7 160"/><path class="fr" d="M1331.7 160 q-27.1 -13.6 -49.3 18.7"/><path class="fr" d="M1331.7 160 q-20.6 -20.4 -37.4 25.5"/><path class="fr" d="M1331.7 160 q-12.2 -22.1 -22.1 28.9"/><path class="fr" d="M1331.7 160 q12.2 -22.1 22.1 28.9"/><path class="fr" d="M1331.7 160 q20.6 -20.4 37.4 25.5"/><path class="fr" d="M1331.7 160 q27.1 -13.6 49.3 18.7"/><path class="fr" d="M1331.7 160 q-4.7 -28.9 -8.5 5.1"/><path class="fr" d="M1331.7 160 q5.6 -28.9 10.2 5.1"/><ellipse cx="1331.7" cy="161.0" rx="6.0" ry="4.2" class="dt"/><circle cx="1329.2" cy="165.1" r="1.9" class="dt"/><circle cx="1334.2" cy="165.1" r="1.9" class="dt"/></g><g class="palm" style="animation-delay:-5s;transform-origin:1394px 236px"><path class="tr" d="M1394 236 C1398.8 197.6 1390.2 164.0 1395.9 140"/><path class="fr" d="M1395.9 140 q-30.3 -15.2 -55.1 20.9"/><path class="fr" d="M1395.9 140 q-23.0 -22.8 -41.8 28.5"/><path class="fr" d="M1395.9 140 q-13.6 -24.7 -24.7 32.3"/><path class="fr" d="M1395.9 140 q13.6 -24.7 24.7 32.3"/><path class="fr" d="M1395.9 140 q23.0 -22.8 41.8 28.5"/><path class="fr" d="M1395.9 140 q30.3 -15.2 55.1 20.9"/><path class="fr" d="M1395.9 140 q-5.2 -32.3 -9.5 5.7"/><path class="fr" d="M1395.9 140 q6.3 -32.3 11.4 5.7"/><ellipse cx="1395.9" cy="141.0" rx="6.6" ry="4.8" class="dt"/><circle cx="1393.1" cy="145.7" r="2.1" class="dt"/><circle cx="1398.8" cy="145.7" r="2.1" class="dt"/></g></g></svg>
   <div class="wrap">
     <div class="tip" id="homeTip" role="note"><span data-i18n="homeTip">قبل البدء: اضغط «الإعدادات العامة» لتكتب بياناتك المطلوبة من توقيعات أو تغيير في الترويسة فتظهر في كل التقارير تلقائيا.</span><button type="button" class="tip-x" id="tipX" aria-label="×">×</button></div>
     <div class="hero">
@@ -257,11 +416,15 @@ dialog{overflow-x:hidden}
 </section>
 
 <!-- ================= المولد ================= -->
-<div class="app" id="gen" hidden>
-  <aside class="panel">
-    <h2 data-i18n="savedH">التقارير المحفوظة</h2>
+<div class="app" id="gen" data-view="form" hidden>
+  <div class="mtabs" role="tablist">
+    <button type="button" role="tab" class="mtab" id="tabForm" data-view="form" aria-selected="true" data-i18n="tabForm">النموذج</button>
+    <button type="button" role="tab" class="mtab" id="tabPrev" data-view="preview" aria-selected="false" data-i18n="tabPrev">المعاينة</button>
+  </div>
+  <aside class="panel" id="formPanel">
+    <h2 id="savedH" data-i18n="savedH">التقارير المحفوظة</h2>
     <div class="saved">
-      <select id="savedSel"></select>
+      <select id="savedSel" aria-labelledby="savedH"></select>
       <button class="btn sec sm" id="btnSave" data-i18n="save">حفظ</button>
       <button class="btn dng sm" id="btnDel" data-i18n="del">حذف</button>
     </div>
@@ -270,8 +433,8 @@ dialog{overflow-x:hidden}
     <h2 data-i18n="dataH">بيانات التقرير</h2>
     <div id="formArea"></div>
 
-    <h2 data-i18n="evH">شواهد (صور)</h2>
-    <input type="file" id="imgInput" accept="image/*" multiple>
+    <h2 id="evH" data-i18n="evH">شواهد (صور)</h2>
+    <input type="file" id="imgInput" accept="image/*" multiple aria-labelledby="evH">
     <div class="hint" data-i18n="imgHint">حتى 10 شواهد. تصغر الصور تلقائيا قبل الحفظ.</div>
     <label class="chk"><input type="checkbox" data-set="compress"> <span data-i18n="compress">ضغط الشواهد (أصغر ارتفاعا لتناسب صفحة واحدة)</span></label>
     <div class="thumbs" id="thumbs"></div>
@@ -379,7 +542,7 @@ dialog{overflow-x:hidden}
     <button class="btn pri sm" id="dlgOk" data-i18n="save">حفظ</button>
   </div>
 </dialog>
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 /* =====================================================================
@@ -417,8 +580,36 @@ const REPORTS = {
       recs: 'توظيف ما تم التدرب عليه في الحصص القادمة ومشاركة الزملاء بالخبرات المكتسبة.', notes: ''
     }
   },
+  minutes: {
+    name: 'محضر اجتماع', icon: '📝', acc: '#2f6f5e',
+    desc: 'توثيق اجتماع: موضوعه ومكانه ووقته والحضور وجدول الأعمال وما نوقش والقرارات والمهام والتوصيات.',
+    info: [
+      { id: 'place', label: 'مكان الاجتماع' }, { id: 'date', label: 'التاريخ', type: 'date' },
+      { id: 'time', label: 'الوقت' }, { id: 'chair', label: 'رئيس الاجتماع' }
+    ],
+    sections: [
+      { id: 'summary',   label: 'موضوع الاجتماع',  type: 'text', full: true, ph: 'اكتب موضوع الاجتماع' },
+      { id: 'attendees', label: 'الحضور',           type: 'list', ph: 'اسم في كل سطر' },
+      { id: 'agenda',    label: 'جدول الأعمال',     type: 'list', ph: 'بند في كل سطر' },
+      { id: 'discussion',label: 'ما تمت مناقشته',   type: 'list', ph: 'نقطة نقاش في كل سطر' },
+      { id: 'decisions', label: 'القرارات',         type: 'list', ph: 'قرار في كل سطر' },
+      { id: 'tasks',     label: 'المهام والمسؤولون', type: 'list', ph: 'مهمة - المسؤول - الموعد' },
+      { id: 'recs',      label: 'التوصيات',         type: 'text', ph: 'توصيات الاجتماع' },
+      { id: 'notes',     label: 'الملاحظات',        type: 'text', ph: 'أي معلومات إضافية' }
+    ],
+    sample: {
+      title: 'محضر اجتماع', place: 'قاعة الاجتماعات', date: '', time: '10:00 صباحا', chair: 'طارق الهفل',
+      summary: 'اجتماع لمتابعة الخطة التشغيلية للفصل الدراسي الأول.',
+      attendees: 'طارق الهفل\nرؤساء الأقسام\nمنسقو المواد',
+      agenda: 'متابعة تنفيذ الخطة التشغيلية\nمستوى تحصيل الطلبة\nما يستجد من أعمال',
+      discussion: 'استعراض مؤشرات الأداء للفترة الماضية\nمناقشة التحديات التي تواجه تنفيذ الخطة\nعرض مقترحات التطوير',
+      decisions: 'اعتماد خطة المتابعة الأسبوعية\nتفعيل برامج دعم الطلبة الأقل تحصيلا',
+      tasks: 'إعداد تقرير المتابعة - منسقو المواد - نهاية الأسبوع\nجدولة برامج الدعم - رؤساء الأقسام - الأسبوع القادم',
+      recs: 'الالتزام بالمواعيد المحددة ورفع تقارير دورية للإدارة.', notes: ''
+    }
+  },
 };
-const ORDER = ['program'];
+const ORDER = ['program','minutes'];
 Object.keys(REPORTS).forEach(k => REPORTS[k].key = k);
 
 /* =====================================================================
@@ -434,7 +625,7 @@ const I18N = {
     homeTitle:'أداء الواجبات الوظيفية',
     homeSub:'اختر القالب المناسب لتوثيق شاهدك، ثم أدخل بياناتك وأرفق صور الشواهد واطبع التقرير أو احفظه PDF.',
     recentTitle:'آخر التقارير', viewLog:'عرض السجل', logBtn:'السجل', logTitle:'سجل التقارير', close:'إغلاق', logEmpty:'لا توجد تقارير بعد. ابدأ بأي قالب وسيظهر عملك هنا تلقائيا.', allTypes:'كل أنواع التقارير', draft:'مسودة', savedBadge:'محفوظ', logCount:'{n} تقرير', logCount1:'تقرير واحد', cLogDel:'حذف هذا التقرير من السجل؟ إن كان محفوظا فسيُحذف من المحفوظات أيضا.', now:'الآن', delBtn:'حذف',
-    page:'صفحة', of:'من', cont:'تابع',
+    page:'صفحة', of:'من', cont:'تابع', szLess:'تصغير مساحة الكتابة', tabForm:'النموذج', tabPrev:'المعاينة', skipTo:'انتقل إلى المحتوى', szMore:'تكبير مساحة الكتابة',
     vision:'رؤيتنا: تعليم متميز في بيئة جاذبة لإعداد جيل مبدع يطور ذاته ويواجه تحديات المستقبل ويحافظ على هويته الوطنية في ظل مشاركة مجتمعية فاعلة',
     homeTip:'قبل البدء: اضغط «الإعدادات العامة» لتكتب بياناتك المطلوبة من توقيعات أو تغيير في الترويسة فتظهر في كل التقارير تلقائيا.',
     start:'ابدأ التصميم', savedH:'التقارير المحفوظة', save:'حفظ', del:'حذف', newOpt:'— تقرير جديد —',
@@ -462,7 +653,7 @@ const I18N = {
     homeTitle:'Job Duties Performance',
     homeSub:'Choose the template that fits your evidence, enter your details, attach evidence photos, then print the report or save it as a PDF.',
     recentTitle:'Recent reports', viewLog:'View history', logBtn:'History', logTitle:'Report history', close:'Close', logEmpty:'No reports yet. Start any template and your work will appear here automatically.', allTypes:'All report types', draft:'Draft', savedBadge:'Saved', logCount:'{n} reports', logCount1:'1 report', cLogDel:'Remove this report from the history? If it is saved, it will be deleted from saved reports too.', now:'Just now', delBtn:'Delete',
-    page:'Page', of:'of', cont:'cont.',
+    page:'Page', of:'of', cont:'cont.', szLess:'Shrink writing area', tabForm:'Form', tabPrev:'Preview', skipTo:'Skip to content', szMore:'Enlarge writing area',
     vision:'Our vision: Distinguished education in an attractive environment to prepare a creative generation that develops itself, faces future challenges and preserves its national identity, with active community participation',
     homeTip:'Before you start: open “General settings” to enter your signatures or change the header details — they will appear in every report automatically.',
     start:'Start designing', savedH:'Saved reports', save:'Save', del:'Delete', newOpt:'— New report —',
@@ -511,6 +702,31 @@ const EN = {
       goals: 'Understand the concept of active learning\nApply collaborative strategies in class\nDesign activities that measure learning outcomes',
       steps: 'Review the theoretical framework of active learning\nCarry out practical group applications\nDiscuss the models presented\nGive feedback and close the workshop',
       recs: 'Apply what was learned in upcoming lessons and share the gained experience with colleagues.', notes: ''
+    }
+  },
+  minutes: {
+    name: 'Meeting Minutes',
+    desc: 'Document a meeting: topic, place, time, attendees, agenda, discussion, decisions, tasks and recommendations.',
+    info: { place: 'Meeting place', date: 'Date', time: 'Time', chair: 'Chairperson' },
+    sections: {
+      summary: ['Meeting topic', 'Write the topic of the meeting'],
+      attendees: ['Attendees', 'One name per line'],
+      agenda: ['Agenda', 'One item per line'],
+      discussion: ['Discussion', 'One discussion point per line'],
+      decisions: ['Decisions', 'One decision per line'],
+      tasks: ['Tasks and owners', 'Task - owner - deadline'],
+      recs: ['Recommendations', 'Recommendations of the meeting'],
+      notes: ['Notes', 'Any additional information']
+    },
+    sample: {
+      title: 'Meeting Minutes', place: 'Meeting room', date: '', time: '10:00 AM', chair: 'Tareq Al-Hafl',
+      summary: 'A meeting to follow up the first-semester operational plan.',
+      attendees: 'Tareq Al-Hafl\nHeads of departments\nSubject coordinators',
+      agenda: 'Follow-up on the operational plan\nStudent attainment\nAny other business',
+      discussion: 'Review of performance indicators for the past period\nChallenges facing plan implementation\nDevelopment proposals',
+      decisions: 'Approve the weekly follow-up plan\nActivate support programs for lower-attaining students',
+      tasks: 'Prepare follow-up report - Subject coordinators - End of week\nSchedule support programs - Heads of departments - Next week',
+      recs: 'Commit to the set deadlines and submit periodic reports to management.', notes: ''
     }
   },
 };
@@ -639,16 +855,34 @@ function buildCards(){
   }).join('');
   $$('[data-open]').forEach(b => b.addEventListener('click', () => go(b.dataset.open)));
 }
+
+/* ===== تبويب النموذج/المعاينة على الشاشات الضيقة + تركيز عند التنقل + رابط التخطي ===== */
+function setView(v){
+  const g = $('#gen'); g.dataset.view = v;
+  $$('.mtab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.view === v)));
+  if (v === 'preview'){ fit(); window.scrollTo(0, 0); }
+}
+$$('.mtab').forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
+function focusMain(){
+  const t = !$('#home').hidden ? $('#home h1') : $('#gen .panel h2');
+  if (t){ t.setAttribute('tabindex', '-1'); try { t.focus({ preventScroll: true }); } catch(e){} }
+}
+$('#skipLink').addEventListener('click', e => { e.preventDefault(); focusMain(); });
+let navReady = false;
+const _showHome = showHome, _openReport = openReport;
+showHome = function(){ _showHome(); if (navReady) focusMain(); };
+openReport = function(k){ _openReport(k); setView('form'); if (navReady) focusMain(); };
+setTimeout(() => { navReady = true; }, 600);
 addEventListener('hashchange', route);
 addEventListener('popstate', route);
 
 /* ===================== بناء النموذج ===================== */
 function buildForm(){
-  let h = `<label>${esc(T('repTitle'))}</label><input type="text" data-f="title">`;
+  let h = `<label for="f-title">${esc(T('repTitle'))}</label><input type="text" id="f-title" data-f="title" autocomplete="off">`;
   h += `<div class="row2">` + R.info.map(f =>
-    `<div><label>${esc(FL(R, f))}</label><input type="${f.type === 'date' ? 'date' : 'text'}" data-f="${f.id}"></div>`).join('') + `</div>`;
+    `<div><label for="f-${f.id}">${esc(FL(R, f))}</label><input type="${f.type === 'date' ? 'date' : 'text'}" id="f-${f.id}" data-f="${f.id}" autocomplete="off"></div>`).join('') + `</div>`;
   R.sections.forEach(s => {
-    h += `<label>${esc(SL(R, s))}</label><textarea data-f="${s.id}" placeholder="${esc(SP(R, s) || '')}"></textarea>`;
+    h += `<div class="lblrow"><label for="f-${s.id}">${esc(SL(R, s))}</label><span class="sz"><button type="button" data-sz="-1" data-for="${s.id}" title="${esc(T('szLess'))}" aria-label="${esc(T('szLess'))}">−</button><button type="button" data-sz="1" data-for="${s.id}" title="${esc(T('szMore'))}" aria-label="${esc(T('szMore'))}">+</button></span></div><textarea id="f-${s.id}" data-f="${s.id}" placeholder="${esc(SP(R, s) || '')}"></textarea>`;
     if (s.type === 'list') h += `<div class="hint">${esc(T('hintList'))}</div>`;
   });
   $('#formArea').innerHTML = h;
@@ -657,10 +891,16 @@ function buildForm(){
     el.style.cursor = 'pointer';
     el.addEventListener('click', () => { try { el.showPicker(); } catch(e){} });
   });
-  $$('[data-f]').forEach(el => el.addEventListener('input', () => { data[el.dataset.f] = el.value; render(); markDirty(); }));
+  $$('[data-f]').forEach(el => el.addEventListener('input', () => { data[el.dataset.f] = el.value; if (el.tagName === 'TEXTAREA') growTa(el); render(); markDirty(); }));
+  $$('[data-sz]').forEach(b => b.addEventListener('click', () => {
+    const ta = $('[data-f="' + b.dataset.for + '"]'); if (!ta) return;
+    ta.style.height = Math.max(60, ta.offsetHeight + (+b.dataset.sz) * 48) + 'px';
+  }));
 }
+// يتمدد الحقل تلقائيا عند امتلائه (ولا يصغر من تلقاء نفسه، فيبقى ما ضبطه المستخدم)
+function growTa(el){ if (el.scrollHeight > el.clientHeight) el.style.height = (el.scrollHeight + 2) + 'px'; }
 function syncForm(){
-  $$('[data-f]').forEach(el => el.value = data[el.dataset.f] || '');
+  $$('[data-f]').forEach(el => { el.value = data[el.dataset.f] || ''; if (el.tagName === 'TEXTAREA'){ el.style.height = ''; growTa(el); } });
   renderThumbs();
 }
 
@@ -717,14 +957,6 @@ function render(){
   if (pend.length) rows.push(pend);
   rows.forEach((r, i) => blocks.push({ kind: 'row', boxes: r, html: rowHTML(r, i === 0) }));
 
-  if (images.length){
-    const cols = Math.min(images.length, 3);
-    const evRow = chunk => `<div class="ev ${S.compress ? 'cp' : ''}" style="grid-template-columns:repeat(${cols},minmax(0,1fr));max-width:${cols * 62}mm">${chunk.map(src => `<figure><img src="${src}" alt=""></figure>`).join('')}</div>`;
-    for (let i = 0; i < images.length; i += 3){
-      const row = evRow(images.slice(i, i + 3));
-      blocks.push({ kind: 'ev', html: i === 0 ? `<div class="evblk"><div class="evh">${esc(T('evidence'))}</div>${row}</div>` : row });
-    }
-  }
   const sg = sigsFor();
   const sigsHTML = sg.some(g => g.role || g.name)
     ? `<div class="sigs">` + sg.map(g => (g.role || g.name)
@@ -792,6 +1024,37 @@ function render(){
     if (cur.items.length) newPage();
     put(b.html, h);
   });
+  /* ---- الشواهد: تحجيم تلقائي بحسب العدد والمساحة المتاحة ---- */
+  const evN = images.length;
+  const evCols = evN <= 1 ? 1 : evN === 2 ? 2 : evN === 4 ? 2 : 3;
+  const evMax = S.compress ? 30 : (evN === 1 ? 110 : evN === 2 ? 80 : 62);
+  const evMin = S.compress ? 20 : 28;
+  const evFig = (src, cols) => `<figure style="flex:0 0 calc((100% - ${(cols - 1) * 8}px) / ${cols})"><img src="${src}" alt=""></figure>`;
+  const evGrid = (list, cols, h) => `<div class="ev" style="--eh:${h}mm;max-width:min(100%,${(cols * h * 1.45).toFixed(1)}mm)">${list.map(src => evFig(src, cols)).join('')}</div>`;
+  const evBlock = (list, cols, h, head) => head ? `<div class="evblk"><div class="evh">${esc(T('evidence'))}</div>${evGrid(list, cols, h)}</div>` : evGrid(list, cols, h);
+  const evFitH = space => {            // أكبر ارتفاع يتسع في المساحة (أو 0)
+    for (let h = evMax; h >= evMin; h -= 1){
+      if (hOf(evBlock(images, evCols, h, true)) <= space) return h;
+    }
+    return 0;
+  };
+  const placeEvidence = () => {
+    if (!evN) return;
+    const hs = sigsHTML ? hOf(sigsHTML) + 6 * MM : 0;
+    let h = evFitH(room() - hs);
+    if (!h && cur.items.length){
+      newPage();
+      h = evFitH(room() - hs);
+    }
+    if (h){ const html = evBlock(images, evCols, h, true); put(html, hOf(html)); return; }
+    const hh = Math.min(evMax, 44);      // كثير: صفوف متتابعة عبر الصفحات
+    for (let i = 0; i < evN; i += evCols){
+      const html = evBlock(images.slice(i, i + evCols), evCols, hh, i === 0), hr = hOf(html);
+      if (hr > room() && cur.items.length) newPage();
+      put(html, hr);
+    }
+  };
+  placeEvidence();
   if (sigsHTML){
     const hs = hOf(sigsHTML), gap = 6 * MM;
     if (hs + gap > room()){
